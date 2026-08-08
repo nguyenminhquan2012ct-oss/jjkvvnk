@@ -3,6 +3,10 @@ import sys
 import subprocess
 from importlib import metadata
 
+# Đảm bảo log hiện ngay trong console panel (không bị buffer)
+os.environ.setdefault("PYTHONUNBUFFERED", "1")
+os.environ.setdefault("PYTHONIOENCODING", "utf-8")
+
 # Các thư viện bắt buộc (nếu thiếu sẽ tự cài)
 REQUIRED_PACKAGES = [
     "discord.py-self", "aiohttp", "pynacl", "pytz",
@@ -63,7 +67,8 @@ def main():
 
 def check_env():
     """Cảnh báo sớm nếu thiếu token, tiết kiệm lỗi khi chạy"""
-    if os.environ.get("DISCORD_TOKEN") or os.environ.get("DISCORD_BOT_TOKEN") or os.path.exists("config.json"):
+    if (os.environ.get("DISCORD_TOKEN") or os.environ.get("DISCORD_BOT_TOKEN")
+            or os.environ.get("BOT_TOKEN") or os.path.exists("config.json")):
         return
     print("[!] Chưa có Token: đặt biến môi trường DISCORD_TOKEN hoặc tạo config.json.")
 

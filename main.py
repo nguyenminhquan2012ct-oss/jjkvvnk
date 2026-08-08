@@ -12,7 +12,7 @@ from pytz import timezone
 import rate_utils
 
 # --- 1. CẤU HÌNH (Kết giới): ưu tiên Biến môi trường, fallback config.json ---
-TOKEN = os.environ.get("DISCORD_TOKEN") or os.environ.get("DISCORD_BOT_TOKEN")
+TOKEN = os.environ.get("DISCORD_TOKEN") or os.environ.get("DISCORD_BOT_TOKEN") or os.environ.get("BOT_TOKEN")
 PREFIX = os.environ.get("DISCORD_PREFIX", ".")
 
 if not TOKEN and os.path.exists('config.json'):
