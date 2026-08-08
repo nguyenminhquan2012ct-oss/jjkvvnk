@@ -85,7 +85,7 @@ class UISystem(commands.Cog):
         embed.add_field(name="🛡️ ADMIN", value="`.quanly` - Menu quản lý", inline=True)
         embed.add_field(name="🃏 TROLL", value="`.troll` - Menu troll", inline=True)
         embed.set_footer(text=f"JJK-VVNK Bot | {len(self.bot.guilds)} servers")
-        await ctx.send(embed=embed)
+        await ctx.send(embeds=[embed])
 
     @commands.command(name="warmenu")
     async def _war_menu_embed(self, ctx):
@@ -99,7 +99,7 @@ class UISystem(commands.Cog):
         embed.add_field(name="`.khaitram`", value="Xóa toàn bộ kênh", inline=False)
         embed.add_field(name="`.huydiet`", value="Nuke server", inline=False)
         embed.add_field(name="`.ngung`", value="Dừng tất cả", inline=False)
-        await ctx.send(embed=embed)
+        await ctx.send(embeds=[embed])
 
     @commands.command(name="musicmenu")
     async def _music_menu_embed(self, ctx):
@@ -112,7 +112,7 @@ class UISystem(commands.Cog):
         embed.add_field(name="`.skip / .stop / .now`", value="Điều khiển", inline=False)
         embed.add_field(name="`.volume [1-100]`", value="Âm lượng", inline=False)
         embed.add_field(name="`.loop / .pause / .resume`", value="Loop & Pause", inline=False)
-        await ctx.send(embed=embed)
+        await ctx.send(embeds=[embed])
 
     @commands.command(name="funmenu")
     async def _fun_menu_embed(self, ctx):
@@ -123,7 +123,7 @@ class UISystem(commands.Cog):
         embed.add_field(name="`.daily / .bal / .pay / .shop / .inventory`", value="Economy", inline=False)
         embed.add_field(name="`.fact / .quote / .meme / .insult / .compliment`", value="Fun", inline=False)
         embed.add_field(name="`.avatar / .banner`", value="Avatar & Banner", inline=False)
-        await ctx.send(embed=embed)
+        await ctx.send(embeds=[embed])
 
     @commands.command(name="progress")
     async def _test_progress(self, ctx, current: int = 50, total: int = 100):
