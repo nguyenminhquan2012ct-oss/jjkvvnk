@@ -85,7 +85,7 @@ if not exist "config.json" (
 
     if "!prefix!"=="" set "prefix=."
 
-    powershell -NoProfile -Command "$config = @{Token='!token!'; Prefix='!prefix!'}; $config | ConvertTo-Json | Set-Content -LiteralPath 'config.json' -Encoding UTF8"
+    powershell -NoProfile -Command "$config = @{token='!token!'; prefix='!prefix!'}; $config | ConvertTo-Json | Set-Content -LiteralPath 'config.json' -Encoding UTF8"
 
     if errorlevel 1 (
         echo.
@@ -111,7 +111,7 @@ if not exist "config.json" (
     exit /b 1
 )
 
-powershell -NoProfile -Command "$c=Get-Content -LiteralPath 'config.json' -Raw | ConvertFrom-Json; if ([string]::IsNullOrWhiteSpace($c.Token)) { exit 1 }"
+powershell -NoProfile -Command "$c=Get-Content -LiteralPath 'config.json' -Raw | ConvertFrom-Json; $t=$c.token; if ([string]::IsNullOrWhiteSpace($t)) { $t=$c.Token }; if ([string]::IsNullOrWhiteSpace($t)) { exit 1 }"
 
 if errorlevel 1 (
     echo.
