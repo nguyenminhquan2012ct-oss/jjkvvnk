@@ -1,6 +1,7 @@
 @echo off
 title JJK-VVNK Bot
 cls
+color 0D
 
 echo.
 echo    ___           _           _       QU4N.TH3.D3V
@@ -29,17 +30,25 @@ if not exist config.json (
 )
 
 echo  [*] Dang kiem tra thu vien...
-python -m pip install -r requirements.txt -q 2>nul
-echo  [OK] San sang!
+python -m pip install -r requirements.txt 2>nul
+if %errorlevel%==0 (
+    echo.
+    echo  [OK] Thu vien da san sang!
+) else (
+    echo.
+    echo  [!] Co loi xay ra, thu chay lai...
+)
 echo.
 
-set /p BOT_TOKEN_TOKEN=<nul
 for /f "tokens=*" %%i in ('powershell -Command "(Get-Content config.json -Raw | ConvertFrom-Json).Token"') do set BOT_TOKEN=%%i
 set DISCORD_TOKEN=%BOT_TOKEN%
 
+echo  [OK] Token da load!
 echo  [*] Dang khoi dong bot...
+echo  ========================================
 echo.
 python main.py
 echo.
+echo  ========================================
 echo  [*] Bot da dung.
 pause
