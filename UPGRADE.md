@@ -1,4 +1,4 @@
-# 🔥 SIÊU PROMPT NÂNG CẤP JJK-VVNK BOT
+# 🔥 NÂNG CẤP JJK-VVNK BOT
 
 ## 📋 TỔNG QUAN
 Nâng cấp bot self-bot Discord từ bản cơ bản lên phiên bản **pro** với:
