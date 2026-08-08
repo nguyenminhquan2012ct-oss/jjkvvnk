@@ -11,59 +11,11 @@ SPECIAL_COLOR = 0x800080
 
 class UIHelper:
     @staticmethod
-    def war_embed(title, description, **kwargs):
-        return discord.Embed(title=title, description=description, color=WAR_COLOR, **kwargs)
-
-    @staticmethod
-    def music_embed(title, description, **kwargs):
-        return discord.Embed(title=title, description=description, color=MUSIC_COLOR, **kwargs)
-
-    @staticmethod
-    def fun_embed(title, description, **kwargs):
-        return discord.Embed(title=title, description=description, color=FUN_COLOR, **kwargs)
-
-    @staticmethod
-    def utility_embed(title, description, **kwargs):
-        return discord.Embed(title=title, description=description, color=UTILITY_COLOR, **kwargs)
-
-    @staticmethod
-    def special_embed(title, description, **kwargs):
-        return discord.Embed(title=title, description=description, color=SPECIAL_COLOR, **kwargs)
-
-    @staticmethod
     def progress_bar(current, total, length=20):
         filled = int(length * current / total) if total > 0 else 0
         bar = "█" * filled + "░" * (length - filled)
         percent = int(100 * current / total) if total > 0 else 0
         return f"`[{bar}] {percent}%`"
-
-    @staticmethod
-    def pagination_embed(items, page, per_page, title="Danh sách", color=UTILITY_COLOR):
-        total_pages = max(1, (len(items) + per_page - 1) // per_page)
-        page = max(0, min(page, total_pages - 1))
-        start = page * per_page
-        end = start + per_page
-        page_items = items[start:end]
-        embed = discord.Embed(title=f"{title} (Trang {page + 1}/{total_pages})", color=color)
-        return embed, page_items, page, total_pages
-
-class UIPaginator:
-    def __init__(self, ctx, pages, timeout=60):
-        self.ctx = ctx
-        self.pages = pages
-        self.current = 0
-        self.timeout = timeout
-        self.message = None
-
-    async def start(self):
-        if not self.pages:
-            return
-        await self._show_page()
-        self.message = self.ctx.sent_message if hasattr(self.ctx, "sent_message") else None
-
-    async def _show_page(self):
-        if hasattr(self.ctx, "send"):
-            pass
 
 class UISystem(commands.Cog):
     def __init__(self, bot):
@@ -73,57 +25,68 @@ class UISystem(commands.Cog):
     async def _main_menu(self, ctx):
         """Menu chính đẹp"""
         await ctx.message.delete()
-        embed = discord.Embed(
-            title="💫 DOMAIN EXPANSION: INFINITE VOID 💫",
-            description="**Lãnh địa đã sẵn sàng!** Chọn thuật thức bên dưới:",
-            color=SPECIAL_COLOR
-        )
-        embed.add_field(name="⚔️ WAR", value="`.raid` - Menu chiến tranh", inline=True)
-        embed.add_field(name="🎵 MUSIC", value="`.nhac` - Menu nhạc", inline=True)
-        embed.add_field(name="🎮 FUN", value="`.traloi` - Menu giải trí", inline=True)
-        embed.add_field(name="🛠️ UTILITY", value="`.chucu` - Menu tiện ích", inline=True)
-        embed.add_field(name="🛡️ ADMIN", value="`.quanly` - Menu quản lý", inline=True)
-        embed.add_field(name="🃏 TROLL", value="`.troll` - Menu troll", inline=True)
-        embed.set_footer(text=f"JJK-VVNK Bot | {len(self.bot.guilds)} servers")
-        await ctx.send(embed=embed)
+        menu = f"""```ansi
+\033[1;35m💫 DOMAIN EXPANSION: INFINITE VOID 💫\033[0m
+
+\033[1;37m**Lãnh địa đã sẵn sàng!** Chọn thuật thức bên dưới:\033[0m
+
+\033[1;31m⚔️ WAR\033[0m     \033[1;30m|\033[0m \033[1;37m.raid\033[0m    \033[1;30m- Menu chiến tranh\033[0m
+\033[1;34m🎵 MUSIC\033[0m   \033[1;30m|\033[0m \033[1;37m.nhac\033[0m   \033[1;30m- Menu nhạc\033[0m
+\033[1;32m🎮 FUN\033[0m     \033[1;30m|\033[0m \033[1;37m.traloi\033[0m \033[1;30m- Menu giải trí\033[0m
+\033[1;33m🛠️ UTILITY\033[0m \033[1;30m|\033[0m \033[1;37m.chucu\033[0m  \033[1;30m- Menu tiện ích\033[0m
+\033[1;35m🛡️ ADMIN\033[0m   \033[1;30m|\033[0m \033[1;37m.quanly\033[0m \033[1;30m- Menu quản lý\033[0m
+\033[1;36m🃏 TROLL\033[0m   \033[1;30m|\033[0m \033[1;37m.troll\033[0m  \033[1;30m- Menu troll\033[0m
+
+\033[1;30mJJK-VVNK Bot | {len(self.bot.guilds)} servers\033[0m
+```"""
+        await ctx.send(menu)
 
     @commands.command(name="warmenu")
     async def _war_menu_embed(self, ctx):
-        """Menu war bằng Embed"""
+        """Menu war bằng ANSI"""
         await ctx.message.delete()
-        embed = discord.Embed(title="⚔️ WAR MENU", description="Thuật thức chiến tranh", color=WAR_COLOR)
-        embed.add_field(name="`.vohahan [delay] [text]`", value="Spam tùy chỉnh", inline=False)
-        embed.add_field(name="`.thuong [delay]`", value="Spam ngon.txt", inline=False)
-        embed.add_field(name="`.lienke [delay]`", value="Spam nhay.txt", inline=False)
-        embed.add_field(name="`.hacmon [url] [delay] [text]`", value="Webhook spam", inline=False)
-        embed.add_field(name="`.khaitram`", value="Xóa toàn bộ kênh", inline=False)
-        embed.add_field(name="`.huydiet`", value="Nuke server", inline=False)
-        embed.add_field(name="`.ngung`", value="Dừng tất cả", inline=False)
-        await ctx.send(embed=embed)
+        menu = f"""```ansi
+\033[1;31m⚔️ WAR MENU ⚔️\033[0m
+
+\033[1;37m .vohahan [delay] [text]\033[0m \033[1;30m|\033[0m Spam tùy chỉnh
+\033[1;37m .thuong [delay]\033[0m          \033[1;30m|\033[0m Spam ngon.txt
+\033[1;37m .lienke [delay]\033[0m          \033[1;30m|\033[0m Spam nhay.txt
+\033[1;37m .hacmon [url] [delay] [text]\033[0m \033[1;30m|\033[0m Webhook spam
+\033[1;37m .khaitram\033[0m               \033[1;30m|\033[0m Xóa toàn bộ kênh
+\033[1;37m .huydiet\033[0m               \033[1;30m|\033[0m Nuke server
+\033[1;37m .ngung\033[0m                 \033[1;30m|\033[0m Dừng tất cả
+```"""
+        await ctx.send(menu)
 
     @commands.command(name="musicmenu")
     async def _music_menu_embed(self, ctx):
-        """Menu nhạc bằng Embed"""
+        """Menu nhạc bằng ANSI"""
         await ctx.message.delete()
-        embed = discord.Embed(title="🎵 MUSIC MENU", description="Thuật thức âm thanh", color=MUSIC_COLOR)
-        embed.add_field(name="`.play [link/tên]`", value="Phát nhạc YouTube", inline=False)
-        embed.add_field(name="`.play-sa / play-sh / play-amk / play-sp`", value="Nhạc có sẵn", inline=False)
-        embed.add_field(name="`.queue`", value="Xem hàng chờ", inline=False)
-        embed.add_field(name="`.skip / .stop / .now`", value="Điều khiển", inline=False)
-        embed.add_field(name="`.volume [1-100]`", value="Âm lượng", inline=False)
-        embed.add_field(name="`.loop / .pause / .resume`", value="Loop & Pause", inline=False)
-        await ctx.send(embed=embed)
+        menu = f"""```ansi
+\033[1;34m🎵 MUSIC MENU 🎵\033[0m
+
+\033[1;37m .play [link/tên]\033[0m          \033[1;30m|\033[0m Phát nhạc YouTube
+\033[1;37m .play-sa / .play-sh / .play-amk / .play-sp\033[0m \033[1;30m|\033[0m Nhạc có sẵn
+\033[1;37m .queue\033[0m                  \033[1;30m|\033[0m Xem hàng chờ
+\033[1;37m .skip / .stop / .now\033[0m     \033[1;30m|\033[0m Điều khiển
+\033[1;37m .volume [1-100]\033[0m          \033[1;30m|\033[0m Âm lượng
+\033[1;37m .loop / .pause / .resume\033[0m \033[1;30m|\033[0m Loop & Pause
+```"""
+        await ctx.send(menu)
 
     @commands.command(name="funmenu")
     async def _fun_menu_embed(self, ctx):
-        """Menu giải trí bằng Embed"""
+        """Menu giải trí bằng ANSI"""
         await ctx.message.delete()
-        embed = discord.Embed(title="🎮 FUN MENU", description="Mini games & Fun", color=FUN_COLOR)
-        embed.add_field(name="`.8ball / .rps / .trivia / .coinflip / .number`", value="Mini games", inline=False)
-        embed.add_field(name="`.daily / .bal / .pay / .shop / .inventory`", value="Economy", inline=False)
-        embed.add_field(name="`.fact / .quote / .meme / .insult / .compliment`", value="Fun", inline=False)
-        embed.add_field(name="`.avatar / .banner`", value="Avatar & Banner", inline=False)
-        await ctx.send(embed=embed)
+        menu = f"""```ansi
+\033[1;32m🎮 FUN MENU 🎮\033[0m
+
+\033[1;37m .8ball / .rps / .trivia / .coinflip / .number\033[0m \033[1;30m|\033[0m Mini games
+\033[1;37m .daily / .bal / .pay / .shop / .inventory\033[0m   \033[1;30m|\033[0m Economy
+\033[1;37m .fact / .quote / .meme / .insult / .compliment\033[0m \033[1;30m|\033[0m Fun
+\033[1;37m .avatar / .banner\033[0m              \033[1;30m|\033[0m Avatar & Banner
+```"""
+        await ctx.send(menu)
 
     @commands.command(name="progress")
     async def _test_progress(self, ctx, current: int = 50, total: int = 100):

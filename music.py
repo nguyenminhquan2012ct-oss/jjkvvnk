@@ -91,7 +91,7 @@ class MusicSystem(commands.Cog):
 \033[1;37m .pause\033[0m \033[1;30m|\033[0m Tạm dừng
 \033[1;37m .resume\033[0m \033[1;30m|\033[0m Tiếp tục
 
-\033[1;35m🎵 Nhạc có sẵn: stay_alive, styx_helix, akuma_no_ko, specialz\033[0m
+\033[1;35m🎵 Nhạc có sẵn: stay_alive, styx_helix \033[0m
 ```"""
         await ctx.send(menu)
 

@@ -358,9 +358,7 @@ class EntertainmentSystem(commands.Cog):
         await ctx.message.delete()
         target = target or ctx.author
         if target.avatar:
-            embed = discord.Embed(title=f"🖼️ Avatar của {target.name}", color=0x00FF00)
-            embed.set_image(url=target.avatar.url)
-            await ctx.send(embed=embed)
+            await ctx.send(f"🖼️ **Avatar của {target.name}:**\n{target.avatar.url}")
         else:
             await ctx.send("❌ Đối tượng không có avatar!", delete_after=3)
 
@@ -372,9 +370,7 @@ class EntertainmentSystem(commands.Cog):
         try:
             user = await self.bot.fetch_user(target.id)
             if user.banner:
-                embed = discord.Embed(title=f"🖼️ Banner của {target.name}", color=0x800080)
-                embed.set_image(url=user.banner.url)
-                await ctx.send(embed=embed)
+                await ctx.send(f"🖼️ **Banner của {target.name}:**\n{user.banner.url}")
             else:
                 await ctx.send("❌ Đối tượng không có banner!", delete_after=3)
         except Exception:
