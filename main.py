@@ -74,7 +74,7 @@ async def on_ready():
     print(f"\033[1;36m{'-'*54}\033[0m")
     
     # Tự động nạp Cogs (file .py cùng thư mục, ngoại trừ main.py)
-    skip = {'main.py', 'index.py', 'rate_utils.py', 'cache.py', 'ui.py', '__init__.py'}
+    skip = {'main.py', 'index.py', 'rate_utils.py', 'cache.py', '__init__.py'}
     for filename in os.listdir('.'):
         if filename.endswith('.py') and filename not in skip:
             try:
