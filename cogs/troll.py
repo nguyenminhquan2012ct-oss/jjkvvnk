@@ -57,7 +57,7 @@ class TrollSystem(commands.Cog):
         # Thiết lập đường dẫn linh hồn (Path)
         music_folder = os.path.join(os.getcwd(), 'music')
         audio_path = os.path.join(music_folder, audio_name)
-        ffmpeg_path = os.path.join(os.getcwd(), 'ffmpeg', 'ffmpeg.exe')
+        ffmpeg_path = "ffmpeg" if os.name != "nt" else os.path.join(os.getcwd(), 'ffmpeg', 'ffmpeg.exe')
 
         if not os.path.isfile(audio_path):
             return await ctx.send(f"❌ Không tìm thấy chú vật tại: `{audio_name}` trong thư mục /music", delete_after=5)
