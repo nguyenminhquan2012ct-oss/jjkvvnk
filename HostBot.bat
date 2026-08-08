@@ -1,4 +1,3 @@
-```bat
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
@@ -7,10 +6,10 @@ color 0D
 cls
 
 echo.
-echo                              QU4N.TH3.D3V
+echo                                                    QU4N.TH3.D3V
 echo   _   _  _   _  _  _  _  _
 echo  | | | || | | || \| || |/ /
-echo  | |_| || |_| || .  || ' < 
+echo  | |_| || |_| || .  || ' ^< 
 echo   \___/  \___/ |_|\_||_|\_\
 echo.
 echo  ========================================
@@ -169,4 +168,3 @@ echo.
 
 pause
 exit /b !BOT_EXIT_CODE!
-```
