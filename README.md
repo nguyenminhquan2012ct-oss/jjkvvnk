@@ -1,65 +1,210 @@
-# HostBot v6.1
+# HostBot v6.2
 
-**Discord Self-Bot — Max Speed Raid & Utility Bot**
-Tác giả: **QU4N.TH3.D3V**
-
-> **Update v6.1:** Bypass rate limit — tất cả lệnh spam chạy max speed (delay = 0). Thêm `chcp 65001` cho banner UTF-8.
+**Discord Self-Bot voi Console Manager & Customization**
+Tac gia: **QU4N.TH3.D3V**
 
 ---
 
-## Tính năng
+## Tinh nang
 
-| Module | Mô tả |
+| Module | Mo ta |
 |--------|-------|
+| **Console** | CLI quan ly bot: start, stop, restart, kill, config, help |
 | **War** | Spam, raid, nuke, mass delete/create channels |
-| **Music** | YouTube, queue, volume, loop, nhạc có sẵn |
+| **Music** | YouTube, queue, volume, loop, nhac co san |
 | **Entertainment** | 8ball, rps, trivia, coinflip, guess number |
 | **Economy** | Daily, bal, pay, shop, inventory |
 | **Utility** | Ping, avatar, banner, server/user info, copy emoji |
 | **Admin** | Kick, ban, unban, create/delete channels, rename server |
 | **Troll** | Fake message, dice, voice spam, mind games |
-| **UI** | Embed menus màu sắc, progress bar |
+| **Auto GIF** | Tu dong gui GIF sau moi lenh |
+| **Status Cycle** | Tu dong chuyen doi trang thai |
+| **Customization** | Doi ten bot, author, prefix, GIF ma khong can code |
 
 ---
 
-## Cài đặt
+## Cai dat
 
-### Yêu cầu
+### Yeu cau
 
-- Python 3.10 trở lên
+- Python 3.10 tro len
 - pip
-- ffmpeg (cho tính năng nhạc)
+- ffmpeg (cho tinh nang nhac)
 
-### Cách 1: Double-click (Dễ nhất)
+### Cach 1: Double-click (De nhat)
 
-1. Tải zip hoặc clone repo
+1. Tai zip hoac clone repo
 2. Double-click `HostBot.bat`
-3. Nhập Discord Token khi được hỏi
-4. Xong — bot tự cài dependencies và chạy
+3. Nhap Discord Token khi duoc hoi
+4. Xong — bot tu cai dependencies va chay
 
-### Cách 2: Cmd / Terminal
+### Cach 2: Cmd / Terminal
 
 ```bash
 git clone https://github.com/nguyenminhquan2012ct-oss/jjkvvnk.git
 cd jjkvvnk
 pip install -r requirements.txt
-python main.py
+python console.py
 ```
 
-### Cách 3: Tải zip
+### Cach 3: Tai zip
 
-1. Vào https://github.com/nguyenminhquan2012ct-oss/jjkvvnk
-2. Nhấn Code > Download ZIP
-3. Giải nén
-4. Chạy `HostBot.bat` hoặc `python main.py`
+1. Vao https://github.com/nguyenminhquan2012ct-oss/jjkvvnk
+2. Nhan Code > Download ZIP
+3. Giai nen
+4. Chay `HostBot.bat` hoac `python console.py`
 
 ---
 
-## Cấu hình
+## Console Manager
+
+Sau khi chay `python console.py`, ban se thay console nhu hinh:
+
+```
+                  QU4N.TH3.D3V
+    ██╗   ██╗██╗   ██╗███╗   ██╗██╗  ██╗
+    ██║   ██║██║   ██║████╗  ██║██║ ██╔╝
+    ...
+    v6.2.0 | Console Manager
+==================================================
+  [HH:MM:SS] Console san sang. Go help de xem huong dan.
+
+HostBot >
+```
+
+### Lenh Console
+
+| Lenh | Alias | Mo ta |
+|------|-------|-------|
+| `start` | `s` | Khoi dong bot |
+| `stop` | `p` | Dung bot |
+| `restart` | `r` | Restart bot |
+| `kill` | | Force kill bot |
+| `status` | | Xem trang thai bot |
+| `config` | `set` | Xem/tat ca cau hinh |
+| `help` | | Hien thi menu lenh |
+| `clear` | | Xoa man hinh |
+| `exit` | `q` | Thoat console |
+
+### Vi du su dung
+
+```
+HostBot > start
+  [HH:MM:SS] Dang khoi dong HostBot...
+  [HH:MM:SS] HostBot da duoc khoi dong!
+
+HostBot > config bot_name SukunaBot
+  [HH:MM:SS] Bot name: SukunaBot
+
+HostBot > config prefix !
+  [HH:MM:SS] Prefix: !
+
+HostBot > gif_add raid https://media.tenor.com/sukuna.gif
+  [HH:MM:SS] GIF 'raid' da duoc them.
+
+HostBot > stop
+  [HH:MM:SS] Dang dung HostBot...
+  [HH:MM:SS] HostBot da dung.
+
+HostBot > exit
+  [HH:MM:SS] Tam biet!
+```
+
+---
+
+## Cai dat Customization
+
+### File settings.json
+
+File `settings.json` luu tat ca cai dat ca nhan hoa:
+
+```json
+{
+    "bot_name": "HostBot",
+    "author": "QU4N.TH3.D3V",
+    "auto_gif": true,
+    "gif_responses": {
+        "raid": "https://media.tenor.com/sukuna.gif",
+        "spam": "https://media.tenor.com/sukuna.gif",
+        "nuke": "https://media.tenor.com/sukuna.gif",
+        "music": "https://media.tenor.com/music.gif",
+        "fun": "https://media.tenor.com/fun.gif",
+        "troll": "https://media.tenor.com/troll.gif",
+        "admin": "https://media.tenor.com/admin.gif"
+    },
+    "status_cycle": [
+        ".menu de mo Menu",
+        "HostBot v6.2",
+        "Dung .help de tro giup"
+    ]
+}
+```
+
+### Doi ten bot
+
+**Cach 1: Qua Console**
+```
+HostBot > config bot_name TenMoi
+```
+
+**Cach 2: Sua settings.json**
+```json
+"bot_name": "TenMoi"
+```
+
+### Doi ten tac gia
+
+```
+HostBot > config author TenTacGiaMoi
+```
+
+### Doi prefix
+
+```
+HostBot > config prefix !
+```
+
+### Them/Xoa GIF tu dong
+
+Sau moi lenh, bot se tu dong gui 1 URL GIF. Ban co the tuy chinh:
+
+```
+HostBot > gif_add raid https://media.tenor.com/sukuna.gif
+HostBot > gif_add music https://media.tenor.com/music.gif
+HostBot > gif_add fun https://media.tenor.com/fun.gif
+HostBot > gif_del raid
+HostBot > gif_list
+```
+
+**Cac category GIF:**
+
+| Category | Lenh tuong ung |
+|----------|---------------|
+| `spam` | .vohahan, .thuong, .lienke, .hacmon |
+| `nuke` | .khaitram, .huydiet, .diet |
+| `raid` | .ngucmon, .loanvuc, .anpham |
+| `music` | .play, .nhac, .play-sa/sh/amk/sp |
+| `fun` | .8ball, .rps, .trivia, .coinflip, .fact, .quote, .meme |
+| `troll` | .batdiet, .xucxac, .amhon, .fake, .vonghon |
+| `admin` | .tram, .phong, .giai, .tao, .danh |
+
+### Bat/Tat Auto GIF
+
+```
+HostBot > config auto_gif false   # Tat
+HostBot > config auto_gif true    # Bat
+```
+
+### Status Cycle (Tu dong chuyen doi trang thai)
+
+```
+HostBot > status_add "Dang hoat dong..."
+HostBot > status_add ".help de tro giup"
+HostBot > status_del 2
+HostBot > status_list
+```
 
 ### File config.json
-
-Tạo file `config.json` trong thư mục bot:
 
 ```json
 {
@@ -68,85 +213,58 @@ Tạo file `config.json` trong thư mục bot:
 }
 ```
 
-### Biến môi trường (ưu tiên cao hơn config.json)
+### Bien moi truong (uu tile cao hon config.json)
 
-| Biên | Mô tả |
+| Bien | Mo ta |
 |------|-------|
-| `BOT_TOKEN` | Token Discord (ưu tiên nhất) |
+| `BOT_TOKEN` | Token Discord (uu tile nhat) |
 | `DISCORD_TOKEN` | Token Discord (fallback) |
 | `DISCORD_BOT_TOKEN` | Token Discord (fallback) |
 
-### Lấy Token
+### Lay Token
 
-1. Vào https://discord.com/developers/applications
-2. Tạo Application > Bot > Copy Token
-3. Dán vào `config.json` hoặc biến môi trường
-
----
-
-## Cách dùng
-
-### Khởi động
-
-**Windows:**
-```
-Double-click HostBot.bat
-```
-
-**Cmd:**
-```
-set BOT_TOKEN=token_cua_ban
-python main.py
-```
-
-**Linux/Mac:**
-```
-export BOT_TOKEN=token_cua_ban
-python main.py
-```
-
-### Dừng bot
-
-Nhấn `Ctrl + C` trong terminal.
+1. Vao https://discord.com/developers/applications
+2. Tao Application > Bot > Copy Token
+3. Dan vao `config.json` hoac bien moi truong
 
 ---
 
-## Danh sách lệnh
+## Danh sach lenh Bot
 
-Prefix mặc định: `.` (có thể đổi trong config.json)
+Prefix mac dinh: `. (co the doi trong config.json hoac console)
 
 ### Menu
 
-| Lệnh | Mô tả |
+| Lenh | Mo ta |
 |-------|-------|
-| `.menu` | Menu chính (Embed) |
-| `.lanhdia` | Menu chính (ANSI) |
-| `.info` | Thông tin bot |
-| `.ngung` | Dừng tất cả thuật thức đang chạy |
+| `.menu` | Menu chinh |
+| `.lanhdia` | Menu chinh (ANSI) |
+| `.info` | Thong tin bot |
+| `.ngung` | Dung tat ca thuat thuc dang chay |
 
 ---
 
 ### War
 
-| Lệnh | Tham số | Mô tả |
+| Lenh | Tham so | Mo ta |
 |-------|---------|-------|
 | `.raid` | | Menu war |
-| `.vohahan` | `[delay] [text]` | Spam tùy chỉnh (delay=0 = max speed) |
-| `.thuong` | `[delay]` | Spam nội dung từ `ngon.txt` |
-| `.lienke` | `[delay] [@user]` | Spam nội dung từ `nhay.txt` |
+| `.vohahan` | `[delay] [text]` | Spam tuy chinh (delay=0 = max speed) |
+| `.thuong` | `[delay]` | Spam noi dung tu `ngon.txt` |
+| `.lienke` | `[delay] [@user]` | Spam noi dung tu `nhay.txt` |
 | `.hacmon` | `[url] [delay] [text]` | Spam qua Webhook |
 | `.ngucmon` | `[voice_id]` | Treo trong Voice Channel |
 | `.loanvuc` | `[voice_id] [delay]` | Spam join/leave Voice |
-| `.anpham` | `[số] [emoji]` | Thả reaction hàng loạt |
-| `.khaitram` | | Xóa toàn bộ kênh |
+| `.anpham` | `[so] [emoji]` | Tha reaction hang loat |
+| `.khaitram` | | Xoa toan bo kenh |
 | `.huydiet` | `[webhook_url] [delay]` | Nuke server |
 
-**Ví dụ:**
+**Vi du:**
 ```
-.vohahan 0.5 Xin chào mọi người
-.thuong 0.8
-.lienke 1.0 @someone
-.hacmon https://discord.com/api/webhooks/xxx 0.5 Spammed!
+.vohahan 0 Xin chao moi nguoi
+.thuong 0
+.lienke 0 @someone
+.hacmon https://discord.com/api/webhooks/xxx 0 Spammed!
 .ngucmon 123456789
 .khaitram
 ```
@@ -155,26 +273,26 @@ Prefix mặc định: `.` (có thể đổi trong config.json)
 
 ### Music
 
-| Lệnh | Tham số | Mô tả |
+| Lenh | Tham so | Mo ta |
 |-------|---------|-------|
-| `.nhac` | | Menu nhạc |
-| `.play` | `[link/tên]` | Phát nhạc từ YouTube |
-| `.play-sa` | | Phát "Stay Alive" |
-| `.play-sh` | | Phát "Styx Helix" |
-| `.play-amk` | | Phát "Akuma no Ko" |
-| `.play-sp` | | Phát "Specialz" |
-| `.queue` | | Xem danh sách chờ |
-| `.skip` | | Bỏ qua bài hiện tại |
-| `.stop` | | Dừng nhạc + rời voice |
-| `.now` | | Bài đang phát |
-| `.loop` | | Bật/tắt lặp bài |
-| `.volume` | `[1-100]` | Điều chỉnh âm lượng |
-| `.pause` | | Tạm dừng |
-| `.resume` | | Tiếp tục |
+| `.nhac` | | Menu nhac |
+| `.play` | `[link/ten]` | Phat nhac tu YouTube |
+| `.play-sa` | | Phat "Stay Alive" |
+| `.play-sh` | | Phat "Styx Helix" |
+| `.play-amk` | | Phat "Akuma no Ko" |
+| `.play-sp` | | Phat "Specialz" |
+| `.queue` | | Xem danh sach cho |
+| `.skip` | | Bo qua bai hien tai |
+| `.stop` | | Dung nhac + roi voice |
+| `.now` | | Bai dang phat |
+| `.loop` | | Bat/tat lap bai |
+| `.volume` | `[1-100]` | Dieu chinh am luong |
+| `.pause` | | Tam dung |
+| `.resume` | | Tiep tuc |
 
-**Yêu cầu:** FFmpeg phải được cài trên hệ thống.
+**Yeu cau:** FFmpeg phai duoc cai tren he thong.
 
-**Nhạc có sẵn (đặt trong thư mục `music/`):**
+**Nhac co san (dat trong thu muc `music/`):**
 - `stay_alive.mp3`
 - `styx_helix.mp3`
 - `akuma_no_ko.mp3`
@@ -184,82 +302,82 @@ Prefix mặc định: `.` (có thể đổi trong config.json)
 
 ### Entertainment
 
-| Lệnh | Tham số | Mô tả |
+| Lenh | Tham so | Mo ta |
 |-------|---------|-------|
-| `.traloi` | | Menu giải trí |
-| `.8ball` | `[câu hỏi]` | Phép bói 8 bóng |
-| `.rps` | `[rock/paper/scissors]` | Kéo búa bao |
-| `.trivia` | | Câu đố vui |
-| `.coinflip` | | Toss đồng xu |
-| `.number` | `[1-100]` | Đoán số bí ẩn |
+| `.traloi` | | Menu giai tri |
+| `.8ball` | `[cau hoi]` | Phep boi 8 bong |
+| `.rps` | `[rock/paper/scissors]` | Keo bua bao |
+| `.trivia` | | Cau do vui |
+| `.coinflip` | | Toss dong xu |
+| `.number` | `[1-100]` | Doan so bi an |
 
 ---
 
 ### Economy
 
-| Lệnh | Tham số | Mô tả |
+| Lenh | Tham so | Mo ta |
 |-------|---------|-------|
-| `.daily` | | Nhận 100-500 vàng/ngày |
-| `.bal` | `[@user]` | Xem số dư |
-| `.pay` | `[@user] [số]` | Chuyển tiền |
-| `.shop` | | Xem cửa hàng |
-| `.buy` | `[tên item]` | Mua vật phẩm |
-| `.inventory` | `[@user]` | Xem vật phẩm |
+| `.daily` | | Nhan 100-500 vang/ngay |
+| `.bal` | `[@user]` | Xem so du |
+| `.pay` | `[@user] [so]` | Chuyen tien |
+| `.shop` | | Xem cua hang |
+| `.buy` | `[ten item]` | Mua vat pham |
+| `.inventory` | `[@user]` | Xem vat pham |
 
 **Items trong shop:**
-- `bam_ngo` — Bành Ngô Random Box (500)
-- `chuc_luc` — Chú Lực Túi +10 (1000)
-- `hoa_dieu` — Hóa Giải Đá Reset (2000)
-- `nguyen_lieu` — Nguyên Liệu SSR (5000)
+- `bam_ngo` — Banh Ngo Random Box (500)
+- `chuc_luc` — Chu Luc Tui +10 (1000)
+- `hoa_dieu` — Hoa Giai Da Reset (2000)
+- `nguyen_lieu` — Nguyen Lieu SSR (5000)
 
 ---
 
 ### Utility
 
-| Lệnh | Tham số | Mô tả |
+| Lenh | Tham so | Mo ta |
 |-------|---------|-------|
-| `.chucu` | | Menu tiện ích |
-| `.thauthi` | `[token]` | Kiểm tra token |
-| `.thanhduyet` | `[số]` | Xóa tin nhắn bản thân |
-| `.giapan` | | Đóng tất cả DM |
-| `.nguonluc` | | Check ping & hệ thống |
+| `.chucu` | | Menu tien ich |
+| `.thauthi` | `[token]` | Kiem tra token |
+| `.thanhduyet` | `[so]` | Xoa tin nhan ban than |
+| `.giapan` | | Dong tat ca DM |
+| `.nguonluc` | | Check ping & he thong |
 | `.truytung` | `[@user]` | Soi avatar |
 | `.phian` | `[@user]` | Soi banner |
-| `.sao-an` | `[server_id]` | Copy toàn bộ cấu trúc kênh |
-| `.danhdinh` | `[@user]` | Thông tin người dùng |
-| `.ketgioi` | | Thông tin server |
-| `.dongan` | `[emoji]` | Copy emoji về server |
+| `.sao-an` | `[server_id]` | Copy toan bo cau truc kenh |
+| `.danhdinh` | `[@user]` | Thong tin nguoi dung |
+| `.ketgioi` | | Thong tin server |
+| `.dongan` | `[emoji]` | Copy emoji ve server |
 
 ---
 
 ### Admin
 
-| Lệnh | Tham số | Mô tả |
+| Lenh | Tham so | Mo ta |
 |-------|---------|-------|
-| `.quanly` | | Menu quản lý |
-| `.tram` | `[user]` | Kick thành viên |
-| `.phong` | `[user]` | Ban thành viên |
-| `.giai` | `[user_id]` | Unban thành viên |
-| `.diet` | | Xóa toàn bộ kênh |
-| `.tao` | `[tên]` | Tạo 15 kênh mới |
-| `.danh` | `[tên mới]` | Đổi tên server |
+| `.quanly` | | Menu quan ly |
+| `.tram` | `[user]` | Kick thanh vien |
+| `.phong` | `[user]` | Ban thanh vien |
+| `.giai` | `[user_id]` | Unban thanh vien |
+| `.diet` | | Xoa toan bo kenh |
+| `.tao` | `[ten]` | Tao 15 kenh moi |
+| `.danh` | `[ten moi]` | Doi ten server |
 
 ---
 
 ### Troll
 
-| Lệnh | Tham số | Mô tả |
+| Lenh | Tham so | Mo ta |
 |-------|---------|-------|
 | `.troll` | | Menu troll |
 | `.batdiet` | | Random outcome |
-| `.xucxac` | | Tung xúc xắc 1-6 |
-| `.amhon` | `[channel_id] [file]` | Phát nhạc vào Voice |
-| `.truhon` | | Rời Voice |
-| `.fake` | `[@user] [text]` | Giả mạo tin nhắn |
-| `.donguyen` | | Đoạn chú lực |
-| `.vonghon` | | Nhại lại tin nhắn |
-| `.nguyenrua` | `[@user]` | Ám quẻ đối phương |
-| `.batkhuat` | | Tự phản hồi khi bị tag |
+| `.xucxac` | | Tung xuc xac 1-6 |
+| `.amhon` | `[channel_id] [file]` | Phat nhac vao Voice |
+| `.truhon` | | Roi Voice |
+| `.fake` | `[@user] [text]` | Gia mao tin nhan |
+| `.donguyen` | | Doan chu luc |
+| `.vonghon` | | Nhai lai tin nhan |
+| `.nguyenrua` | `[@user]` | Am que doi phuong |
+| `.batkhuat` | | Tu phan hoi khi bi tag |
 
 ---
 
@@ -267,38 +385,41 @@ Prefix mặc định: `.` (có thể đổi trong config.json)
 
 ### Wispbyte (Free)
 
-**Bước 1:** Push code lên GitHub
+**Buoc 1:** Push code len GitHub
 
-**Bước 2:** Clone trên Wispbyte panel
+**Buoc 2:** Clone tren Wispbyte panel
 
-**Bước 3:** Startup Command:
+**Buoc 3:** Startup Command:
 ```
 if [[ -d .git ]] && [[ "0" == "1" ]]; then git pull; fi;
 if [[ ! -z "aiohttp" ]]; then pip install -U --prefix .local aiohttp; fi;
-if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then 
-  pip install -U --prefix .local -r ${REQUIREMENTS_FILE}; 
+if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then
+  pip install -U --prefix .local -r ${REQUIREMENTS_FILE};
 fi;
 /usr/local/bin/python /home/container/main.py
 ```
 
-**Bước 4:** Env var: `BOT_TOKEN` = Token Discord
+**Buoc 4:** Env var: `BOT_TOKEN` = Token Discord
 
-**Bước 5:** Nhấn Start
+**Buoc 5"> Nhan Start
 
-### Lưu ý hosting
+### Luu y hosting
 
-- Xóa `.git/`, `__pycache__/`, `.zip` để tiết kiệm dung lượng
-- Python version: 3.11 hoặc 3.12
-- Thêm `apt install -y ffmpeg` vào startup nếu dùng nhạc
+- Xoa `.git/`, `__pycache__/`, `.zip` de tieu thu dung luong
+- Python version: 3.11 hoac 3.12
+- Them `apt install -y ffmpeg` vao startup neu dung nhac
 
 ---
 
-## Cấu trúc file
+## Cau truc file
 
 ```
 HostBot/
-├── main.py              ← Entry point, nạp modules
-├── rate_utils.py        ← Xử lý rate limit Discord API
+├── console.py           ← Console manager (entry point)
+├── main.py              ← Bot logic, loads cogs
+├── settings.json        ← Cai dat ca nhan hoa (bot name, GIF, status)
+├── config.json          ← Token & prefix
+├── rate_utils.py        ← Xu ly rate limit Discord API
 ├── cache.py             ← TTL cache (user/guild/channel/role)
 ├── ui.py                ← Embed helpers, colors, progress bar
 ├── entertainment.py     ← Games, economy, fun commands
@@ -309,13 +430,13 @@ HostBot/
 ├── troll.py             ← Troll/mini-game commands
 ├── lanhdia.py           ← Menu & bot info
 ├── requirements.txt     ← Python dependencies
-├── ngon.txt             ← Data cho lệnh .thuong
-├── nhay.txt             ← Data cho lệnh .lienke
+├── ngon.txt             ← Data cho lenh .thuong
+├── nhay.txt             ← Data cho lenh .lienke
 ├── HostBot.bat          ← Launcher (double-click)
-├── .gitignore           ← Bảo vệ secrets
+├── .gitignore           ← Bao ve secrets
 ├── LICENSE              ← MIT License
-├── README.md            ← Tài liệu này
-└── music/               ← Thư mục nhạc có sẵn
+├── README.md            ← Tai lieu nay
+└── music/               ← Thu muc nhac co san
     ├── stay_alive.mp3
     ├── styx_helix.mp3
     ├── akuma_no_ko.mp3
@@ -324,13 +445,13 @@ HostBot/
 
 ---
 
-## Yêu cầu hệ thống
+## Yeu cau he thong
 
-| Thành phần | Yêu cầu |
+| Thanh phan | Yeu cau |
 |------------|----------|
 | Python | 3.10+ |
-| pip | Có sẵn với Python |
-| ffmpeg | Cho tính năng nhạc (không bắt buộc) |
+| pip | Co san voi Python |
+| ffmpeg | Cho tinh nang nhac (khong bat buoc) |
 | Disk | ~50MB |
 | RAM | ~100MB |
 
@@ -338,63 +459,60 @@ HostBot/
 
 ## Troubleshooting
 
-### Bot không chạy
+### Bot khong chay
 
-1. Kiểm tra `config.json` có token đúng chưa
-2. Chạy `python main.py` trực tiếp để xem lỗi
+1. Kiem tra `config.json` co token dung chua
+2. Chay `python main.py` truc tiep de xem loi
 
-### Lỗi `ModuleNotFoundError`
+### Loi `ModuleNotFoundError`
 
 ```
 pip install -r requirements.txt
 ```
 
-### Lỗi `No module named 'discord'`
+### Loi `No module named 'discord'`
 
 ```
 pip install discord.py-self
 ```
 
-### Lỗi rate limit (429)
+### Loi rate limit (429)
 
-Bot tự xử lý 429 và retry ngay lập tức. Để chạy max speed, bỏ delay:
-```
-.vohahan 0 Xin chào
-```
-Nếu muốn delay giữa các tin nhắn:
+Bot tu xu ly 429 va retry ngay lap tuc. Neu muon delay giua cac tin nhan:
 ```
 .vohahan 2.0 text
 ```
 
-### Lỗi voice / music
+### Loi voice / music
 
-- Cần cài ffmpeg
-- Windows: tải ffmpeg.exe, đặt trong thư mục `ffmpeg/`
+- Can cai ffmpeg
+- Windows: tai ffmpeg.exe, dat trong thu muc `ffmpeg/`
 - Linux: `apt install ffmpeg`
 - Mac: `brew install ffmpeg`
 
-### Không join voice được
+### Khong join voice duoc
 
-- Kiểm tra bot có quyền `Connect` trong voice channel
-- Kiểm tra voice ID đúng
+- Kiem tra bot co quyen `Connect` trong voice channel
+- Kiem tra voice ID dung
 
-### Token die / Không login được
+### Token die / Khong login duoc
 
-- Token có thể bị reset khi đổi password
-- Vào Developer Portal > Bot > Reset Token
-- Cập nhật lại `config.json`
-
----
-
-## Lưu ý quan trọng
-
-- **Self-bot vi phạm ToS Discord** — dùng alt account, chấp nhận rủi ro
-- **Không spam quá đà** — dễ bị flag và ban account
-- **Token là bí mật** — không share, không commit lên GitHub
-- **Backup config** — lưu token ở nơi an toàn
-- **Whitelist** — thêm ID server vào `PROTECTED_GUILD_IDS` trong `rate_utils.py` để bảo vệ
-- **Max Speed** — delay = 0 ở mọi lệnh, Discord sẽ tự impose rate limit nhưng bot retry ngay
+- Token co the bi reset khi doi password
+- Vao Developer Portal > Bot > Reset Token
+- Cap nhat lai `config.json`
 
 ---
 
-*HostBot v6.1 — Made by QU4N.TH3.D3V*
+## Luu y quan trong
+
+- **Self-bot vi pham ToS Discord** — dung alt account, chap nhan rui ro
+- **Khong spam qua de** — de bi flag va ban account
+- **Token la bi mat** — khong share, khong commit len GitHub
+- **Backup config** — luu token o noi an toan
+- **Whitelist** — them ID server vao `PROTECTED_GUILD_IDS` trong `rate_utils.py` de bao ve
+- **Max Speed** — delay = 0 o moi lenh, Discord se tu impose rate limit nhung bot retry ngay
+- **Customization** — dung console hoac settings.json de cau hinh, khong can viet code
+
+---
+
+*HostBot v6.2 — Made by QU4N.TH3.D3V*

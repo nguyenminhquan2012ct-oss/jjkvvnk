@@ -1,0 +1,19 @@
+{
+    "bot_name": "HostBot",
+    "author": "QU4N.TH3.D3V",
+    "auto_gif": true,
+    "gif_responses": {
+        "raid": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "spam": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "nuke": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "music": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "fun": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "troll": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "admin": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif"
+    },
+    "status_cycle": [
+        ".menu de mo Menu",
+        "HostBot v6.2",
+        "Dung .help de tro giup"
+    ]
+}

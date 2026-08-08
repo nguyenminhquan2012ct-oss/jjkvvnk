@@ -175,17 +175,32 @@ echo  [ OK ] main.py found.
 echo.
 
 REM ============================================================
-REM  START HOSTBOT
+REM  CHECK CONSOLE
+REM ============================================================
+
+if not exist "console.py" (
+    echo  [WARN] console.py not found. Starting main.py directly.
+    echo.
+    python main.py
+    pause
+    exit /b
+)
+
+echo  [ OK ] console.py found.
+echo.
+
+REM ============================================================
+REM  START HOSTBOT CONSOLE
 REM ============================================================
 
 echo  ========================================
 echo.
-echo        STARTING HOSTBOT...
+echo        STARTING HOSTBOT CONSOLE...
 echo.
 echo  ========================================
 echo.
 
-python main.py
+python console.py
 
 set "EXIT_CODE=!errorlevel!"
 
@@ -193,9 +208,9 @@ echo.
 echo  ========================================
 
 if "!EXIT_CODE!"=="0" (
-    echo  [ OK ] HostBot stopped normally.
+    echo  [ OK ] HostBot Console stopped normally.
 ) else (
-    echo  [ERROR] HostBot exited with code !EXIT_CODE!
+    echo  [ERROR] HostBot Console exited with code !EXIT_CODE!
 )
 
 echo  ========================================
