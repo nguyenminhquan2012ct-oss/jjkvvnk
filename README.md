@@ -273,50 +273,6 @@ JJK-VVNK/
 
 ---
 
-## 💡 PROMPT CHO AI CODE
-
-Sử dụng prompt này với AI để tạo code:
-
-```
-Tôi muốn nâng cấp bot self-bot Discord với các tính năng:
-
-1. MUSIC MODULE:
-- Phát nhạc từ YouTube link bằng yt-dlp + ffmpeg
-- Built-in songs trong thư mục music/
-- Queue system, volume control, loop
-- Auto-disconnect sau 5 phút idle
-
-2. WAR MODULE:
-- Mass ban/kick với progress bar
-- Enhanced spam với smart rate limit
-- Server nuke nâng cao (delete + recreate + spam)
-- Raid protection (auto-kick strangers)
-
-3. ENTERTAINMENT:
-- Mini games: 8ball, rps, trivia, wordle
-- Economy: daily, bal, pay, shop, inventory
-- Fun: meme, anime search, quotes, facts
-
-4. UI:
-- Discord Embeds màu sắc cho mỗi loại lệnh
-- Button interactions cho menus
-- Pagination cho danh sách dài
-- Progress bars cho operations
-
-5. PERFORMANCE:
-- Smart rate limiter (theo dõi headers)
-- Caching user/guild/channel info
-- Connection pooling cho aiohttp
-- Lazy loading cho大型 files
-
-Yêu cầu:
-- Sử dụng discord.py-self (self-bot)
-- Tối ưu cho hosting (Linux, 512MB RAM)
-- Xử lý lỗi tốt, không crash
-- Code sạch, có comment tiếng Việt
-```
-
----
 
 ## 📝 LƯU Ý
 
