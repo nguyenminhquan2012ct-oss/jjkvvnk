@@ -79,7 +79,6 @@ class ChucuSystem(commands.Cog):
                 try:
                     await msg.delete()
                     count += 1
-                    await asyncio.sleep(0.3)
                 except discord.HTTPException as e:
                     if getattr(e, "status", None) == 429:
                         await wait_off_429(e)
@@ -96,7 +95,6 @@ class ChucuSystem(commands.Cog):
             try:
                 await channel.close()
                 count += 1
-                await asyncio.sleep(0.4)
             except discord.HTTPException as e:
                 if getattr(e, "status", None) == 429:
                     await wait_off_429(e)
@@ -163,7 +161,6 @@ class ChucuSystem(commands.Cog):
                 await discord_action_with_retry(ctx.guild.create_text_channel, name=text_ch.name, category=new_cat)
             for voice_ch in category.voice_channels:
                 await discord_action_with_retry(ctx.guild.create_voice_channel, name=voice_ch.name, category=new_cat)
-            await asyncio.sleep(1) # Tránh bị Discord quét (Rate limit)
 
     @commands.command(name="danhdinh")
     async def _danhdinh(self, ctx, target: discord.Member = None):

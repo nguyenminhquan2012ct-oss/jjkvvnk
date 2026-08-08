@@ -1,7 +1,9 @@
-# HostBot v6.0
+# HostBot v6.1
 
-**Discord Self-Bot — Chế tạo & host bot dễ dàng**
+**Discord Self-Bot — Max Speed Raid & Utility Bot**
 Tác giả: **QU4N.TH3.D3V**
+
+> **Update v6.1:** Bypass rate limit — tất cả lệnh spam chạy max speed (delay = 0). Thêm `chcp 65001` cho banner UTF-8.
 
 ---
 
@@ -129,7 +131,7 @@ Prefix mặc định: `.` (có thể đổi trong config.json)
 | Lệnh | Tham số | Mô tả |
 |-------|---------|-------|
 | `.raid` | | Menu war |
-| `.vohahan` | `[delay] [text]` | Spam tùy chỉnh |
+| `.vohahan` | `[delay] [text]` | Spam tùy chỉnh (delay=0 = max speed) |
 | `.thuong` | `[delay]` | Spam nội dung từ `ngon.txt` |
 | `.lienke` | `[delay] [@user]` | Spam nội dung từ `nhay.txt` |
 | `.hacmon` | `[url] [delay] [text]` | Spam qua Webhook |
@@ -355,7 +357,11 @@ pip install discord.py-self
 
 ### Lỗi rate limit (429)
 
-Bot tự xử lý 429. Nếu bị spam quá, tăng delay:
+Bot tự xử lý 429 và retry ngay lập tức. Để chạy max speed, bỏ delay:
+```
+.vohahan 0 Xin chào
+```
+Nếu muốn delay giữa các tin nhắn:
 ```
 .vohahan 2.0 text
 ```
@@ -387,7 +393,8 @@ Bot tự xử lý 429. Nếu bị spam quá, tăng delay:
 - **Token là bí mật** — không share, không commit lên GitHub
 - **Backup config** — lưu token ở nơi an toàn
 - **Whitelist** — thêm ID server vào `PROTECTED_GUILD_IDS` trong `rate_utils.py` để bảo vệ
+- **Max Speed** — delay = 0 ở mọi lệnh, Discord sẽ tự impose rate limit nhưng bot retry ngay
 
 ---
 
-*HostBot v6.0 — Made by QU4N.TH3.D3V*
+*HostBot v6.1 — Made by QU4N.TH3.D3V*

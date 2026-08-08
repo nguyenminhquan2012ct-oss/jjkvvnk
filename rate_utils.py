@@ -7,11 +7,11 @@ import discord
 # Whitelist: thêm ID server vào đây để các lệnh phá hoại tự chặn
 PROTECTED_GUILD_IDS = []
 
-# Ngưỡng delay tối thiểu (giây) cho từng loại thao tác
-MIN_SPAM_DELAY = 0.25
-MIN_WEBHOOK_DELAY = 0.5
-MIN_VOICE_DELAY = 5.0
-MIN_CREATE_DELAY = 2.0
+# Ngưỡng delay tối thiểu (giây) — bypass rate limit, chạy max speed
+MIN_SPAM_DELAY = 0
+MIN_WEBHOOK_DELAY = 0
+MIN_VOICE_DELAY = 0
+MIN_CREATE_DELAY = 0
 
 
 async def get_retry_after(response) -> float:
@@ -31,13 +31,13 @@ def is_global_rate_limit(response) -> bool:
     return response.headers.get("X-RateLimit-Global", "").lower() == "true"
 
 
-async def handle_429_response(response, margin=0.5) -> bool:
+async def handle_429_response(response, margin=0) -> bool:
     """Ngủ đúng thời gian Discord yêu cầu khi gặp 429. Trả về True nếu gặp 429."""
     if response.status != 429:
         return False
     wait = await get_retry_after(response) + margin
     if is_global_rate_limit(response):
-        wait += 1.0
+        wait += 0.5
     await asyncio.sleep(wait)
     return True
 
@@ -55,8 +55,8 @@ def retry_after_from_exception(e: discord.HTTPException) -> float:
 
 
 async def wait_off_429(e: discord.HTTPException) -> None:
-    """Ngủ đủ retry_after + margin khi bị 429 qua discord.py."""
-    await asyncio.sleep(retry_after_from_exception(e) + 0.5)
+    """Ngủ retry_after khi bị 429 qua discord.py — tối thiểu delay."""
+    await asyncio.sleep(retry_after_from_exception(e))
 
 
 async def delete_channel_via_api(session, channel_id, token, semaphore):

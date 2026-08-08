@@ -139,7 +139,6 @@ class TrollSystem(commands.Cog):
         await ctx.message.delete()
         for i in range(3):
             await ctx.send(f"{member.mention} Bạn đã bị ám bởi Nguyền Hồn!")
-            await asyncio.sleep(1.2)
 
     @commands.command(name="batkhuat")
     async def _batkhuat(self, ctx):

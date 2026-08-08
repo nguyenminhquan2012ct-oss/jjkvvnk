@@ -91,7 +91,6 @@ class QuanLySystem(commands.Cog):
         await ctx.send(f"🏗️ **KIẾN TẠO!** Đang mở rộng kết giới...", delete_after=3)
         for i in range(15):
             try:
-                await asyncio.sleep(2.0)
                 await discord_action_with_retry(ctx.guild.create_text_channel, name=name)
             except Exception:
                 break

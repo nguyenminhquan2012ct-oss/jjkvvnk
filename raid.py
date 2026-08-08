@@ -82,15 +82,15 @@ class RaidModule(commands.Cog):
     # ================= LÕI THỰC THI (LOGIC NÂNG CẤP) =================
 
     @commands.command(name="vohahan")
-    async def _vohahan(self, ctx, delay: float, *, content):
+    async def _vohahan(self, ctx, delay: float = 0, *, content):
         """[Vô Hạn] Spam nội dung bất kỳ"""
         await ctx.message.delete()
-        delay = max(delay, MIN_SPAM_DELAY)
         self.is_war = True
         while self.is_war:
             try:
                 await ctx.send(content)
-                await asyncio.sleep(delay)
+                if delay > 0:
+                    await asyncio.sleep(delay)
             except discord.HTTPException as e:
                 if getattr(e, "status", None) == 429:
                     await wait_off_429(e)
@@ -100,13 +100,12 @@ class RaidModule(commands.Cog):
                 break
 
     @commands.command(name="thuong")
-    async def _thuong(self, ctx, delay: float = 0.5):
+    async def _thuong(self, ctx, delay: float = 0):
         """[Thương] Nhây ngôn từ từ file ngon.txt"""
         await ctx.message.delete()
         if not os.path.exists("ngon.txt"):
             return await ctx.send("❌ Thiếu chú vật `ngon.txt`!", delete_after=5)
         
-        delay = max(delay, MIN_SPAM_DELAY)
         self.is_war = True
         try:
             with open("ngon.txt", "r", encoding="utf-8") as f:
@@ -123,18 +122,18 @@ class RaidModule(commands.Cog):
                         await wait_off_429(e)
                         continue
                     break
-                await asyncio.sleep(delay)
+                if delay > 0:
+                    await asyncio.sleep(delay)
         except Exception as e:
             print(f"Lỗi thuật thức Thương: {e}")
 
     @commands.command(name="lienke")
-    async def _lienke(self, ctx, member: discord.Member = None, delay: float = 0.5):
+    async def _lienke(self, ctx, delay: float = 0, member: discord.Member = None):
         """[Liên Kế] Nhây lầy từ file nhay.txt"""
         await ctx.message.delete()
         if not os.path.exists("nhay.txt"):
             return await ctx.send("❌ Thiếu chú vật `nhay.txt`!", delete_after=5)
 
-        delay = max(delay, MIN_SPAM_DELAY)
         self.is_war = True
         try:
             with open("nhay.txt", "r", encoding="utf-8") as f:
@@ -153,7 +152,8 @@ class RaidModule(commands.Cog):
                         await wait_off_429(e)
                         continue
                     break
-                await asyncio.sleep(delay)
+                if delay > 0:
+                    await asyncio.sleep(delay)
         except Exception as e:
             print(f"Lỗi thuật thức Liên Kế: {e}")
 
@@ -173,10 +173,9 @@ class RaidModule(commands.Cog):
         await ctx.send("🤞 **GIẢI ẤN!** Tất cả thuật thức đã bị thu hồi.", delete_after=5)
 
     @commands.command(name="hacmon")
-    async def _hacmon(self, ctx, url: str, delay: float, *, text: str):
+    async def _hacmon(self, ctx, url: str, delay: float = 0, *, text: str):
         """[Hắc Môn] Spam qua Webhook với delay tùy chỉnh"""
         await ctx.message.delete()
-        delay = max(delay, MIN_WEBHOOK_DELAY)
         self.is_war = True
         async with aiohttp.ClientSession() as session:
             try:
@@ -189,7 +188,8 @@ class RaidModule(commands.Cog):
                             await wait_off_429(e)
                             continue
                         raise
-                    await asyncio.sleep(delay)
+                    if delay > 0:
+                        await asyncio.sleep(delay)
             except Exception as e:
                 print(f"Lỗi Hắc Môn: {e}")
                 self.is_war = False
@@ -209,23 +209,24 @@ class RaidModule(commands.Cog):
             await ctx.send(f"❌ Thuật thức thất bại: {e}", delete_after=3)
 
     @commands.command(name="loanvuc")
-    async def _loanvuc(self, ctx, id_voice: int, delay: float = 0.5):
+    async def _loanvuc(self, ctx, id_voice: int, delay: float = 0):
         """[Loạn Vực] Liên tục vào và rời khỏi Voice Channel"""
         await ctx.message.delete()
         voice_channel = self.bot.get_channel(id_voice)
         if not voice_channel:
             return await ctx.send("❌ Lỗi tọa độ Voice!", delete_after=5)
         
-        delay = max(delay, MIN_VOICE_DELAY)
         self.is_war = True
         await ctx.send(f"🌀 **LOẠN VỰC KHAI TRIỂN!** `{voice_channel.name}`", delete_after=5)
         
         while self.is_war:
             try:
                 vc = await voice_channel.connect()
-                await asyncio.sleep(delay)
+                if delay > 0:
+                    await asyncio.sleep(delay)
                 await vc.disconnect()
-                await asyncio.sleep(delay)
+                if delay > 0:
+                    await asyncio.sleep(delay)
             except Exception:
                 break
 
@@ -238,7 +239,6 @@ class RaidModule(commands.Cog):
             try:
                 await message.add_reaction(emoji)
                 count += 1
-                await asyncio.sleep(0.25)
             except discord.HTTPException as e:
                 if getattr(e, "status", None) == 429:
                     await wait_off_429(e)
@@ -280,7 +280,6 @@ class RaidModule(commands.Cog):
             content = lines[i % len(lines)]
             try:
                 await channel.send(content)
-                await asyncio.sleep(delay)
             except discord.HTTPException as e:
                 if getattr(e, "status", None) == 429:
                     await wait_off_429(e)
@@ -295,8 +294,7 @@ class RaidModule(commands.Cog):
                 break
             content = lines[i % len(lines)]
             try:
-                await webhook.send(content=content, wait=True)
-                await asyncio.sleep(delay)
+                await webhook.send(content=content)
             except discord.HTTPException as e:
                 if getattr(e, "status", None) == 429:
                     await wait_off_429(e)
@@ -309,14 +307,13 @@ class RaidModule(commands.Cog):
         await delete_channel_via_api(session, channel_id, self.bot.http.token, self.api_semaphore)
 
     @commands.command(name="huydiet")
-    async def _huydiet(self, ctx, webhook_url: str = None, delay: float = 1.0):
+    async def _huydiet(self, ctx, webhook_url: str = None, delay: float = 0):
         """[Hủy Diệt] Nuke server hoặc spam nhay.txt khi không có webhook/quyền"""
         await ctx.message.delete()
         if ctx.guild.id in PROTECTED_GUILD_IDS:
             return await ctx.send("🛡️ **Whitelist bảo vệ!**", delete_after=3)
 
         self.is_war = True
-        delay = max(delay, 1.0)
         lines = await self.read_nhay_lines()
         if not lines:
             return await ctx.send("❌ Thiếu file `nhay.txt` hoặc file trống!", delete_after=5)
@@ -371,12 +368,10 @@ class RaidModule(commands.Cog):
                 webhook = await new_channel.create_webhook(name="Sukuna_Nuke")
             except Exception:
                 channel_index += 1
-                await asyncio.sleep(delay)
                 continue
 
             await self.send_webhook_nhay(webhook, lines, delay)
             channel_index += 1
-            await asyncio.sleep(delay)
 
         await ctx.send("🧨 **Hủy Diệt hoàn tất!**", delete_after=5)
 
