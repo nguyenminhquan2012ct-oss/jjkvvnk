@@ -1,170 +1,215 @@
+```bat
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
+
+REM ============================================================
+REM  HOSTBOT - CLEAN LAUNCHER
+REM ============================================================
+
+cd /d "%~dp0"
 
 title HostBot
 color 0D
 cls
 
+REM ============================================================
+REM  BANNER
+REM ============================================================
+
 echo.
-echo                                                    QU4N.TH3.D3V
-echo   _   _  _   _  _  _  _  _
-echo  | | | || | | || \| || |/ /
-echo  | |_| || |_| || .  || ' ^< 
-echo   \___/  \___/ |_|\_||_|\_\
+echo  ___           _           _       QU4N.TH3.D3V
+echo / (_)___ _ __ ^| ^|__  _   ^|_ ___
+echo/ /^| / __^| '_ \^| '_ \^| ^| ^| ^| __/ _ \
+echo/ / ^| \__ \ ^|_) ^| ^|_) ^| ^|_^| ^| ^|  __/
+echo/_/  ^|_^|___/ .__/^|_.__/ \__, ^| ^__\___^|
+echo            ^|_^|          ^|___/
 echo.
 echo  ========================================
-echo   HostBot v6.0 - Discord Self-Bot
+echo       HOSTBOT v6.0 - STARTUP
 echo  ========================================
 echo.
 
 REM ============================================================
-REM  KIEM TRA PYTHON
+REM  CHECK PYTHON
 REM ============================================================
+
+echo  [1/5] Checking Python...
 
 where python >nul 2>&1
+
 if errorlevel 1 (
-    echo  [ERROR] Khong tim thay Python!
     echo.
-    echo  Hay cai Python va chon "Add Python to PATH".
+    echo  [ERROR] Python was not found.
+    echo.
+    echo  Please install Python and enable:
+    echo  Add Python to PATH
     echo.
     pause
     exit /b 1
 )
 
-echo  [OK] Python da san sang.
+for /f "tokens=*" %%A in ('python --version 2^>^&1') do (
+    set "PYTHON_VERSION=%%A"
+)
+
+echo  [ OK ] !PYTHON_VERSION!
 echo.
 
 REM ============================================================
-REM  TAO CONFIG NEU CHUA CO
+REM  CHECK PIP
 REM ============================================================
 
+echo  [2/5] Checking pip...
+
+python -m pip --version >nul 2>&1
+
+if errorlevel 1 (
+    echo.
+    echo  [ERROR] pip is not available.
+    echo.
+    pause
+    exit /b 1
+)
+
+echo  [ OK ] pip is available.
+echo.
+
+REM ============================================================
+REM  CONFIGURATION
+REM ============================================================
+
+echo  [3/5] Checking configuration...
+
 if not exist "config.json" (
-    echo  [!] Chua co config.json!
-    echo  [?] Dang tao file config...
+    echo.
+    echo  [INFO] config.json not found.
+    echo  [INFO] Creating configuration...
     echo.
 
     set "token="
-    set "prefix="
+    set "prefix=."
 
-    set /p "token=  Nhap Discord Token: "
-    set /p "prefix=  Nhap Prefix (Enter = .): "
+    set /p "token=  Discord Token: "
+    set /p "prefix=  Prefix [Enter = .]: "
 
     if "!prefix!"=="" set "prefix=."
 
-    powershell -NoProfile -Command "$t='!token!'; $p='!prefix!'; @{Token=$t;Prefix=$p} | ConvertTo-Json | Set-Content -LiteralPath 'config.json' -Encoding UTF8"
+    powershell -NoProfile -Command "$config = @{Token='!token!'; Prefix='!prefix!'}; $config | ConvertTo-Json | Set-Content -LiteralPath 'config.json' -Encoding UTF8"
 
     if errorlevel 1 (
         echo.
-        echo  [ERROR] Khong the tao config.json!
+        echo  [ERROR] Failed to create config.json.
+        echo.
         pause
         exit /b 1
     )
 
     echo.
-    echo  [OK] Da luu config.json!
+    echo  [ OK ] config.json created.
     echo.
 )
 
 REM ============================================================
-REM  KIEM TRA CONFIG
+REM  VALIDATE CONFIG
 REM ============================================================
 
 if not exist "config.json" (
-    echo  [ERROR] config.json khong ton tai!
+    echo  [ERROR] config.json is missing.
+    echo.
     pause
     exit /b 1
 )
-
-echo  [*] Dang kiem tra config.json...
 
 powershell -NoProfile -Command "$c=Get-Content -LiteralPath 'config.json' -Raw | ConvertFrom-Json; if ([string]::IsNullOrWhiteSpace($c.Token)) { exit 1 }"
 
 if errorlevel 1 (
-    echo  [ERROR] Token trong config.json dang rong hoac khong hop le!
+    echo.
+    echo  [ERROR] Token is missing or invalid.
+    echo  [INFO ] Edit config.json and try again.
+    echo.
     pause
     exit /b 1
 )
 
-echo  [OK] config.json hop le.
+echo  [ OK ] config.json is valid.
 echo.
 
 REM ============================================================
-REM  CAI THU VIEN
+REM  DEPENDENCIES
 REM ============================================================
 
-if not exist "requirements.txt" (
-    echo  [WARNING] Khong tim thay requirements.txt!
-    echo  [!] Bo qua buoc cai thu vien.
-    echo.
-) else (
-    echo  [*] Dang kiem tra thu vien...
+echo  [4/5] Checking dependencies...
 
+if exist "requirements.txt" (
     python -m pip install -r requirements.txt
 
     if errorlevel 1 (
         echo.
-        echo  [ERROR] Cai thu vien that bai!
-        echo  [!] Kiem tra Internet va requirements.txt.
+        echo  [ERROR] Failed to install dependencies.
+        echo.
+        echo  Check your Internet connection and
+        echo  requirements.txt.
         echo.
         pause
         exit /b 1
     )
 
     echo.
-    echo  [OK] Thu vien da san sang!
-    echo.
+    echo  [ OK ] Dependencies ready.
+) else (
+    echo  [WARN] requirements.txt not found.
+    echo  [INFO] Skipping dependency installation.
 )
 
-REM ============================================================
-REM  LOAD TOKEN
-REM ============================================================
-
-set "BOT_TOKEN="
-
-for /f "usebackq tokens=*" %%i in (`powershell -NoProfile -Command "(Get-Content -LiteralPath 'config.json' -Raw | ConvertFrom-Json).Token"`) do (
-    set "BOT_TOKEN=%%i"
-)
-
-if "!BOT_TOKEN!"=="" (
-    echo  [ERROR] Khong doc duoc Token tu config.json!
-    pause
-    exit /b 1
-)
-
-set "DISCORD_TOKEN=!BOT_TOKEN!"
-
-echo  [OK] Token da load!
-echo.
-echo  [*] Dang khoi dong bot...
-echo  ========================================
 echo.
 
 REM ============================================================
-REM  CHAY BOT
+REM  APPLICATION
 REM ============================================================
+
+echo  [5/5] Checking application...
 
 if not exist "main.py" (
-    echo  [ERROR] Khong tim thay main.py!
+    echo.
+    echo  [ERROR] main.py was not found.
+    echo.
+    echo  Current directory:
+    echo  %CD%
     echo.
     pause
     exit /b 1
 )
+
+echo  [ OK ] main.py found.
+echo.
+
+REM ============================================================
+REM  START HOSTBOT
+REM ============================================================
+
+echo  ========================================
+echo.
+echo          STARTING HOSTBOT...
+echo.
+echo  ========================================
+echo.
 
 python main.py
 
-set "BOT_EXIT_CODE=!errorlevel!"
+set "EXIT_CODE=!errorlevel!"
 
 echo.
 echo  ========================================
 
-if not "!BOT_EXIT_CODE!"=="0" (
-    echo  [ERROR] Bot dung voi ma loi: !BOT_EXIT_CODE!
+if "!EXIT_CODE!"=="0" (
+    echo  [ OK ] HostBot stopped normally.
 ) else (
-    echo  [OK] Bot da dung.
+    echo  [ERROR] HostBot exited with code !EXIT_CODE!
 )
 
 echo  ========================================
 echo.
 
 pause
-exit /b !BOT_EXIT_CODE!
+exit /b !EXIT_CODE!
+```
