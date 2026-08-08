@@ -9,6 +9,7 @@ from datetime import datetime
 
 SETTINGS_FILE = "settings.json"
 CONFIG_FILE = "config.json"
+DEFAULTS_FILE = "settings.default.json"
 PYTHON = sys.executable
 
 RESET = "\033[0m"
@@ -24,43 +25,73 @@ GRAY = "\033[1;30m"
 PINK = "\033[1;95m"
 
 
-def load_settings():
-    if os.path.exists(SETTINGS_FILE):
-        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+def load_json(path):
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
     return {}
 
 
-def save_settings(data):
-    with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
+def save_json(path, data):
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
 
-def load_config():
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, "r", encoding="utf-8-sig") as f:
-            return json.load(f)
-    return {}
-
-
-def save_config(data):
-    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+def deep_merge(base, override):
+    result = base.copy()
+    for k, v in override.items():
+        if k in result and isinstance(result[k], dict) and isinstance(v, dict):
+            result[k] = deep_merge(result[k], v)
+        else:
+            result[k] = v
+    return result
 
 
 def timestamp():
     return datetime.now().strftime("%H:%M:%S")
 
 
+DEFAULT_SETTINGS = {
+    "bot_name": "HostBot",
+    "author": "QU4N.TH3.D3V",
+    "auto_gif": True,
+    "gif_responses": {
+        "raid": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "spam": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "nuke": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "music": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "fun": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "troll": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+        "admin": "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
+    },
+    "status_cycle": [".menu de mo Menu", "HostBot v6.2", "Dung .help de tro giup"],
+    "menu": {
+        "title": "DOMAIN EXPANSION: INFINITE VOID",
+        "description": "Lanh dia da san sang! Chon thuat thuc ben duoi:",
+        "footer": "HostBot | {servers} servers",
+        "color_main": "0x800080",
+        "sections": {
+            "war": {"name": "WAR", "emoji": "⚔️", "color": "0xFF0000", "command": "raid", "desc": "Menu chien tranh"},
+            "music": {"name": "MUSIC", "emoji": "🎵", "color": "0x00AAFF", "command": "nhac", "desc": "Menu nhac"},
+            "fun": {"name": "FUN", "emoji": "🎮", "color": "0x00FF00", "command": "traloi", "desc": "Menu giai tri"},
+            "utility": {"name": "UTILITY", "emoji": "🛠️", "color": "0xFFFF00", "command": "chucu", "desc": "Menu tien ich"},
+            "admin": {"name": "ADMIN", "emoji": "🛡️", "color": "0xFF0000", "command": "quanly", "desc": "Menu quan ly"},
+            "troll": {"name": "TROLL", "emoji": "🃏", "color": "0x00FFFF", "command": "troll", "desc": "Menu troll"},
+        },
+    },
+    "command_aliases": {},
+}
+
+
 class HostBotConsole:
     def __init__(self):
         self.process = None
         self.running = False
-        self.settings = load_settings()
-        self.config = load_config()
+        self.settings = load_json(SETTINGS_FILE)
+        self.config = load_json(CONFIG_FILE)
         self.bot_name = self.settings.get("bot_name", "HostBot")
         self.author = self.settings.get("author", "QU4N.TH3.D3V")
-        self.version = "6.2.0"
+        self.version = "6.3.0"
 
     def print_banner(self):
         os.system("cls" if os.name == "nt" else "clear")
@@ -80,18 +111,16 @@ class HostBotConsole:
 
     def start_bot(self):
         if self.process and self.process.poll() is None:
-            self.log("Bot dang chay roi! Dung . stop truoc.", YELLOW)
+            self.log("Bot dang chay roi! Dung stop truoc.", YELLOW)
             return
-
         if not self.config.get("token") and not self.config.get("Token"):
             token = input(f"  {YELLOW}Nhap Discord Token: {RESET}").strip()
             if not token:
                 self.log("Token trong! Huy.", RED)
                 return
             self.config["token"] = token
-            save_config(self.config)
+            save_json(CONFIG_FILE, self.config)
             self.log("Da luu Token vao config.json", GREEN)
-
         self.log(f"Dang khoi dong {self.bot_name}...", CYAN)
         try:
             self.process = subprocess.Popen(
@@ -115,8 +144,7 @@ class HostBotConsole:
             pass
         finally:
             if self.process and self.process.poll() is not None:
-                rc = self.process.returncode
-                self.log(f"Bot da dung (exit code: {rc})", YELLOW)
+                self.log(f"Bot da dung (exit: {self.process.returncode})", YELLOW)
                 self.running = False
                 self.process = None
 
@@ -161,87 +189,78 @@ class HostBotConsole:
 
     def show_status(self):
         if self.process and self.process.poll() is None:
-            pid = self.process.pid
-            self.log(f"{self.bot_name}: {GREEN}DANG CHAY{RESET} (PID: {pid})", GREEN)
+            self.log(f"{self.bot_name}: {GREEN}DANG CHAY{RESET} (PID: {self.process.pid})", GREEN)
         else:
             self.log(f"{self.bot_name}: {RED}DA DUNG{RESET}", RED)
 
     def show_config(self):
-        print(f"\n  {CYAN}{'=' * 50}")
+        print(f"\n  {CYAN}{'=' * 55}")
         print(f"  {WHITE}CAU HINH HIEN TAI")
-        print(f"  {CYAN}{'=' * 50}{RESET}")
-
+        print(f"  {CYAN}{'=' * 55}{RESET}")
         token = self.config.get("token") or self.config.get("Token", "")
         masked = token[:8] + "..." + token[-4:] if len(token) > 12 else "***"
-        print(f"  {GRAY}Token:{RESET}      {masked}")
-        print(f"  {GRAY}Prefix:{RESET}     {self.config.get('prefix', self.config.get('Prefix', '.'))}")
-        print(f"  {GRAY}Bot Name:{RESET}   {self.settings.get('bot_name', 'HostBot')}")
-        print(f"  {GRAY}Author:{RESET}     {self.settings.get('author', 'QU4N.TH3.D3V')}")
-        print(f"  {GRAY}Auto GIF:{RESET}   {self.settings.get('auto_gif', True)}")
-
-        print(f"\n  {YELLOW}GIF Responses:{RESET}")
-        gifs = self.settings.get("gif_responses", {})
-        for key, url in gifs.items():
-            short = url[:50] + "..." if len(url) > 50 else url
-            print(f"    {GRAY}{key}:{RESET} {short}")
-
-        print(f"\n  {YELLOW}Status Cycle:{RESET}")
-        for s in self.settings.get("status_cycle", []):
-            print(f"    {GRAY}- {s}{RESET}")
-        print(f"  {CYAN}{'=' * 50}{RESET}\n")
+        print(f"  {GRAY}Token:{RESET}          {masked}")
+        print(f"  {GRAY}Prefix:{RESET}         {self.config.get('prefix', self.config.get('Prefix', '.'))}")
+        print(f"  {GRAY}Bot Name:{RESET}       {self.settings.get('bot_name', 'HostBot')}")
+        print(f"  {GRAY}Author:{RESET}         {self.settings.get('author', 'QU4N.TH3.D3V')}")
+        print(f"  {GRAY}Auto GIF:{RESET}       {self.settings.get('auto_gif', True)}")
+        print(f"\n  {YELLOW}[ Menu ]{RESET}")
+        menu = self.settings.get("menu", {})
+        print(f"    {GRAY}Title:{RESET}       {menu.get('title', 'N/A')}")
+        print(f"    {GRAY}Description:{RESET} {menu.get('description', 'N/A')}")
+        print(f"    {GRAY}Color:{RESET}       {menu.get('color_main', 'N/A')}")
+        sections = menu.get("sections", {})
+        for key, sec in sections.items():
+            print(f"    {GRAY}{key}:{RESET} {sec.get('emoji','')} {sec.get('name','')} -> {sec.get('command','')} ({sec.get('desc','')})")
+        print(f"\n  {YELLOW}[ Command Aliases ]{RESET}")
+        aliases = self.settings.get("command_aliases", {})
+        if aliases:
+            for cmd, alias in list(aliases.items())[:10]:
+                print(f"    {GRAY}{cmd}{RESET} -> {alias}")
+            if len(aliases) > 10:
+                print(f"    {GRAY}... va {len(aliases) - 10} lenh khac{RESET}")
+        else:
+            print(f"    {GRAY}Chua co alias nao{RESET}")
+        print(f"  {CYAN}{'=' * 55}{RESET}\n")
 
     def set_config(self, key, value):
         if not key:
-            self.log("Dung: .config <key> <value>", YELLOW)
+            self.log("Dung: config <key> <value>", YELLOW)
             return
-        if key == "bot_name":
-            self.settings["bot_name"] = value or "HostBot"
-            self.bot_name = self.settings["bot_name"]
-            save_settings(self.settings)
-            self.log(f"Bot name: {self.bot_name}", GREEN)
-        elif key == "author":
-            self.settings["author"] = value or "QU4N.TH3.D3V"
-            self.author = self.settings["author"]
-            save_settings(self.settings)
-            self.log(f"Author: {self.author}", GREEN)
-        elif key == "prefix":
-            self.config["prefix"] = value or "."
-            save_config(self.config)
-            self.log(f"Prefix: {self.config['prefix']}", GREEN)
-        elif key == "token":
-            if value:
-                self.config["token"] = value
-                save_config(self.config)
-                self.log("Token da duoc cap nhat!", GREEN)
-            else:
-                self.log("Nhap: .config token <token>", YELLOW)
-        elif key == "auto_gif":
-            self.settings["auto_gif"] = value.lower() in ("true", "1", "yes", "on")
-            save_settings(self.settings)
-            self.log(f"Auto GIF: {self.settings['auto_gif']}", GREEN)
+        handlers = {
+            "bot_name": lambda v: (self.settings.__setitem__("bot_name", v or "HostBot"), self.__dict__.__setitem__("bot_name", v or "HostBot")),
+            "author": lambda v: (self.settings.__setitem__("author", v or "QU4N.TH3.D3V"), self.__dict__.__setitem__("author", v or "QU4N.TH3.D3V")),
+            "prefix": lambda v: self.config.__setitem__("prefix", v or "."),
+            "token": lambda v: self.config.__setitem__("token", v) if v else None,
+            "auto_gif": lambda v: self.settings.__setitem__("auto_gif", v.lower() in ("true", "1", "yes", "on")),
+        }
+        if key in handlers:
+            handlers[key](value)
+            save_json(SETTINGS_FILE, self.settings)
+            save_json(CONFIG_FILE, self.config)
+            self.log(f"{key} = {value or '(mac dinh)'}", GREEN)
         elif key.startswith("gif_"):
-            category = key[4:]
+            cat = key[4:]
             gifs = self.settings.get("gif_responses", {})
             if value:
-                gifs[category] = value
+                gifs[cat] = value
             else:
-                gifs.pop(category, None)
+                gifs.pop(cat, None)
             self.settings["gif_responses"] = gifs
-            save_settings(self.settings)
-            self.log(f"GIF '{category}': {value or '(da xoa)'}", GREEN)
+            save_json(SETTINGS_FILE, self.settings)
+            self.log(f"GIF '{cat}': {value or '(da xoa)'}", GREEN)
         else:
             self.log(f"Key khong hop le: {key}", RED)
-            self.log("Keys: bot_name, author, prefix, token, auto_gif, gif_<category>", GRAY)
 
     def add_status(self, *args):
         text = " ".join(args)
         if not text:
-            self.log("Dung: .status_add <text>", YELLOW)
+            self.log("Dung: status_add <text>", YELLOW)
             return
         cycle = self.settings.get("status_cycle", [])
         cycle.append(text)
         self.settings["status_cycle"] = cycle
-        save_settings(self.settings)
+        save_json(SETTINGS_FILE, self.settings)
         self.log(f"Da them status: {text}", GREEN)
 
     def remove_status(self, index):
@@ -250,7 +269,7 @@ class HostBotConsole:
             idx = int(index) - 1
             removed = cycle.pop(idx)
             self.settings["status_cycle"] = cycle
-            save_settings(self.settings)
+            save_json(SETTINGS_FILE, self.settings)
             self.log(f"Da xoa: {removed}", GREEN)
         except (ValueError, IndexError):
             self.log("So thu tu khong hop le.", RED)
@@ -267,12 +286,12 @@ class HostBotConsole:
 
     def add_gif(self, category, url):
         if not category or not url:
-            self.log("Dung: .gif_add <category> <url>", YELLOW)
+            self.log("Dung: gif_add <category> <url>", YELLOW)
             return
         gifs = self.settings.get("gif_responses", {})
         gifs[category] = url
         self.settings["gif_responses"] = gifs
-        save_settings(self.settings)
+        save_json(SETTINGS_FILE, self.settings)
         self.log(f"GIF '{category}' da duoc them.", GREEN)
 
     def remove_gif(self, category):
@@ -280,7 +299,7 @@ class HostBotConsole:
         if category in gifs:
             del gifs[category]
             self.settings["gif_responses"] = gifs
-            save_settings(self.settings)
+            save_json(SETTINGS_FILE, self.settings)
             self.log(f"GIF '{category}' da duoc xoa.", GREEN)
         else:
             self.log(f"Khong tim thay GIF '{category}'.", YELLOW)
@@ -296,61 +315,165 @@ class HostBotConsole:
             print(f"    {GRAY}{cat}:{RESET} {short}")
         print()
 
-    def send_console_msg(self, channel_id, *args):
-        text = " ".join(args)
-        if not channel_id or not text:
-            self.log("Dung: .say <channel_id> <message>", YELLOW)
+    # ================= MENU CUSTOMIZATION =================
+
+    def set_menu(self, key, value):
+        menu = self.settings.get("menu", {})
+        if key == "title":
+            menu["title"] = value
+        elif key == "desc":
+            menu["description"] = value
+        elif key == "footer":
+            menu["footer"] = value
+        elif key == "color":
+            menu["color_main"] = value
+        else:
+            self.log("Keys: title, desc, footer, color", YELLOW)
             return
-        if not self.process or self.process.poll() is not None:
-            self.log("Bot dang khong chay.", YELLOW)
+        self.settings["menu"] = menu
+        save_json(SETTINGS_FILE, self.settings)
+        self.log(f"Menu {key} = {value}", GREEN)
+
+    def set_section(self, section, key, value):
+        menu = self.settings.get("menu", {})
+        sections = menu.get("sections", {})
+        if section not in sections:
+            self.log(f"Section khong ton tai: {section}", RED)
+            self.log("Sections: war, music, fun, utility, admin, troll", GRAY)
             return
-        self.log(f"Gui tin nhan den #{channel_id}: {text}", CYAN)
+        if key not in ("name", "emoji", "command", "desc", "color"):
+            self.log("Keys: name, emoji, command, desc, color", YELLOW)
+            return
+        sections[section][key] = value
+        menu["sections"] = sections
+        self.settings["menu"] = menu
+        save_json(SETTINGS_FILE, self.settings)
+        self.log(f"Section '{section}' {key} = {value}", GREEN)
+
+    def list_sections(self):
+        menu = self.settings.get("menu", {})
+        sections = menu.get("sections", {})
+        print(f"\n  {CYAN}Menu Sections:{RESET}")
+        for key, sec in sections.items():
+            print(f"    {GRAY}{key}:{RESET} {sec.get('emoji','')} {sec.get('name','')} -> {sec.get('command','')} ({sec.get('desc','')})")
+        print()
+
+    # ================= COMMAND ALIASES =================
+
+    def set_alias(self, command, alias):
+        if not command or not alias:
+            self.log("Dung: alias <command> <alias>", YELLOW)
+            return
+        aliases = self.settings.get("command_aliases", {})
+        aliases[command] = alias
+        self.settings["command_aliases"] = aliases
+        save_json(SETTINGS_FILE, self.settings)
+        self.log(f"Alias: {command} -> {alias}", GREEN)
+
+    def remove_alias(self, command):
+        aliases = self.settings.get("command_aliases", {})
+        if command in aliases:
+            del aliases[command]
+            self.settings["command_aliases"] = aliases
+            save_json(SETTINGS_FILE, self.settings)
+            self.log(f"Da xoa alias: {command}", GREEN)
+        else:
+            self.log(f"Khong tim thay alias: {command}", YELLOW)
+
+    def list_aliases(self):
+        aliases = self.settings.get("command_aliases", {})
+        if not aliases:
+            self.log("Chua co alias nao.", YELLOW)
+            return
+        print(f"\n  {CYAN}Command Aliases:{RESET}")
+        for cmd, alias in aliases.items():
+            print(f"    {GRAY}{cmd}{RESET} -> {alias}")
+        print()
+
+    # ================= RESET DEFAULTS =================
+
+    def reset_all(self):
+        save_json(SETTINGS_FILE, DEFAULT_SETTINGS)
+        self.settings = DEFAULT_SETTINGS.copy()
+        self.bot_name = self.settings["bot_name"]
+        self.author = self.settings["author"]
+        self.log("Da dat lai tat ca cau hinh ve mac dinh!", GREEN)
+
+    def reset_menu(self):
+        self.settings["menu"] = DEFAULT_SETTINGS["menu"].copy()
+        save_json(SETTINGS_FILE, self.settings)
+        self.log("Da dat lai menu ve mac dinh!", GREEN)
+
+    def reset_gifs(self):
+        self.settings["gif_responses"] = DEFAULT_SETTINGS["gif_responses"].copy()
+        save_json(SETTINGS_FILE, self.settings)
+        self.log("Da dat lai GIF ve mac dinh!", GREEN)
+
+    def reset_aliases(self):
+        self.settings["command_aliases"] = {}
+        save_json(SETTINGS_FILE, self.settings)
+        self.log("Da xoa tat ca alias!", GREEN)
+
+    # ================= HELP =================
 
     def show_help(self):
         print(f"""
-  {CYAN}{'=' * 55}
+  {CYAN}{'=' * 60}
   {WHITE}{BOLD}HOSTBOT CONSOLE - v{self.version}
-  {CYAN}{'=' * 55}{RESET}
+  {CYAN}{'=' * 60}{RESET}
 
-  {YELLOW}[BOT CONTROL]{RESET}
-  {GRAY}  start{RESET}              Khoi dong bot
-  {GRAY}  stop{RESET}               Dung bot
-  {GRAY}  restart{RESET}            Restart bot
-  {GRAY}  kill{RESET}               Force kill bot
-  {GRAY}  status{RESET}             Xem trang thai bot
+  {YELLOW}[ DIEU KHIEN BOT ]{RESET}
+  {GRAY}  start{RESET}                    Khoi dong bot
+  {GRAY}  stop{RESET}                     Dung bot
+  {GRAY}  restart{RESET}                  Restart bot
+  {GRAY}  kill{RESET}                     Force kill bot
+  {GRAY}  status{RESET}                   Xem trang thai bot
 
-  {YELLOW}[CONFIG]{RESET}
-  {GRAY}  config{RESET}             Xem tat ca cau hinh
-  {GRAY}  config <key> <value>{RESET}  Thay doi cau hinh
-  {GRAY}  set <key> <value>{RESET}     Alias cua config
-
-  {YELLOW}[BOT NAME & AUTHOR]{RESET}
-  {GRAY}  config bot_name <name>{RESET}  Doi ten bot
-  {GRAY}  config author <name>{RESET}    Doi ten tac gia
-  {GRAY}  config prefix <char>{RESET}    Doi prefix (mac dinh: .)
-  {GRAY}  config token <token>{RESET}    Doi token
-
-  {YELLOW}[GIF RESPONSES]{RESET}
-  {GRAY}  gif_add <category> <url>{RESET}  Them GIF cho category
-  {GRAY}  gif_del <category>{RESET}        Xoa GIF
-  {GRAY}  gif_list{RESET}                  Danh sach GIF
+  {YELLOW}[ CAU HINH CO BAN ]{RESET}
+  {GRAY}  config{RESET}                   Xem tat ca cau hinh
+  {GRAY}  config bot_name <ten>{RESET}     Doi ten bot
+  {GRAY}  config author <ten>{RESET}       Doi ten tac gia
+  {GRAY}  config prefix <ky tu>{RESET}     Doi prefix
+  {GRAY}  config token <token>{RESET}      Doi token
   {GRAY}  config auto_gif <true/false>{RESET}  Bat/tat auto GIF
 
-  {YELLOW}[STATUS CYCLE]{RESET}
-  {GRAY}  status_add <text>{RESET}     Them status moi
-  {GRAY}  status_del <number>{RESET}   Xoa status theo STT
-  {GRAY}  status_list{RESET}           Danh sach status
+  {YELLOW}[ TUY CHINH MENU ]{RESET}
+  {GRAY}  menu set title <text>{RESET}     Doi title menu chinh
+  {GRAY}  menu set desc <text>{RESET}      Doi mo ta menu
+  {GRAY}  menu set footer <text>{RESET}    Doi footer menu
+  {GRAY}  menu set color <hex>{RESET}      Doi mau menu chinh
+  {GRAY}  menu section <sec> <key> <val>{RESET}  Sua section
+  {GRAY}  menu list{RESET}                 Xem cac section
 
-  {YELLOW}[UTILITY]{RESET}
-  {GRAY}  say <channel_id> <msg>{RESET}  Gui tin nhan den kenh
-  {GRAY}  servers{RESET}               Danh sach server
-  {GRAY}  help{RESET}                  Hien thi menu nay
-  {GRAY}  clear{RESET}                 Xoa man hinh
-  {GRAY}  exit{RESET}                  thoat console
+  {YELLOW}[ TEN LENH ]{RESET}
+  {GRAY}  alias <lenh> <ten_moi>{RESET}    Doi ten lenh
+  {GRAY}  alias del <lenh>{RESET}          Xoa ten lenh
+  {GRAY}  alias list{RESET}                Xem tat ca ten lenh
 
-  {YELLOW}[SHORTCUTS]{RESET}
+  {YELLOW}[ GIF TU DONG ]{RESET}
+  {GRAY}  gif_add <category> <url>{RESET}  Them GIF
+  {GRAY}  gif_del <category>{RESET}        Xoa GIF
+  {GRAY}  gif_list{RESET}                  Danh sach GIF
+
+  {YELLOW}[ STATUS CYCLE ]{RESET}
+  {GRAY}  status_add <text>{RESET}         Them status
+  {GRAY}  status_del <so>{RESET}           Xoa status
+  {GRAY}  status_list{RESET}               Danh sach status
+
+  {YELLOW}[ DAT LAI MAC DINH ]{RESET}
+  {GRAY}  reset all{RESET}                 Dat lai tat ca
+  {GRAY}  reset menu{RESET}                Dat lai menu
+  {GRAY}  reset gif{RESET}                 Dat lai GIF
+  {GRAY}  reset alias{RESET}               Xoa tat ca alias
+
+  {YELLOW}[ TIEN ICH ]{RESET}
+  {GRAY}  help{RESET}                      Hien thi menu nay
+  {GRAY}  clear{RESET}                     Xoa man hinh
+  {GRAY}  exit{RESET}                      Thoat console
+
+  {YELLOW}[ PHIM TAT ]{RESET}
   {GRAY}  s{RESET} = start | {GRAY}p{RESET} = stop | {GRAY}r{RESET} = restart | {GRAY}q{RESET} = exit
-  {CYAN}{'=' * 55}{RESET}
+  {CYAN}{'=' * 60}{RESET}
 """)
 
     def run(self):
@@ -363,7 +486,6 @@ class HostBotConsole:
                 raw = input(f"  {PINK}{self.bot_name}{RESET} {GRAY}>{RESET} ").strip()
                 if not raw:
                     continue
-
                 parts = raw.split()
                 cmd = parts[0].lower()
                 args = parts[1:]
@@ -387,6 +509,28 @@ class HostBotConsole:
                         self.log(f"{key} = {val}", CYAN)
                     else:
                         self.set_config(args[0], " ".join(args[1:]))
+                elif cmd == "menu":
+                    if not args:
+                        self.show_config()
+                    elif args[0] == "set" and len(args) >= 3:
+                        self.set_menu(args[1], " ".join(args[2:]))
+                    elif args[0] == "section" and len(args) >= 4:
+                        self.set_section(args[1], args[2], " ".join(args[3:]))
+                    elif args[0] == "list":
+                        self.list_sections()
+                    else:
+                        self.log("Dung: menu set <key> <value> | menu section <sec> <key> <val> | menu list", YELLOW)
+                elif cmd == "alias":
+                    if not args:
+                        self.list_aliases()
+                    elif args[0] == "del" and len(args) >= 2:
+                        self.remove_alias(args[1])
+                    elif args[0] == "list":
+                        self.list_aliases()
+                    elif len(args) >= 2:
+                        self.set_alias(args[0], args[1])
+                    else:
+                        self.log("Dung: alias <lenh> <ten_moi> | alias del <lenh> | alias list", YELLOW)
                 elif cmd == "gif_add":
                     if len(args) >= 2:
                         self.add_gif(args[0], " ".join(args[1:]))
@@ -405,19 +549,20 @@ class HostBotConsole:
                     if args:
                         self.remove_status(args[0])
                     else:
-                        self.log("Dung: status_del <number>", YELLOW)
+                        self.log("Dung: status_del <so>", YELLOW)
                 elif cmd == "status_list":
                     self.list_status()
-                elif cmd == "say":
-                    if len(args) >= 2:
-                        self.send_console_msg(args[0], *args[1:])
+                elif cmd == "reset":
+                    if not args or args[0] == "all":
+                        self.reset_all()
+                    elif args[0] == "menu":
+                        self.reset_menu()
+                    elif args[0] == "gif":
+                        self.reset_gifs()
+                    elif args[0] == "alias":
+                        self.reset_aliases()
                     else:
-                        self.log("Dung: say <channel_id> <message>", YELLOW)
-                elif cmd == "servers":
-                    if self.process and self.process.poll() is None:
-                        self.log("Dang xem servers...", CYAN)
-                    else:
-                        self.log("Bot dang khong chay.", YELLOW)
+                        self.log("Dung: reset all | reset menu | reset gif | reset alias", YELLOW)
                 elif cmd == "help":
                     self.show_help()
                 elif cmd == "clear":
@@ -434,7 +579,7 @@ class HostBotConsole:
 
             except KeyboardInterrupt:
                 print()
-                self.log("Nhan Ctrl+C de thoat. Go {YELLOW}exit{RESET}.", YELLOW)
+                self.log("Nhan Ctrl+C de thoat. Go exit.", YELLOW)
             except EOFError:
                 break
             except Exception as e:
