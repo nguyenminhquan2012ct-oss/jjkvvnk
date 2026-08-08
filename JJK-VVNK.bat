@@ -42,6 +42,7 @@ if not exist config.json (
 )
 for /f "tokens=*" %%i in ('powershell -Command "(Get-Content config.json -Raw | ConvertFrom-Json).Token"') do set BOT_TOKEN=%%i
 set DISCORD_TOKEN=%BOT_TOKEN%
+python -m pip install -r requirements.txt -q 2>nul
 python main.py
 pause
 goto MENU
