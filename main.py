@@ -18,8 +18,8 @@ PREFIX = os.environ.get("DISCORD_PREFIX", ".")
 if not TOKEN and os.path.exists('config.json'):
     with open('config.json', 'r', encoding='utf-8-sig') as f:
         config = json.load(f)
-    TOKEN = config.get('token')
-    PREFIX = config.get('prefix') or PREFIX
+    TOKEN = config.get('token') or config.get('Token')
+    PREFIX = config.get('prefix') or config.get('Prefix') or PREFIX
 
 if not TOKEN:
     if not os.path.exists('config.json'):
