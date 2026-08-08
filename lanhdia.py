@@ -9,7 +9,7 @@ class LanhDiaSystem(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.start_time = time.time()
-        self.version = "5.0.5"
+        self.version = "6.0.0"
 
     # --- Thuật thức 1: .lanhdia (Menu chính theo style JJK ông thích) ---
     @commands.command(name="lanhdia")

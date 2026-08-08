@@ -1,6 +1,6 @@
-# JJK-VVNK BOT v6.0
+# HostBot v6.0
 
-**Self-Bot Discord theo phong cách Jujutsu Kaisen**
+**Discord Self-Bot — Chế tạo & host bot dễ dàng**
 Tác giả: **QU4N.TH3.D3V**
 
 ---
@@ -31,7 +31,7 @@ Tác giả: **QU4N.TH3.D3V**
 ### Cách 1: Double-click (Dễ nhất)
 
 1. Tải zip hoặc clone repo
-2. Double-click `JJK-VVNK.bat`
+2. Double-click `HostBot.bat`
 3. Nhập Discord Token khi được hỏi
 4. Xong — bot tự cài dependencies và chạy
 
@@ -49,7 +49,7 @@ python main.py
 1. Vào https://github.com/nguyenminhquan2012ct-oss/jjkvvnk
 2. Nhấn Code > Download ZIP
 3. Giải nén
-4. Chạy `JJK-VVNK.bat` hoặc `python main.py`
+4. Chạy `HostBot.bat` hoặc `python main.py`
 
 ---
 
@@ -88,7 +88,7 @@ Tạo file `config.json` trong thư mục bot:
 
 **Windows:**
 ```
-Double-click JJK-VVNK.bat
+Double-click HostBot.bat
 ```
 
 **Cmd:**
@@ -137,7 +137,7 @@ Prefix mặc định: `.` (có thể đổi trong config.json)
 | `.loanvuc` | `[voice_id] [delay]` | Spam join/leave Voice |
 | `.anpham` | `[số] [emoji]` | Thả reaction hàng loạt |
 | `.khaitram` | | Xóa toàn bộ kênh |
-| `.huydiet` | `[webhook_url] [delay]` | Nuke server (xóa + tạo kênh mới + spam) |
+| `.huydiet` | `[webhook_url] [delay]` | Nuke server |
 
 **Ví dụ:**
 ```
@@ -187,7 +187,7 @@ Prefix mặc định: `.` (có thể đổi trong config.json)
 | `.traloi` | | Menu giải trí |
 | `.8ball` | `[câu hỏi]` | Phép bói 8 bóng |
 | `.rps` | `[rock/paper/scissors]` | Kéo búa bao |
-| `.trivia` | | Câu đố vui (JJK + kiến thức chung) |
+| `.trivia` | | Câu đố vui |
 | `.coinflip` | | Toss đồng xu |
 | `.number` | `[1-100]` | Đoán số bí ẩn |
 
@@ -249,34 +249,27 @@ Prefix mặc định: `.` (có thể đổi trong config.json)
 | Lệnh | Tham số | Mô tả |
 |-------|---------|-------|
 | `.troll` | | Menu troll |
-| `.batdiet` | | Random outcome (Sống sót/Bị thanh tẩy...) |
+| `.batdiet` | | Random outcome |
 | `.xucxac` | | Tung xúc xắc 1-6 |
 | `.amhon` | `[channel_id] [file]` | Phát nhạc vào Voice |
 | `.truhon` | | Rời Voice |
 | `.fake` | `[@user] [text]` | Giả mạo tin nhắn |
-| `.donguyen` | | Đoạn chú lực (random power) |
+| `.donguyen` | | Đoạn chú lực |
 | `.vonghon` | | Nhại lại tin nhắn |
 | `.nguyenrua` | `[@user]` | Ám quẻ đối phương |
 | `.batkhuat` | | Tự phản hồi khi bị tag |
 
 ---
 
-## Hosting 24/7 (Wispbyte)
+## Hosting 24/7
 
-### Bước 1: Upload code
+### Wispbyte (Free)
 
-**GitHub (khuyến nghị):**
-```
-git push origin main
-```
-Rồi clone trên Wispbyte panel.
+**Bước 1:** Push code lên GitHub
 
-**Hoặc upload zip:**
-- Tải `JJK-VVNK-v6.zip`
-- Upload lên FileManager của Wispbyte
+**Bước 2:** Clone trên Wispbyte panel
 
-### Bước 2: Startup Command
-
+**Bước 3:** Startup Command:
 ```
 if [[ -d .git ]] && [[ "0" == "1" ]]; then git pull; fi;
 if [[ ! -z "aiohttp" ]]; then pip install -U --prefix .local aiohttp; fi;
@@ -286,15 +279,9 @@ fi;
 /usr/local/bin/python /home/container/main.py
 ```
 
-### Bước 3: Environment Variables
+**Bước 4:** Env var: `BOT_TOKEN` = Token Discord
 
-| Key | Value |
-|-----|-------|
-| `BOT_TOKEN` | Token Discord của bạn |
-
-### Bước 4: Khởi động
-
-Nhấn **Start** trên panel.
+**Bước 5:** Nhấn Start
 
 ### Lưu ý hosting
 
@@ -307,7 +294,7 @@ Nhấn **Start** trên panel.
 ## Cấu trúc file
 
 ```
-JJK-VVNK/
+HostBot/
 ├── main.py              ← Entry point, nạp modules
 ├── rate_utils.py        ← Xử lý rate limit Discord API
 ├── cache.py             ← TTL cache (user/guild/channel/role)
@@ -322,11 +309,11 @@ JJK-VVNK/
 ├── requirements.txt     ← Python dependencies
 ├── ngon.txt             ← Data cho lệnh .thuong
 ├── nhay.txt             ← Data cho lệnh .lienke
-├── JJK-VVNK.bat         ← Launcher (double-click)
+├── HostBot.bat          ← Launcher (double-click)
 ├── .gitignore           ← Bảo vệ secrets
 ├── LICENSE              ← MIT License
 ├── README.md            ← Tài liệu này
-└── music/               ← Thư mục nhạc có sẵn (tạo thủ công)
+└── music/               ← Thư mục nhạc có sẵn
     ├── stay_alive.mp3
     ├── styx_helix.mp3
     ├── akuma_no_ko.mp3
@@ -403,4 +390,4 @@ Bot tự xử lý 429. Nếu bị spam quá, tăng delay:
 
 ---
 
-*JJK-VVNK Bot v6.0 — Made by QU4N.TH3.D3V*
+*HostBot v6.0 — Made by QU4N.TH3.D3V*

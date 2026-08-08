@@ -58,15 +58,17 @@ bot = commands.Bot(command_prefix=PREFIX, self_bot=True, help_command=None)
 @bot.event
 async def on_ready():
     os.system('cls' if os.name == 'nt' else 'clear')
-    banner = f"""\033[1;35m
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-    ┃        🤞 DOMAIN EXPANSION: INFINITE VOID 🤞         ┃
-    ┃              (BÀNH TRƯỚNG LÃNH ĐỊA)                  ┃
-    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\033[0m"""
+    banner = f"""\033[1;36m
+     __  __           _       _    ____                         
+    |  \\/  |___ _ _ (_)__ __| |  / __|_ _ ___ __ _ _ __  ___  
+    | |\\/| / _ \\ ' \\| / _|_ _| | | (_ | '_/ -_) _` | '  \\/ -_) 
+    |_|  |_\\___/_||_|_\\__|__|_|  \\___|_| \\___\\__,_|_|_|_\\___| 
+    \033[0m"""
     print(banner)
-    print(f"\033[1;36m[>] CHÚ THUẬT SƯ:\033[0m \033[1;32m{bot.user}\033[0m")
-    print(f"\033[1;36m[>] ĐỊNH DANH ID:\033[0m \033[1;32m{bot.user.id}\033[0m")
-    print(f"\033[1;35m{'-'*54}\033[0m")
+    print(f"\033[1;36m[>] Bot:\033[0m \033[1;32m{bot.user}\033[0m")
+    print(f"\033[1;36m[>] ID:\033[0m \033[1;32m{bot.user.id}\033[0m")
+    print(f"\033[1;36m[>] Servers:\033[0m \033[1;32m{len(bot.guilds)}\033[0m")
+    print(f"\033[1;36m{'-'*54}\033[0m")
     
     # Tự động nạp Cogs (file .py cùng thư mục, ngoại trừ main.py)
     skip = {'main.py', 'index.py', 'rate_utils.py', 'cache.py', 'ui.py', '__init__.py'}
@@ -79,7 +81,7 @@ async def on_ready():
                 print(f"\033[1;31m    - Lỗi nạp {filename}: {e}\033[0m")
     
     print(f"\033[1;35m{'-'*54}\033[0m")
-    print(f"\033[1;32m[SUCCESS] Lãnh địa đã sẵn sàng. Gõ {PREFIX}lanhdia để mở Menu.\033[0m")
+    print(f"\033[1;32m[SUCCESS] HostBot da san sang. Go {PREFIX}menu de mo Menu.\033[0m")
 
 # --- 6. THUẬT THỨC TẤT TRÚNG (Nitro Sniper) ---
 @bot.event
@@ -114,6 +116,6 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\033[1;31m\n[!] Đã thu hồi lãnh địa.\033[0m")
+        print("\033[1;31m\n[!] HostBot da dung.\033[0m")
     except Exception as e:
         print(f"\033[1;31m[!] Lỗi hệ thống: {e}\033[0m")
