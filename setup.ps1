@@ -52,22 +52,22 @@ function Test-Requirements {
     }
 
     # pip
+    $pipOk = $false
     try {
-        $pipCheck = python -m pip --version 2>&1
-        if ($LASTEXITCODE -eq 0) {
-            Write-Color "    OK pip: $pipCheck" Green
-        } else {
-            throw "pip not found"
-        }
-    } catch {
+        $pipOutput = python -m pip --version 2>&1
+        if ($pipOutput -match "pip") { $pipOk = $true }
+    } catch {}
+
+    if ($pipOk) {
+        Write-Color "    OK pip: $pipOutput" Green
+    } else {
         Write-Color "    DANG CAI pip..." Yellow
         try {
             python -m ensurepip --upgrade 2>&1 | Out-Null
             python -m pip install --upgrade pip 2>&1 | Out-Null
             Write-Color "    OK Da cai pip!" Green
         } catch {
-            Write-Color "    LOI Khong the cai pip!" Red
-            Write-Color "    Thu cong: python -m ensurepip --upgrade" Yellow
+            Write-Color "    LOI Khong the cai pip! Thu cong: python -m ensurepip --upgrade" Red
             return $false
         }
     }
