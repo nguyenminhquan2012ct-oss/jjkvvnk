@@ -1,121 +1,119 @@
 # ============================================================
 #  QU4N.TH3.D3V TERMINAL UI - JJK-VVNK BOT LAUNCHER
-#  Chế độ Terminal UI để host bot trên PowerShell
-#  Chạy: powershell -ExecutionPolicy Bypass -File launch.ps1
+#  Chay: powershell -ExecutionPolicy Bypass -File launch.ps1
 # ============================================================
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $ErrorActionPreference = "Stop"
 $Host.UI.RawUI.WindowTitle = "JJK-VVNK Bot | QU4N.TH3.D3V"
 
-$ESC = [char]27
 $CONFIG_FILE = "config.json"
-$BOT_FILE = "main.py"
+
+function Write-Color {
+    param([string]$Text, [ConsoleColor]$Color = "White")
+    Write-Host $Text -ForegroundColor $Color
+}
 
 # ========================= BANNER =========================
 function Show-Banner {
     Clear-Host
     Write-Host ""
-    Write-Host "${ESC}[38;2;180;0;255m        ___           _           _       ${ESC}[38;2;100;100;100mQU4N.TH3.D3V${ESC}[0m"
-    Write-Host "${ESC}[38;2;180;0;255m       / (_)___ _ __ | |__  _   _| |_ ___ ${ESC}[0m"
-    Write-Host "${ESC}[38;2;180;0;255m      / /| / __| '_ \| '_ \| | | | __/ _ \${ESC}[0m"
-    Write-Host "${ESC}[38;2;180;0;255m     / / | \__ \ |_) | |_) | |_| | ||  __/ ${ESC}[0m"
-    Write-Host "${ESC}[38;2;180;0;255m    /_/  |_|___/ .__/|_.__/ \__, |\__\___| ${ESC}[0m"
-    Write-Host "${ESC}[38;2;180;0;255m              |_|          |___/          ${ESC}[0m"
+    Write-Color "        ___           _           _       QU4N.TH3.D3V" Purple
+    Write-Color "       / (_)___ _ __ | |__  _   _| |_ ___ " Purple
+    Write-Color "      / /| / __| '_ \_| '_ \_| | | | __/ _ \" Purple
+    Write-Color "     / / | \__ \ |_) | |_) | |_| | ||  __/ " Purple
+    Write-Color "    /_/  |_|___/ .__/|_.__/ \__, |\__\___| " Purple
+    Write-Color "              |_|          |___/          " Purple
     Write-Host ""
-    Write-Host "${ESC}[38;2;255;0;0m  ╔═══════════════════════════════════════════════════╗${ESC}[0m"
-    Write-Host "${ESC}[38;2;255;0;0m  ║${ESC}[0m  ${ESC}[38;2;255;255;255m⚔️  JJK-VVNK SELF-BOT v6.0 | Terminal UI${ESC}[0m      ${ESC}[38;2;255;0;0m║${ESC}[0m"
-    Write-Host "${ESC}[38;2;255;0;0m  ╚═══════════════════════════════════════════════════╝${ESC}[0m"
+    Write-Color "  ================================================" DarkCyan
+    Write-Color "    JJK-VVNK SELF-BOT v6.0 | Terminal UI Edition" White
+    Write-Color "  ================================================" DarkCyan
     Write-Host ""
 }
 
-# ========================= MENU CHÍNH =========================
+# ========================= MENU CHINH =========================
 function Show-Menu {
     param([bool]$IsConfigured)
 
     if ($IsConfigured) {
         $cfg = Get-Content $CONFIG_FILE -Raw | ConvertFrom-Json
         $mask = if ($cfg.Token.Length -gt 8) { $cfg.Token.Substring(0,4) + "****" + $cfg.Token.Substring($cfg.Token.Length-4) } else { "****" }
-        Write-Host "${ESC}[38;2;180;0;255m  ┌─────────────────────────────────────────────┐${ESC}[0m"
-        Write-Host "${ESC}[38;2;180;0;255m  │${ESC}[0m  ${ESC}[38;2;255;255;255mToken:${ESC}[0m  ${ESC}[38;2;255;255;0m$mask${ESC}[0m                          ${ESC}[38;2;180;0;255m│${ESC}[0m"
-        Write-Host "${ESC}[38;2;180;0;255m  │${ESC}[0m  ${ESC}[38;2;255;255;255mPrefix:${ESC}[0m ${ESC}[38;2;0;255;0m$($cfg.Prefix)${ESC}[0m                                ${ESC}[38;2;180;0;255m│${ESC}[0m"
-        Write-Host "${ESC}[38;2;180;0;255m  │${ESC}[0m  ${ESC}[38;2;255;255;255mStatus:${ESC}[0m ${ESC}[38;2;0;255;0m✅ Sẵn sàng${ESC}[0m                           ${ESC}[38;2;180;0;255m│${ESC}[0m"
-        Write-Host "${ESC}[38;2;180;0;255m  └─────────────────────────────────────────────┘${ESC}[0m"
+        Write-Color "  +-------------------------------------------+" Magenta
+        Write-Color "  |  Token:  $mask" White
+        Write-Color "  |  Prefix: $($cfg.Prefix)" Green
+        Write-Color "  |  Status: SAN SANG" Green
+        Write-Color "  +-------------------------------------------+" Magenta
         Write-Host ""
     }
 
-    Write-Host "${ESC}[38;2;0;170;255m  ╔═══════════════════════════════════════════╗${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ║${ESC}[0m                                           ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ║${ESC}[0m  ${ESC}[38;2;0;255;0m[1]${ESC}[0m 🚀 Chạy Bot                          ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ║${ESC}[0m  ${ESC}[38;2;255;255;0m[2]${ESC}[0m ⚙️  Cài Đặt / Đổi Token              ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ║${ESC}[0m  ${ESC}[38;2;255;0;0m[3]${ESC}[0m 📊 Xem Log                          ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ║${ESC}[0m  ${ESC}[38;2;180;0;255m[4]${ESC}[0m 🔧 Sửa config.json                   ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ║${ESC}[0m  ${ESC}[38;2;100;100;100m[5]${ESC}[0m 📁 Mở thư mục bot                    ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ║${ESC}[0m  ${ESC}[38;2;255;0;0m[0]${ESC}[0m ❌ Thoát                              ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ║${ESC}[0m                                           ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  ╚═══════════════════════════════════════════╝${ESC}[0m"
+    Write-Color "  +-------------------------------------------+" Cyan
+    Write-Color "  |                                           |" Cyan
+    Write-Color "  |  [1] CHAY BOT                        |" Cyan -NoNewline; Write-Color "]" Green; Write-Host ""
+    Write-Color "  |  [2] CAI DAT / DOI TOKEN             |" Cyan -NoNewline; Write-Color "]" Yellow; Write-Host ""
+    Write-Color "  |  [3] XEM LOG                         |" Cyan -NoNewline; Write-Color "]" Red; Write-Host ""
+    Write-Color "  |  [4] SUA config.json                 |" Cyan -NoNewline; Write-Color "]" Magenta; Write-Host ""
+    Write-Color "  |  [5] MO THU MUC BOT                 |" Cyan -NoNewline; Write-Color "]" DarkGray; Write-Host ""
+    Write-Color "  |  [0] THOAT                           |" Cyan -NoNewline; Write-Color "]" Red; Write-Host ""
+    Write-Color "  |                                           |" Cyan
+    Write-Color "  +-------------------------------------------+" Cyan
     Write-Host ""
 }
 
 # ========================= SETUP =========================
 function Start-Setup {
-    Write-Host "${ESC}[38;2;0;170;255m  ┌─────────────────────────────────────────────┐${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  │${ESC}[0m  ${ESC}[38;2;255;255;255m⚙️  CÀI ĐẶT BOT JJK-VVNK${ESC}[0m              ${ESC}[38;2;0;170;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;170;255m  └─────────────────────────────────────────────┘${ESC}[0m"
+    Write-Color "  +-------------------------------------------+" Yellow
+    Write-Color "  |  CAI DAT BOT JJK-VVNK                    |" Yellow
+    Write-Color "  +-------------------------------------------+" Yellow
     Write-Host ""
 
-    # Token
     $existingToken = ""
     if (Test-Path $CONFIG_FILE) {
         $cfg = Get-Content $CONFIG_FILE -Raw | ConvertFrom-Json
         $existingToken = $cfg.Token
-        Write-Host "${ESC}[38;2;100;100;100m  Token hiện tại: $($existingToken.Substring(0, [Math]::Min(8, $existingToken.Length)))...${ESC}[0m"
-        Write-Host "${ESC}[38;2;100;100;100m  Nhấn Enter để giữ nguyên, hoặc dán token mới:${ESC}[0m"
+        Write-Color "  Token hien tai: $($existingToken.Substring(0, [Math]::Min(8, $existingToken.Length)))..." DarkGray
+        Write-Color "  Nhan Enter de giu nguyen, hoac dan token moi:" DarkGray
     } else {
-        Write-Host "${ESC}[38;2;255;255;255m  📌 Dán Discord Token của bạn:${ESC}[0m"
-        Write-Host "${ESC}[38;2;100;100;100m  (Lấy tại: https://discord.com/developers/applications)${ESC}[0m"
+        Write-Color "  DAN Discord Token cua ban:" White
+        Write-Color "  (Lay tai: https://discord.com/developers/applications)" DarkGray
     }
     Write-Host ""
-    $newToken = Read-Host "${ESC}[38;2;0;255;0m  Token${ESC}[0m"
+    $newToken = Read-Host "  Token"
     if ([string]::IsNullOrWhiteSpace($newToken)) { $newToken = $existingToken }
 
     if ([string]::IsNullOrWhiteSpace($newToken)) {
-        Write-Host "${ESC}[38;2;255;0;0m  ❌ Token không được để trống!${ESC}[0m"
+        Write-Color "  LOI Token khong duoc de trong!" Red
         Start-Sleep -Seconds 2
         return $false
     }
 
-    # Prefix
     $existingPrefix = "."
     if (Test-Path $CONFIG_FILE) {
         $cfg = Get-Content $CONFIG_FILE -Raw | ConvertFrom-Json
         $existingPrefix = $cfg.Prefix
     }
     Write-Host ""
-    Write-Host "${ESC}[38;2;255;255;255m  📌 Prefix cho bot (mặc định: .):${ESC}[0m"
-    $newPrefix = Read-Host "${ESC}[38;2;0;255;0m  Prefix [$existingPrefix]${ESC}[0m"
+    Write-Color "  PREFIX cho bot (mac dinh: .):" White
+    $newPrefix = Read-Host "  Prefix [$existingPrefix]"
     if ([string]::IsNullOrWhiteSpace($newPrefix)) { $newPrefix = $existingPrefix }
 
-    # Lưu config
     @{ Token = $newToken; Prefix = $newPrefix } | ConvertTo-Json | Set-Content $CONFIG_FILE -Encoding UTF8
     Write-Host ""
-    Write-Host "${ESC}[38;2;0;255;0m  ✅ Đã lưu config!${ESC}[0m"
+    Write-Color "  OK Da luu config!" Green
 
-    # Cài dependencies
     Write-Host ""
-    Write-Host "${ESC}[38;2;255;255;255m  📦 Đang cài thư viện...${ESC}[0m"
+    Write-Color "  Dang cai thu vien..." White
     if (Test-Path "requirements.txt") {
         python -m pip install -r requirements.txt --quiet 2>&1 | Out-Null
-        Write-Host "${ESC}[38;2;0;255;0m  ✅ Đã cài xong!${ESC}[0m"
+        Write-Color "  OK Da cai xong!" Green
     }
 
     Start-Sleep -Seconds 1
     return $true
 }
 
-# ========================= CHẠY BOT =========================
+# ========================= CHAY BOT =========================
 function Start-Bot {
     if (-not (Test-Path $CONFIG_FILE)) {
-        Write-Host "${ESC}[38;2;255;0;0m  ❌ Chưa có config! Chọn [2] để cài đặt.${ESC}[0m"
+        Write-Color "  LOI Chua co config! Chon [2] de cai dat." Red
         Start-Sleep -Seconds 2
         return
     }
@@ -126,16 +124,16 @@ function Start-Bot {
 
     Clear-Host
     Write-Host ""
-    Write-Host "${ESC}[38;2;180;0;255m  ╔═══════════════════════════════════════════╗${ESC}[0m"
-    Write-Host "${ESC}[38;2;180;0;255m  ║${ESC}[0m  ${ESC}[38;2;0;255;0m🚀 BOT ĐANG CHẠY...${ESC}[0m                      ${ESC}[38;2;180;0;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;180;0;255m  ║${ESC}[0m  ${ESC}[38;2;100;100;100mNhấn Ctrl+C để dừng${ESC}[0m                   ${ESC}[38;2;180;0;255m│${ESC}[0m"
-    Write-Host "${ESC}[38;2;180;0;255m  ╚═══════════════════════════════════════════╝${ESC}[0m"
+    Write-Color "  +-------------------------------------------+" Green
+    Write-Color "  |  BOT DANG CHAY...                         |" Green
+    Write-Color "  |  Nhan Ctrl+C de dung                      |" DarkGray
+    Write-Color "  +-------------------------------------------+" Green
     Write-Host ""
 
     try {
         python main.py
     } catch {
-        Write-Host "${ESC}[38;2;255;0;0m  ❌ Lỗi: $_${ESC}[0m"
+        Write-Color "  LOI: $_" Red
         Start-Sleep -Seconds 3
     }
 }
@@ -143,17 +141,17 @@ function Start-Bot {
 # ========================= XEM LOG =========================
 function Show-Log {
     Clear-Host
-    Write-Host "${ESC}[38;2;180;0;255m  📊 LOG BOT (Ctrl+C để thoát)${ESC}[0m"
-    Write-Host "${ESC}[38;2;100;100;100m  ─────────────────────────────────${ESC}[0m"
+    Write-Color "  LOG BOT (Ctrl+C de thoat)" Magenta
+    Write-Color "  -----------------------------------" DarkGray
 
     $cfg = Get-Content $CONFIG_FILE -Raw | ConvertFrom-Json
     $env:BOT_TOKEN = $cfg.Token
     $env:DISCORD_TOKEN = $cfg.Token
 
     try {
-        python main.py 2>&1 | ForEach-Object { Write-Host "${ESC}[38;2;255;255;255m  $_${ESC}[0m" }
+        python main.py 2>&1 | ForEach-Object { Write-Color "  $_" White }
     } catch {
-        Write-Host "${ESC}[38;2;100;100;100m  Log ended.${ESC}[0m"
+        Write-Color "  Log ended." DarkGray
     }
     Start-Sleep -Seconds 2
 }
@@ -165,7 +163,7 @@ function Main {
         $isConfigured = Test-Path $CONFIG_FILE
         Show-Banner
         Show-Menu $isConfigured
-        $choice = Read-Host "${ESC}[38;2;0;255;0m  Chọn [0-5]${ESC}[0m"
+        $choice = Read-Host "  Chon [0-5]"
 
         switch ($choice) {
             "1" { Start-Bot }
@@ -175,25 +173,25 @@ function Main {
                 if (Test-Path $CONFIG_FILE) {
                     notepad $CONFIG_FILE
                 } else {
-                    Write-Host "${ESC}[38;2;255;0;0m  ❌ Chưa có config!${ESC}[0m"
+                    Write-Color "  LOI Chua co config!" Red
                     Start-Sleep -Seconds 2
                 }
             }
             "5" { explorer.exe "." }
             "0" { $running = $false }
             default {
-                Write-Host "${ESC}[38;2;255;255;0m  Chọn sai!${ESC}[0m"
+                Write-Color "  Chon sai!" Yellow
                 Start-Sleep -Seconds 1
             }
         }
     }
 }
 
-# ========================= KHỞI CHẠY =========================
+# ========================= KHOI CHAY =========================
 if (-not (Test-Path $CONFIG_FILE)) {
     Show-Banner
-    Write-Host "${ESC}[38;2;255;255;255m  Chào mừng bạn đến với JJK-VVNK Bot!${ESC}[0m"
-    Write-Host "${ESC}[38;2;0;255;0m  Bắt đầu cài đặt...${ESC}[0m"
+    Write-Color "  Chao mung ban den voi JJK-VVNK Bot!" White
+    Write-Color "  Bat dau cai dat..." Green
     Write-Host ""
     Start-Sleep -Seconds 1
     $setupDone = Start-Setup
