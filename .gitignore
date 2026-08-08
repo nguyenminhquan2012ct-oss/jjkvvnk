@@ -1,0 +1,9 @@
+# Secrets - tuyệt đối không đẩy lên GitHub
+config.json
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pkl
+trash/

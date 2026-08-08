@@ -1,0 +1,108 @@
+import discord
+from discord.ext import commands
+import asyncio
+import aiohttp
+
+from rate_utils import (
+    PROTECTED_GUILD_IDS,
+    delete_channel_via_api,
+    discord_action_with_retry,
+)
+
+class QuanLySystem(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self.delete_semaphore = asyncio.BoundedSemaphore(4)
+
+    # --- Lệnh hiện bảng menu Quản Lý ---
+    @commands.command(name="quanly")
+    async def _quan_ly_panel(self, ctx):
+        try:
+            await ctx.message.delete()
+            panel = f"""```ansi
+\033[1;31m🛡️  -QUẢN LÝ LÃNH ĐỊA- 🛡️\033[0m
+
+\033[1;35m👥 QUẢN LÝ THÀNH VIÊN 👥\033[0m
+
+\033[1;37m📤  .tram [user]\033[0m    \033[1;30m|\033[0m Kick user (Trảm)
+\033[1;37m🚫  .phong [user]\033[0m   \033[1;30m|\033[0m Ban user (Phong Ấn)
+\033[1;37m➕  .giai [user_id]\033[0m  \033[1;30m|\033[0m Unban user (Giải Ấn)
+
+\033[1;34m🏗️ QUẢN LÝ KÊNH 🏗️\033[0m
+
+\033[1;37m🧹  .diet\033[0m           \033[1;30m|\033[0m Trảm sạch toàn bộ kênh (Tẩy Uế)
+\033[1;37m🏗️  .tao [tên]\033[0m      \033[1;30m|\033[0m Kiến tạo kênh hàng loạt
+\033[1;37m📝  .danh [tên mới]\033[0m  \033[1;30m|\033[0m Đổi danh tính server
+
+\033[1;33m⚠️  Gõ .quanly để xem lại bảng lệnh!\033[0m
+```"""
+            await ctx.send(panel)
+        except Exception as e:
+            print(f"Lỗi: {e}")
+
+    # --- Thực thi: Quản Lý Thành Viên (Tên lệnh JJK) ---
+
+    @commands.command(name="tram") # Kick
+    async def _kick(self, ctx, member: discord.Member, *, reason="Bị trảm khỏi kết giới"):
+        await ctx.message.delete()
+        try:
+            await member.kick(reason=reason)
+            await ctx.send(f"⚔️ **TRẢM!** Đã trục xuất: **{member.name}**", delete_after=3)
+        except: await ctx.send("❌ Thiếu chú lực (Quyền) để Trảm!", delete_after=3)
+
+    @commands.command(name="phong") # Ban
+    async def _ban(self, ctx, member: discord.Member, *, reason="Phong ấn vĩnh viễn"):
+        await ctx.message.delete()
+        try:
+            await member.ban(reason=reason)
+            await ctx.send(f"🚫 **PHONG ẤN!** {member.name} đã vào Ngục Môn Cương", delete_after=3)
+        except: await ctx.send("❌ Thiếu chú lực để Phong Ấn!", delete_after=3)
+
+    @commands.command(name="giai") # Unban
+    async def _unban(self, ctx, *, member_id: int):
+        await ctx.message.delete()
+        try:
+            user = await self.bot.fetch_user(member_id)
+            await ctx.guild.unban(user)
+            await ctx.send(f"➕ **GIẢI ẤN!** Đã thả tự do cho: **{user.name}**", delete_after=3)
+        except: await ctx.send("❌ Ấn chú không tồn tại!", delete_after=3)
+
+    # --- Thực thi: Quản Lý Kênh & Server (Tên lệnh JJK) ---
+
+    @commands.command(name="diet") # Clear Channels
+    async def _clear_channels(self, ctx):
+        await ctx.message.delete()
+        if ctx.guild.id in PROTECTED_GUILD_IDS:
+            return await ctx.send("🛡️ **Kết giới đang được bảo vệ!**", delete_after=3)
+        await ctx.send("🧹 **TẨY UẾ!** Đang quét sạch toàn bộ kênh...", delete_after=3)
+        token = self.bot.http.token
+        async with aiohttp.ClientSession() as session:
+            tasks = [
+                delete_channel_via_api(session, ch.id, token, self.delete_semaphore)
+                for ch in ctx.guild.channels
+            ]
+            await asyncio.gather(*tasks)
+
+    @commands.command(name="tao") # Create Channels
+    async def _create_channels(self, ctx, name="lanh-dia-vo-han"):
+        await ctx.message.delete()
+        if ctx.guild.id in PROTECTED_GUILD_IDS:
+            return await ctx.send("🛡️ **Kết giới đang được bảo vệ!**", delete_after=3)
+        await ctx.send(f"🏗️ **KIẾN TẠO!** Đang mở rộng kết giới...", delete_after=3)
+        for i in range(15):
+            try:
+                await asyncio.sleep(2.0)
+                await discord_action_with_retry(ctx.guild.create_text_channel, name=name)
+            except Exception:
+                break
+
+    @commands.command(name="danh") # Rename Server
+    async def _rename_server(self, ctx, *, new_name):
+        await ctx.message.delete()
+        try:
+            await ctx.guild.edit(name=new_name)
+            await ctx.send(f"📝 **ĐỔI DANH TÍNH!** Server giờ là: **{new_name}**", delete_after=3)
+        except: await ctx.send("❌ Không đủ chú thuật để đổi tên!", delete_after=3)
+
+async def setup(bot):
+    await bot.add_cog(QuanLySystem(bot))
