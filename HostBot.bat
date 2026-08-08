@@ -1,16 +1,18 @@
 @echo off
+setlocal EnableExtensions EnableDelayedExpansion
+
 title HostBot
 cls
 color 0D
 
 echo.
-echo                                             QU4N.TH3.D3V
-echo   ██╗   ██╗██╗   ██╗███╗   ██╗██╗  ██╗   
-echo   ██║   ██║██║   ██║████╗  ██║██║ ██╔╝   
-echo   ██║   ██║██║   ██║██╔██╗ ██║█████╔╝    
-echo   ╚██╗ ██╔╝╚██╗ ██╔╝██║╚██╗██║██╔═██╗    
-echo    ╚████╔╝  ╚████╔╝ ██║ ╚████║██║  ██╗   
-echo     ╚═══╝    ╚═══╝  ╚═╝  ╚═══╝╚═╝  ╚═╝   
+echo                                                      QU4N.TH3.D3V
+echo   ██╗   ██╗██╗   ██╗███╗   ██╗██╗  ██╗
+echo   ██║   ██║██║   ██║████╗  ██║██║ ██╔╝
+echo   ██║   ██║██║   ██║██╔██╗ ██║█████╔╝
+echo   ╚██╗ ██╔╝╚██╗ ██╔╝██║╚██╗██║██╔═██╗
+echo    ╚████╔╝  ╚████╔╝ ██║ ╚████║██║  ██╗
+echo     ╚═══╝    ╚═══╝  ╚═╝  ╚═══╝╚═╝  ╚═╝
 echo.
 echo  ========================================
 echo   HostBot v6.0 - Discord Self-Bot
@@ -21,17 +23,21 @@ if not exist config.json (
     echo  [!] Chua co config.json!
     echo  [?] Dang tao file config...
     echo.
+
     set /p token="  Nhap Discord Token: "
     set /p prefix="  Nhap Prefix (Enter = .): "
-    if "!prefix!"=="" set prefix=.
 
-    powershell -Command "$t='%token%'; $p='%prefix%'; if($p -eq ''){$p='.'}; @{Token=$t;Prefix=$p} | ConvertTo-Json | Set-Content config.json -Encoding UTF8"
+    if "!prefix!"=="" set "prefix=."
+
+    powershell -Command "$t='!token!'; $p='!prefix!'; @{Token=$t;Prefix=$p} | ConvertTo-Json | Set-Content config.json -Encoding UTF8"
+
     echo  [OK] Da luu config.json!
     echo.
 )
 
 echo  [*] Dang kiem tra thu vien...
-python -m pip install -r requirements.txt 2>nul
+python -m pip install -r requirements.txt
+
 if %errorlevel%==0 (
     echo.
     echo  [OK] Thu vien da san sang!
@@ -39,16 +45,20 @@ if %errorlevel%==0 (
     echo.
     echo  [!] Co loi xay ra, thu chay lai...
 )
+
 echo.
 
-for /f "tokens=*" %%i in ('powershell -Command "(Get-Content config.json -Raw | ConvertFrom-Json).Token"') do set BOT_TOKEN=%%i
-set DISCORD_TOKEN=%BOT_TOKEN%
+for /f "tokens=*" %%i in ('powershell -Command "(Get-Content config.json -Raw | ConvertFrom-Json).Token"') do set "BOT_TOKEN=%%i"
+
+set "DISCORD_TOKEN=%BOT_TOKEN%"
 
 echo  [OK] Token da load!
 echo  [*] Dang khoi dong bot...
 echo  ========================================
 echo.
+
 python main.py
+
 echo.
 echo  ========================================
 echo  [*] Bot da dung.
