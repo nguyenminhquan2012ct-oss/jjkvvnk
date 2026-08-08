@@ -68,12 +68,12 @@ async def on_ready():
     print(f"\033[1;36m[>] ĐỊNH DANH ID:\033[0m \033[1;32m{bot.user.id}\033[0m")
     print(f"\033[1;35m{'-'*54}\033[0m")
     
-    # Tự động nạp Cogs từ thư mục cogs/
-    if not os.path.exists('./cogs'): os.makedirs('./cogs')
-    for filename in os.listdir('./cogs'):
-        if filename.endswith('.py'):
+    # Tự động nạp Cogs (file .py cùng thư mục, ngoại trừ main.py)
+    skip = {'main.py', 'index.py', 'rate_utils.py', '__init__.py'}
+    for filename in os.listdir('.'):
+        if filename.endswith('.py') and filename not in skip:
             try:
-                await bot.load_extension(f'cogs.{filename[:-3]}')
+                await bot.load_extension(filename[:-3])
                 print(f"\033[1;32m    + Đã nạp thuật thức: {filename}\033[0m")
             except Exception as e:
                 print(f"\033[1;31m    - Lỗi nạp {filename}: {e}\033[0m")
