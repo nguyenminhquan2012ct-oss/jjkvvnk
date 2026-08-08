@@ -16,19 +16,19 @@ class TrollSystem(commands.Cog):
 \033[1;35m🃏 PHÁP ĐÀN GIẢI TRÍ: NGỊCH CHÚ 🃏\033[0m
 
 \033[1;34m[🎮] CHÚ THUẬT MINI GAME\033[0m
-\033[1;37m .batdiet\033[0m           \033[1;30m|\033[0m [Bất Diệt] Game nhân phẩm 
-\033[1;37m .xucxac\033[0m            \033[1;30m|\033[0m [Xúc Xắc] Tung xúc xắc nguyền hồn
+\033[1;37m {self.bot.command_prefix}batdiet\033[0m             \033[1;30m  [Bất Diệt] Game nhân phẩm\033[0m
+\033[1;37m {self.bot.command_prefix}xucxac\033[0m              \033[1;30m  [Xúc Xắc] Tung xúc xắc nguyền hồn\033[0m
 
 \033[1;32m[🎶] PHÁT NHẠC (AUDIO CHÚ THUẬT)\033[0m
-\033[1;37m .amhon [url]\033[0m       \033[1;30m|\033[0m [Âm Hồn] Phát nhạc vào Voice
-\033[1;37m .truhon\033[0m            \033[1;30m|\033[0m [Trục Hồn] Rời Voice channel
+\033[1;37m {self.bot.command_prefix}amhon [url]\033[0m         \033[1;30m  [Âm Hồn] Phát nhạc vào Voice\033[0m
+\033[1;37m {self.bot.command_prefix}truhon\033[0m              \033[1;30m  [Trục Hồn] Rời Voice channel\033[0m
 
 \033[1;31m[🔥] CHIÊU THỨC TROLL\033[0m
-\033[1;37m .fake [@user] [text]\033[0m \033[1;30m|\033[0m [Ngụy Thuật] Giả mạo tin nhắn
-\033[1;37m .donguyen\033[0m          \033[1;30m|\033[0m [Đo Nguyền Lực] Xem sức mạnh
-\033[1;37m .vonghon\033[0m           \033[1;30m|\033[0m [Vọng Hồn] Nhại lại tin nhắn
-\033[1;37m .nguyenrua [@user]\033[0m \033[1;30m|\033[0m [Nguyền Rủa] Ám quẻ đối phương
-\033[1;37m .batkhuat\033[0m          \033[1;30m|\033[0m [Bất Khuất] Tự phản hồi khi bị tag
+\033[1;37m {self.bot.command_prefix}fake [@user] [text]\033[0m  \033[1;30m  [Ngụy Thuật] Giả mạo tin nhắn\033[0m
+\033[1;37m {self.bot.command_prefix}donguyen\033[0m            \033[1;30m  [Đo Nguyền Lực] Xem sức mạnh\033[0m
+\033[1;37m {self.bot.command_prefix}vonghon\033[0m             \033[1;30m  [Vọng Hồn] Nhại lại tin nhắn\033[0m
+\033[1;37m {self.bot.command_prefix}nguyenrua [@user]\033[0m   \033[1;30m  [Nguyền Rủa] Ám quẻ đối phương\033[0m
+\033[1;37m {self.bot.command_prefix}batkhuat\033[0m            \033[1;30m  [Bất Khuất] Tự phản hồi khi bị tag\033[0m
 ```"""
         await ctx.send(menu)
 

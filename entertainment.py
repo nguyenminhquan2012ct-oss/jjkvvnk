@@ -100,28 +100,28 @@ class EntertainmentSystem(commands.Cog):
 \033[1;35m🎮 PHÁP ĐÀN GIẢI TRÍ: NGỊCH CHÚ 🎮\033[0m
 
 \033[1;34m[🎮] MINI GAMES\033[0m
-\033[1;37m .8ball [câu hỏi]\033[0m \033[1;30m|\033[0m Phép bói 8 bóng
-\033[1;37m .rps [rock/paper/scissors]\033[0m \033[1;30m|\033[0m Kéo búa bao
-\033[1;37m .trivia\033[0m \033[1;30m|\033[0m Câu đố vui
-\033[1;37m .coinflip\033[0m \033[1;30m|\033[0m Toss đồng xu
-\033[1;37m .number [1-100]\033[0m \033[1;30m|\033[0m Đoán số bí ẩn
+\033[1;37m {self.bot.command_prefix}8ball [câu hỏi]\033[0m         \033[1;30m  Phép bói 8 bóng\033[0m
+\033[1;37m {self.bot.command_prefix}rps [rock/paper/scissors]\033[0m \033[1;30m  Kéo búa bao\033[0m
+\033[1;37m {self.bot.command_prefix}trivia\033[0m                  \033[1;30m  Câu đố vui\033[0m
+\033[1;37m {self.bot.command_prefix}coinflip\033[0m                \033[1;30m  Toss đồng xu\033[0m
+\033[1;37m {self.bot.command_prefix}number [1-100]\033[0m           \033[1;30m  Đoán số bí ẩn\033[0m
 
 \033[1;32m[💰] KINH TẾ\033[0m
-\033[1;37m .daily\033[0m \033[1;30m|\033[0m Nhận quà hàng ngày
-\033[1;37m .bal\033[0m \033[1;30m|\033[0m Xem số dư
-\033[1;37m .pay [@user] [số]\033[0m \033[1;30m|\033[0m Chuyển tiền
-\033[1;37m .shop\033[0m \033[1;30m|\033[0m Cửa hàng
-\033[1;37m .buy [tên item]\033[0m \033[1;30m|\033[0m Mua vật phẩm
-\033[1;37m .inventory\033[0m \033[1;30m|\033[0m Vật phẩm
+\033[1;37m {self.bot.command_prefix}daily\033[0m                   \033[1;30m  Nhận quà hàng ngày\033[0m
+\033[1;37m {self.bot.command_prefix}bal\033[0m                     \033[1;30m  Xem số dư\033[0m
+\033[1;37m {self.bot.command_prefix}pay [@user] [số]\033[0m       \033[1;30m  Chuyển tiền\033[0m
+\033[1;37m {self.bot.command_prefix}shop\033[0m                   \033[1;30m  Cửa hàng\033[0m
+\033[1;37m {self.bot.command_prefix}buy [tên item]\033[0m         \033[1;30m  Mua vật phẩm\033[0m
+\033[1;37m {self.bot.command_prefix}inventory\033[0m              \033[1;30m  Vật phẩm\033[0m
 
 \033[1;33m[🌟] VUI & THÚ VỊ\033[0m
-\033[1;37m .fact\033[0m \033[1;30m|\033[0m Fact thú vị
-\033[1;37m .quote\033[0m \033[1;30m|\033[0m Trích dẫn JJK
-\033[1;37m .meme\033[0m \033[1;30m|\033[0m Random meme
-\033[1;37m .insult [@user]\033[0m \033[1;30m|\033[0m Insult vui
-\033[1;37m .compliment [@user]\033[0m \033[1;30m|\033[0m Khen ngợi
-\033[1;37m .avatar [@user]\033[0m \033[1;30m|\033[0m Avatar đẹp
-\033[1;37m .banner [@user]\033[0m \033[1;30m|\033[0m Banner đẹp
+\033[1;37m {self.bot.command_prefix}fact\033[0m                    \033[1;30m  Fact thú vị\033[0m
+\033[1;37m {self.bot.command_prefix}quote\033[0m                   \033[1;30m  Trích dẫn JJK\033[0m
+\033[1;37m {self.bot.command_prefix}meme\033[0m                    \033[1;30m  Random meme\033[0m
+\033[1;37m {self.bot.command_prefix}insult [@user]\033[0m         \033[1;30m  Insult vui\033[0m
+\033[1;37m {self.bot.command_prefix}compliment [@user]\033[0m     \033[1;30m  Khen ngợi\033[0m
+\033[1;37m {self.bot.command_prefix}avatar [@user]\033[0m         \033[1;30m  Avatar đẹp\033[0m
+\033[1;37m {self.bot.command_prefix}banner [@user]\033[0m         \033[1;30m  Banner đẹp\033[0m
 ```"""
         await ctx.send(menu)
 

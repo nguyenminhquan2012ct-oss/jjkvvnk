@@ -73,25 +73,25 @@ class MusicSystem(commands.Cog):
 \033[1;34m🎵 PHÁP ĐÀN ÂM THANH: CHÚ THUẬT NHẠC 🎵\033[0m
 
 \033[1;34m[🎶] ĐIỀU KHIỂN NHẠC\033[0m
-\033[1;37m .play [link/tên]\033[0m \033[1;30m|\033[0m Phát nhạc từ YouTube
-\033[1;37m .play-sa\033[0m \033[1;30m|\033[0m Phát "Stay Alive"
-\033[1;37m .play-sh\033[0m \033[1;30m|\033[0m Phát "Styx Helix"
-\033[1;37m .play-amk\033[0m \033[1;30m|\033[0m Phát "Akuma no Ko"
-\033[1;37m .play-sp\033[0m \033[1;30m|\033[0m Phát "Specialz"
+\033[1;37m {self.bot.command_prefix}play [link/tên]\033[0m   \033[1;30m  Phát nhạc từ YouTube\033[0m
+\033[1;37m {self.bot.command_prefix}play-sa\033[0m            \033[1;30m  Phát "Stay Alive"\033[0m
+\033[1;37m {self.bot.command_prefix}play-sh\033[0m            \033[1;30m  Phát "Styx Helix"\033[0m
+\033[1;37m {self.bot.command_prefix}play-amk\033[0m           \033[1;30m  Phát "Akuma no Ko"\033[0m
+\033[1;37m {self.bot.command_prefix}play-sp\033[0m            \033[1;30m  Phát "Specialz"\033[0m
 
 \033[1;32m[📋] HÀNG ĐỢI\033[0m
-\033[1;37m .queue\033[0m \033[1;30m|\033[0m Xem danh sách chờ
-\033[1;37m .skip\033[0m \033[1;30m|\033[0m Bỏ qua bài hiện tại
-\033[1;37m .stop\033[0m \033[1;30m|\033[0m Dừng nhạc + rời voice
-\033[1;37m .now\033[0m \033[1;30m|\033[0m Bài đang phát
-\033[1;37m .loop\033[0m \033[1;30m|\033[0m Bật/tắt lặp bài
+\033[1;37m {self.bot.command_prefix}queue\033[0m              \033[1;30m  Xem danh sách chờ\033[0m
+\033[1;37m {self.bot.command_prefix}skip\033[0m               \033[1;30m  Bỏ qua bài hiện tại\033[0m
+\033[1;37m {self.bot.command_prefix}stop\033[0m               \033[1;30m  Dừng nhạc + rời voice\033[0m
+\033[1;37m {self.bot.command_prefix}now\033[0m                \033[1;30m  Bài đang phát\033[0m
+\033[1;37m {self.bot.command_prefix}loop\033[0m               \033[1;30m  Bật/tắt lặp bài\033[0m
 
 \033[1;33m[🔊] ĐIỀU CHỈNH\033[0m
-\033[1;37m .volume [1-100]\033[0m \033[1;30m|\033[0m Điều chỉnh âm lượng
-\033[1;37m .pause\033[0m \033[1;30m|\033[0m Tạm dừng
-\033[1;37m .resume\033[0m \033[1;30m|\033[0m Tiếp tục
+\033[1;37m {self.bot.command_prefix}volume [1-100]\033[0m     \033[1;30m  Điều chỉnh âm lượng\033[0m
+\033[1;37m {self.bot.command_prefix}pause\033[0m              \033[1;30m  Tạm dừng\033[0m
+\033[1;37m {self.bot.command_prefix}resume\033[0m             \033[1;30m  Tiếp tục\033[0m
 
-\033[1;35m🎵 Nhạc có sẵn: stay_alive, styx_helix \033[0m
+\033[1;35m🎵 Nhạc có sẵn: stay_alive, styx_helix, akuma_no_ko, specialz\033[0m
 ```"""
         await ctx.send(menu)
 

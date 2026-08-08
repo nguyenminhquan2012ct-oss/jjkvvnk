@@ -27,20 +27,20 @@ class ChucuSystem(commands.Cog):
 \033[1;31m🏮 PHỤC MA NGỰ TỌA: CHÚ CỤ HỖ TRỢ 🏮\033[0m
 
 \033[1;35m[⚡] PHÁP BẢO CẤP TỐC\033[0m
-\033[1;37m .thauthi [token]\033[0m \033[1;30m|\033[0m [Thấu Thị] Kiểm tra linh lực token
-\033[1;37m .thanhduyet [số]\033[0m \033[1;30m|\033[0m [Thanh Duyệt] Xóa tin nhắn bản thân
-\033[1;37m .giapan\033[0m \033[1;30m|\033[0m [Giải Ấn] Đóng toàn bộ DM
+\033[1;37m {self.bot.command_prefix}thauthi [token]\033[0m       \033[1;30m  [Thấu Thị] Kiểm tra linh lực token\033[0m
+\033[1;37m {self.bot.command_prefix}thanhduyet [số]\033[0m       \033[1;30m  [Thanh Duyệt] Xóa tin nhắn bản thân\033[0m
+\033[1;37m {self.bot.command_prefix}giapan\033[0m                \033[1;30m  [Giải Ấn] Đóng toàn bộ DM\033[0m
 
 \033[1;34m[🔊] THÔNG TIN & SOI TÌM\033[0m
-\033[1;37m .nguonluc\033[0m \033[1;30m|\033[0m [Nguồn Lực] Check ping và hệ thống
-\033[1;37m .truytung [@tag]\033[0m \033[1;30m|\033[0m [Truy Tung] Soi avatar
-\033[1;37m .phian [@tag]\033[0m \033[1;30m|\033[0m [Phi Ấn] Soi banner
+\033[1;37m {self.bot.command_prefix}nguonluc\033[0m              \033[1;30m  [Nguồn Lực] Check ping và hệ thống\033[0m
+\033[1;37m {self.bot.command_prefix}truytung [@tag]\033[0m       \033[1;30m  [Truy Tung] Soi avatar\033[0m
+\033[1;37m {self.bot.command_prefix}phian [@tag]\033[0m          \033[1;30m  [Phi Ấn] Soi banner\033[0m
 
 \033[1;33m[🧿] THAO TÁC ĐẶC BIỆT\033[0m
-\033[1;37m .sao-an [server_id]\033[0m \033[1;30m|\033[0m [Sao Ấn] Tái tạo cấu trúc kênh
-\033[1;37m .danhdinh [@tag]\033[0m \033[1;30m|\033[0m [Danh Tính] Thông tin người dùng
-\033[1;37m .ketgioi\033[0m \033[1;30m|\033[0m [Kết Giới] Thông số server
-\033[1;37m .dongan [emoji]\033[0m \033[1;30m|\033[0m [Đóng Ấn] Sao chép emoji
+\033[1;37m {self.bot.command_prefix}sao-an [server_id]\033[0m    \033[1;30m  [Sao Ấn] Tái tạo cấu trúc kênh\033[0m
+\033[1;37m {self.bot.command_prefix}danhdinh [@tag]\033[0m       \033[1;30m  [Danh Tính] Thông tin người dùng\033[0m
+\033[1;37m {self.bot.command_prefix}ketgioi\033[0m               \033[1;30m  [Kết Giới] Thông số server\033[0m
+\033[1;37m {self.bot.command_prefix}dongan [emoji]\033[0m        \033[1;30m  [Đóng Ấn] Sao chép emoji\033[0m
 ```"""
 
         await ctx.send(menu)

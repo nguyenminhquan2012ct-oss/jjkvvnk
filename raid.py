@@ -56,21 +56,21 @@ class RaidModule(commands.Cog):
 \033[1;31m🏮 PHỤC MA NGỰ TỌA: THIẾT LẬP SÁT CHIÊU 🏮\033[0m
 
 \033[1;35m[⚡] THUẬT THỨC CẤP TỐC (SPAM)\033[0m
-\033[1;37m .vohahan [delay] [text]\033[0m \033[1;30m|\033[0m [Vô Hạn] Spam tùy chỉnh
-\033[1;37m .thuong [delay]\033[0m          \033[1;30m|\033[0m [Thương] Nhây file ngon.txt
-\033[1;37m .lienke [delay] [@tag]\033[0m    \033[1;30m|\033[0m [Liên Kế] Nhây file nhay.txt
-\033[1;37m .hacmon [url] [delay] [text]\033[0m \033[1;30m|\033[0m [Hắc Môn] Thuật thức Webhook
+\033[1;37m {self.bot.command_prefix}vohahan [delay] [text]\033[0m   \033[1;30m  [Vô Hạn] Spam tùy chỉnh\033[0m
+\033[1;37m {self.bot.command_prefix}thuong [delay]\033[0m            \033[1;30m  [Thương] Nhây file ngon.txt\033[0m
+\033[1;37m {self.bot.command_prefix}lienke [delay] [@tag]\033[0m     \033[1;30m  [Liên Kế] Nhây file nhay.txt\033[0m
+\033[1;37m {self.bot.command_prefix}hacmon [url] [delay] [text]\033[0m \033[1;30m  [Hắc Môn] Thuật thức Webhook\033[0m
 
 \033[1;34m[🔊] KẾT GIỚI ÂM THANH (VOICE)\033[0m
-\033[1;37m .ngucmon [id]\033[0m               \033[1;30m|\033[0m [Ngục Môn] Treo hồn trong Voice
-\033[1;37m .loanvuc [id] [delay]\033[0m        \033[1;30m|\033[0m [Loạn Vực] Spam J/L Voice
-\033[1;37m .anpham [số] [emoji]\033[0m       \033[1;30m|\033[0m [Ấn Phẩm] Đóng dấu chú thuật
+\033[1;37m {self.bot.command_prefix}ngucmon [id]\033[0m                \033[1;30m  [Ngục Môn] Treo hồn trong Voice\033[0m
+\033[1;37m {self.bot.command_prefix}loanvuc [id] [delay]\033[0m         \033[1;30m  [Loạn Vực] Spam J/L Voice\033[0m
+\033[1;37m {self.bot.command_prefix}anpham [số] [emoji]\033[0m        \033[1;30m  [Ấn Phẩm] Đóng dấu chú thuật\033[0m
 
 \033[1;31m[🧨] ĐỊA NGỤC TRẦN GIAN (DESTROY)\033[0m
-\033[1;37m .khaitram\033[0m                   \033[1;30m|\033[0m [Khai Trảm] Giải trừ toàn bộ kênh
-\033[1;37m .huydiet [tên] [text]\033[0m      \033[1;30m|\033[0m [Hủy Diệt] Bình địa kết giới (Nuke)
+\033[1;37m {self.bot.command_prefix}khaitram\033[0m                    \033[1;30m  [Khai Trảm] Giải trừ toàn bộ kênh\033[0m
+\033[1;37m {self.bot.command_prefix}huydiet [tên] [text]\033[0m       \033[1;30m  [Hủy Diệt] Bình địa kết giới (Nuke)\033[0m
 
-\033[1;33m⚠️ Lưu ý: Gõ .ngung để thu hồi toàn bộ thuật thức!\033[0m
+\033[1;33m⚠️ Lưu ý: Gõ {self.bot.command_prefix}ngung để thu hồi toàn bộ thuật thức!\033[0m
 ```"""
             gif_raid = "https://cdn.discordapp.com/attachments/1376174995230949446/1520297142709784626/From_Klickpin.com-_Printable_Wall_Art_Ideas_That_Make_Everyday_Better_29506-pin-id-730779477063900866.gif?ex=6a40ae8c&is=6a3f5d0c&hm=5f9ab89de47a1d586beda24cf5c18f73d6b83f850b416cc3b00afbd2059014f1&"
             

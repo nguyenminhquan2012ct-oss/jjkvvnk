@@ -24,13 +24,13 @@ class LanhDiaSystem(commands.Cog):
 \033[1;34m[+] CHÚ THUẬT SƯ:\033[0m \033[1;32m{self.bot.user.name}\033[0m
 
 \033[1;31m[!] DANH SÁCH THUẬT THỨC\033[0m
-\033[1;37m 🔵 .thuong\033[0m   \033[1;30m|\033[0m [Thương] Nhây ngôn từ (ngon.txt)
-\033[1;37m 🔴 .he\033[0m       \033[1;30m|\033[0m [Hách] Đấm tag liên hồi (nhay.txt)
-\033[1;37m ⚔️ .ngutoa\033[0m   \033[1;30m|\033[0m [Ngự Tọa] Chém nát Server (Raid)
-\033[1;37m ✨ .info\033[0m     \033[1;30m|\033[0m [Lục Nhãn] Soi thông số kết giới
-\033[1;37m 🧹 .tayue\033[0m    \033[1;30m|\033[0m [Tẩy Uế] Thanh tẩy tin nhắn (Clear)
-\033[1;37m 🔄 .hoiphuc\033[0m  \033[1;30m|\033[0m [Phản Phục] Tái thiết kết giới (Restart)
-\033[1;37m ⚪ .ngung\033[0m    \033[1;30m|\033[0m [Ngưng] Giải ấn chú thuật (Stop)
+\033[1;37m 🔵 {self.bot.command_prefix}thuong\033[0m     \033[1;30m  [Thương] Nhây ngôn từ (ngon.txt)\033[0m
+\033[1;37m 🔴 {self.bot.command_prefix}he\033[0m         \033[1;30m  [Hách] Đấm tag liên hồi (nhay.txt)\033[0m
+\033[1;37m ⚔️ {self.bot.command_prefix}ngutoa\033[0m     \033[1;30m  [Ngự Tọa] Chém nát Server (Raid)\033[0m
+\033[1;37m ✨ {self.bot.command_prefix}info\033[0m       \033[1;30m  [Lục Nhãn] Soi thông số kết giới\033[0m
+\033[1;37m 🧹 {self.bot.command_prefix}tayue\033[0m      \033[1;30m  [Tẩy Uế] Thanh tẩy tin nhắn (Clear)\033[0m
+\033[1;37m 🔄 {self.bot.command_prefix}hoiphuc\033[0m    \033[1;30m  [Phản Phục] Tái thiết kết giới (Restart)\033[0m
+\033[1;37m ⚪ {self.bot.command_prefix}ngung\033[0m      \033[1;30m  [Ngưng] Giải ấn chú thuật (Stop)\033[0m
 
 \033[1;35m"Trong lãnh địa của ta, mọi đòn tấn công đều là tất trúng."\033[0m
 ```"""

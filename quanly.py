@@ -24,17 +24,17 @@ class QuanLySystem(commands.Cog):
 
 \033[1;35m👥 QUẢN LÝ THÀNH VIÊN 👥\033[0m
 
-\033[1;37m📤  .tram [user]\033[0m    \033[1;30m|\033[0m Kick user (Trảm)
-\033[1;37m🚫  .phong [user]\033[0m   \033[1;30m|\033[0m Ban user (Phong Ấn)
-\033[1;37m➕  .giai [user_id]\033[0m  \033[1;30m|\033[0m Unban user (Giải Ấn)
+\033[1;37m📤  {self.bot.command_prefix}tram [user]\033[0m     \033[1;30m  Kick user (Trảm)\033[0m
+\033[1;37m🚫  {self.bot.command_prefix}phong [user]\033[0m    \033[1;30m  Ban user (Phong Ấn)\033[0m
+\033[1;37m➕  {self.bot.command_prefix}giai [user_id]\033[0m   \033[1;30m  Unban user (Giải Ấn)\033[0m
 
 \033[1;34m🏗️ QUẢN LÝ KÊNH 🏗️\033[0m
 
-\033[1;37m🧹  .diet\033[0m           \033[1;30m|\033[0m Trảm sạch toàn bộ kênh (Tẩy Uế)
-\033[1;37m🏗️  .tao [tên]\033[0m      \033[1;30m|\033[0m Kiến tạo kênh hàng loạt
-\033[1;37m📝  .danh [tên mới]\033[0m  \033[1;30m|\033[0m Đổi danh tính server
+\033[1;37m🧹  {self.bot.command_prefix}diet\033[0m            \033[1;30m  Trảm sạch toàn bộ kênh (Tẩy Uế)\033[0m
+\033[1;37m🏗️  {self.bot.command_prefix}tao [tên]\033[0m       \033[1;30m  Kiến tạo kênh hàng loạt\033[0m
+\033[1;37m📝  {self.bot.command_prefix}danh [tên mới]\033[0m   \033[1;30m  Đổi danh tính server\033[0m
 
-\033[1;33m⚠️  Gõ .quanly để xem lại bảng lệnh!\033[0m
+\033[1;33m⚠️  Gõ {self.bot.command_prefix}quanly để xem lại bảng lệnh!\033[0m
 ```"""
             await ctx.send(panel)
         except Exception as e:
