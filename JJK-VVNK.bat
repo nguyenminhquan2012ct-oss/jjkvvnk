@@ -1,7 +1,7 @@
 @echo off
-title JJK-VVNK Bot | QU4N.TH3.D3V
-color 0D
+title JJK-VVNK Bot
 cls
+
 echo.
 echo    ___           _           _       QU4N.TH3.D3V
 echo   / (_)___ _ __ ^| ^|__  _   ^|_ ___
@@ -11,79 +11,35 @@ echo /_/  ^|_^|___/ .__/^|_.__/ \__, ^|^\__\___^|
 echo             ^|_^|          ^|___/
 echo.
 echo  ========================================
-echo   JJK-VVNK Self-Bot v6.0 - Terminal UI
+echo   JJK-VVNK Self-Bot v6.0
 echo  ========================================
 echo.
-echo  [1] Chay Bot
-echo  [2] Cai Dat / Doi Token
-echo  [3] Xem Log
-echo  [0] Thoat
-echo.
-set /p choice="  Chon: "
 
-if "%choice%"=="1" goto RUN
-if "%choice%"=="2" goto SETUP
-if "%choice%"=="3" goto LOG
-if "%choice%"=="0" exit
-
-:SETUP
-echo.
-echo  Dang mo launcher...
-powershell -ExecutionPolicy Bypass -File "%~dp0launch.ps1"
-goto MENU
-
-:RUN
-echo.
-echo  Dang khoi dong bot...
 if not exist config.json (
-    echo  Chua co config! Chay launcher de cai dat truoc.
-    powershell -ExecutionPolicy Bypass -File "%~dp0launch.ps1"
-    goto MENU
+    echo  [!] Chua co config.json!
+    echo  [?] Dang tao file config...
+    echo.
+    set /p token="  Nhap Discord Token: "
+    set /p prefix="  Nhap Prefix (Enter = .): "
+    if "!prefix!"=="" set prefix=.
+
+    powershell -Command "$t='%token%'; $p='%prefix%'; if($p -eq ''){$p='.'}; @{Token=$t;Prefix=$p} | ConvertTo-Json | Set-Content config.json -Encoding UTF8"
+    echo  [OK] Da luu config.json!
+    echo.
 )
-for /f "tokens=*" %%i in ('powershell -Command "(Get-Content config.json -Raw | ConvertFrom-Json).Token"') do set BOT_TOKEN=%%i
-set DISCORD_TOKEN=%BOT_TOKEN%
+
+echo  [*] Dang kiem tra thu vien...
 python -m pip install -r requirements.txt -q 2>nul
-python main.py
-pause
-goto MENU
-
-:LOG
+echo  [OK] San sang!
 echo.
-echo  Dang xem log (Ctrl+C de dung)...
-if not exist config.json (
-    echo  Chua co config!
-    pause
-    goto MENU
-)
+
+set /p BOT_TOKEN_TOKEN=<nul
 for /f "tokens=*" %%i in ('powershell -Command "(Get-Content config.json -Raw | ConvertFrom-Json).Token"') do set BOT_TOKEN=%%i
 set DISCORD_TOKEN=%BOT_TOKEN%
+
+echo  [*] Dang khoi dong bot...
+echo.
 python main.py
+echo.
+echo  [*] Bot da dung.
 pause
-goto MENU
-
-:MENU
-cls
-echo.
-echo    ___           _           _       QU4N.TH3.D3V
-echo   / (_)___ _ __ ^| ^|__  _   ^|_ ___
-echo  / /^| / __^| '_ \^| '_ \^| ^| ^| ^| __/ _ \
-echo / / ^| \__ \ ^|_) ^| ^|_) ^| ^|_^| ^| ^|  __/
-echo /_/  ^|_^|___/ .__/^|_.__/ \__, ^|^\__\___^|
-echo             ^|_^|          ^|___/
-echo.
-echo  ========================================
-echo   JJK-VVNK Self-Bot v6.0 - Terminal UI
-echo  ========================================
-echo.
-echo  [1] Chay Bot
-echo  [2] Cai Dat / Doi Token
-echo  [3] Xem Log
-echo  [0] Thoat
-echo.
-set /p choice="  Chon: "
-
-if "%choice%"=="1" goto RUN
-if "%choice%"=="2" goto SETUP
-if "%choice%"=="3" goto LOG
-if "%choice%"=="0" exit
-goto MENU
