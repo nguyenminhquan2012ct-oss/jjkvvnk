@@ -1,288 +1,319 @@
-# 🔥 NÂNG CẤP JJK-VVNK BOT
+# 🏮 JJK-VVNK BOT v6.0
 
-## 📋 TỔNG QUAN
-Nâng cấp bot self-bot Discord từ bản cơ bản lên phiên bản **pro** với:
-- **War**: Spam, raid, nuke, mass actions nâng cao
-- **Giải trí**: Game, meme, mini games, tương tác
-- **Nhạc**: YouTube link, nhạc có sẵn, queue, volume
-- **Hiệu năng**: Rate limit thông minh, cache, connection pool
-- **Giao diện**: Embed, buttons, reactions, menus đẹp
+**Self-Bot Discord theo phong cách Jujutsu Kaisen**
+Tác giả: **QU4N.TH3.D3V**
 
 ---
 
-## 🎵 PHẦN 1: NHẠC (Music Module)
+## 📋 Mục lục
 
-### Tính năng:
-```
-.play [link/tên]      - Phát nhạc từ YouTube link hoặc tìm kiếm
-.play-sa              - Phát "Stay Alive" (nhạc có sẵn)
-.play-sh              - Phát "Styx Helix" (nhạc có sẵn)  
-.queue                - Xem danh sách chờ
-.skip                 - Bỏ qua bài hiện tại
-.stop                 - Dừng nhạc + rời voice
-.volume [1-100]       - Điều chỉnh âm lượng
-.pause                - Tạm dừng
-.resume               - Tiếp tục
-.loop                 - Bật/tắt lặp bài
-.now                  - Bài đang phát
-.lyrics               - Lời bài hát hiện tại
-```
-
-### Tech requirements:
-- `yt-dlp` (tối ưu hơn youtube-dl)
-- `ffmpeg` (audio processing)
-- `discord.py[self]` voice support
-- Built-in songs: mp3 files trong thư mục `music/`
-- Cache歌词, metadata
-
-### Built-in playlist:
-```
-music/
-├── stay_alive.mp3
-├── styx_helix.mp3
-├── akuma_no_ko.mp3
-├── specialz.mp3
-└── ... (thêm bài yêu thích)
-```
+- [Tính năng](#tính-năng)
+- [Cài đặt](#cài-đặt)
+- [Cách dùng](#cách-dùng)
+- [Danh sách lệnh](#danh-sách-lệnh)
+- [Hosting (Wispbyte)](#hosting)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
-## ⚔️ PHẦN 2: WAR (Raid Module Nâng Cao)
+## ⚡ Tính năng
 
-### Tính năng mới:
-```
-.vohahan [delay] [text]    - Spam tùy chỉnh (giữ)
-.vohahan-all [delay] [text] - Spam TẤT CẢ kênh text
-.thuong [delay]            - Spam ngon.txt (giữ)
-.thuong-all [delay]        - Spam ngon.txt tất cả kênh
-.hacmon [url] [delay] [text] - Webhook spam (giữ)
-.khaitram                  - Xóa toàn bộ kênh (giữ)
-.khaitram-all              - Xóa + tạo kênh mới + spam
-.massban                   - Ban hàng loạt (từ file/list)
-.masskick                  - Kick hàng loạt
-.massnick [name]           - Đổi tên hàng loạt
-.nukename [name]           - Đổi tên server
-.delete-all                - Xóa TẤT CẢ (kênh + role + emoji)
-.lockdown                  - Lock server (deny @everyone)
-.raid-protect              - Tự động kick người lạ khi raid
-```
-
-### Rate limit nâng cao:
-- Theo dõi `X-RateLimit-Remaining` headers
-- Tự động throttle trước khi chạm limit
-- Exponential backoff thông minh
-- Queue system cho mass actions
-- Progress bar khi thực hiện hàng loạt
+| Module | Mô tả |
+|--------|-------|
+| **⚔️ War** | Spam, raid, nuke, mass delete/create |
+| **🎵 Music** | YouTube, queue, volume, nhạc có sẵn |
+| **🎮 Entertainment** | 8ball, rps, trivia, economy, daily |
+| **🛠️ Utility** | Ping, avatar, banner, server info |
+| **🛡️ Admin** | Kick, ban, unban, create/delete channels |
+| **🃏 Troll** | Fake message, dice, mind games |
+| **📊 UI** | Embed menu, progress bar, pagination |
 
 ---
 
-## 🎮 PHẦN 3: GIẢI TRÍ (Entertainment Module)
+## 📥 Cài đặt
 
-### Mini Games:
-```
-.8ball [câu hỏi]     - Phép bói 8 bóng
-.rps [rock/paper/scissors] - Kéo búa bao
-.trivia              - Câu đố vui
-.coinflip            - Toss đồng xu
-.number [1-100]      - Đoán số
-.wordle              - Game Wordle
-.tictactoe [@user]   - Cờ caro
-.quiz                - Quiz kiến thức
+### Cách 1: 1-Click (PowerShell)
+
+```powershell
+irm https://raw.githubusercontent.com/nguyenminhquan2012ct-oss/jjkvvnk/main/setup.ps1 | iex
 ```
 
-### Fun Commands:
-```
-.meme                - Random meme từ Reddit
-.anime [tên]         - Tìm anime
-.quote               - Random quote
-.fact                - fact thú vị
-.insult [@user]      - Insult random (vui)
-.compliment [@user]  - Khen ngợi
-.avatar [@user]      - Avatar đẹp hơn (embed)
-.banner [@user]      - Banner đẹp hơn
-.steam [@user]       - Steam profile
-.mine                - Đào vàng mini game
-.farm                - Farm resources
-.daily               - Nhận quà hàng ngày
-.bal                 - Xem số dư
-.pay [@user] [số]    - Chuyển tiền
-.shop                - Cửa hàng
-.inventory           - Vật phẩm
+Tự động: clone repo → cài dependencies → cấu hình token → chạy bot.
+
+### Cách 2: Tải thủ công
+
+1. Tải zip từ GitHub: https://github.com/nguyenminhquan2012ct-oss/jjkvvnk
+2. Giải nén
+3. Cài dependencies:
+```bash
+pip install -r requirements.txt
 ```
 
-### Utility nâng cao:
-```
-.remind [phút] [nội dung] - Nhắc nhở
-.timer [giây]             - Đếm ngược
-.poll [câu hỏi]          - Bình chọn (reaction)
-.strawpoll               - Strawpoll link
-.translate [text]         - Dịch ngôn ngữ
-.weather [thành phố]     - Thời tiết
-.emoji-stats             - Thống kê emoji server
-.server-info             - Info server chi tiết
-.user-info [@user]       - Info user chi tiết
-.bot-info                - Info bot chi tiết
-.uptime                  - Bot chạy được bao lâu
-.ping                    - Latency
+### Cách 3: Clone
+
+```bash
+git clone https://github.com/nguyenminhquan2012ct-oss/jjkvvnk.git
+cd jjkvvnk
+pip install -r requirements.txt
 ```
 
 ---
 
-## 🎨 PHẦN 4: GIAO DIỆN (UI/UX)
+## 🚀 Cách dùng
 
-### Embed Menu System:
-```
-.menu               - Menu chính (embed đẹp)
-.warmenu            - Menu war
-.musicmenu          - Menu nhạc
-.funmenu            - Menu giải trí
-.settingsmenu       - Menu cài đặt
+### PowerShell Launcher (Khuyến nghị)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File launch.ps1
 ```
 
-### Features:
-- Discord Embeds có màu theo loại lệnh
-- Buttons cho menu chính (Interaction buttons)
-- Pagination cho danh sách dài
-- Progress bars khi spam/raid
-- Color scheme:
-  - 🔴 War: Red (#FF0000)
-  - 🔵 Music: Blue (#00FF00)
-  - 🟢 Fun: Green (#00FF00)
-  - 🟡 Utility: Yellow (#FFFF00)
-  - 🟣 Special: Purple (#800080)
+Hoặc双击 file `JJK-VVNK.bat`
 
-### Reaction Navigation:
-- ⬅️ ➡️ để chuyển trang
-- ❌ để đóng menu
-- ✅ để xác nhận
+### Chạy trực tiếp
+
+**Windows:**
+```cmd
+set BOT_TOKEN=token_cua_ban
+python main.py
+```
+
+**Linux/Mac:**
+```bash
+export BOT_TOKEN=token_cua_ban
+python main.py
+```
+
+### Cấu hình
+
+Tạo file `config.json` (hoặc dùng launcher):
+```json
+{
+    "token": "DISCORD_TOKEN_CUA_BAN",
+    "prefix": "."
+}
+```
+
+Hoặc đặt biến môi trường:
+- `BOT_TOKEN` (ưu tiên cao nhất)
+- `DISCORD_TOKEN`
+- `DISCORD_BOT_TOKEN`
 
 ---
 
-## ⚡ PHẦN 5: HIỆU NĂNG (Performance)
+## 📖 Danh sách lệnh
 
-### Rate Limit System:
-```python
-class SmartRateLimiter:
-    - Theo dõi headers X-RateLimit-Remaining
-    - Pre-throttle: ngủ trước khi chạm limit
-    - Exponential backoff: 1s → 2s → 4s → 8s...
-    - Global bucket detection
-    - Per-route bucket tracking
-```
+### ⚔️ WAR (`raid`)
+| Lệnh | Mô tả |
+|-------|-------|
+| `.raid` | Menu war |
+| `.vohahan [delay] [text]` | Spam tùy chỉnh |
+| `.thuong [delay]` | Spam file ngon.txt |
+| `.lienke [delay]` | Spam file nhay.txt |
+| `.hacmon [url] [delay] [text]` | Webhook spam |
+| `.ngucmon [voice_id]` | Treo voice |
+| `.loanvuc [voice_id] [delay]` | Spam join/leave voice |
+| `.anpham [số] [emoji]` | Mass reaction |
+| `.khaitram` | Xóa toàn bộ kênh |
+| `.huydiet` | Nuke server |
+| `.ngung` | Dừng tất cả |
 
-### Caching:
-```python
-class BotCache:
-    - Cache user info (5 phút)
-    - Cache guild info (10 phút)
-    - Cache channel list (2 phút)
-    - Cache role list (5 phút)
-    - Auto-invalidate on changes
-```
+### 🎵 MUSIC (`nhac`)
+| Lệnh | Mô tả |
+|-------|-------|
+| `.nhac` | Menu nhạc |
+| `.play [link/tên]` | Phát từ YouTube |
+| `.play-sa` | Phát Stay Alive |
+| `.play-sh` | Phát Styx Helix |
+| `.play-amk` | Phát Akuma no Ko |
+| `.play-sp` | Phát Specialz |
+| `.queue` | Xem hàng chờ |
+| `.skip` | Bỏ qua bài hiện tại |
+| `.stop` | Dừng + rời voice |
+| `.now` | Bài đang phát |
+| `.loop` | Bật/tắt lặp |
+| `.volume [1-100]` | Điều chỉnh âm lượng |
+| `.pause` | Tạm dừng |
+| `.resume` | Tiếp tục |
 
-### Connection Pooling:
-```python
-class SessionManager:
-    - aiohttp.ClientSession reuse
-    - Connection keep-alive
-    - Cookie jar persistence
-    - Timeout configuration
-```
+### 🎮 ENTERTAINMENT (`traloi`)
+| Lệnh | Mô tả |
+|-------|-------|
+| `.traloi` | Menu giải trí |
+| `.8ball [câu hỏi]` | Phép bói 8 bóng |
+| `.rps [rock/paper/scissors]` | Kéo búa bao |
+| `.trivia` | Câu đố vui |
+| `.coinflip` | Toss đồng xu |
+| `.number [1-100]` | Đoán số |
+| `.daily` | Nhận quà hàng ngày |
+| `.bal` | Xem số dư |
+| `.pay [@user] [số]` | Chuyển tiền |
+| `.shop` | Cửa hàng |
+| `.buy [item]` | Mua vật phẩm |
+| `.inventory` | Xem vật phẩm |
+| `.fact` | Fact thú vị |
+| `.quote` | Trích dẫn JJK |
+| `.insult [@user]` | Insult vui |
+| `.compliment [@user]` | Khen ngợi |
+| `.avatar [@user]` | Xem avatar |
+| `.banner [@user]` | Xem banner |
 
-### Memory Optimization:
-- Lazy loading cho大型 file (ngon.txt, nhay.txt)
-- Stream processing cho spam
-- Limit cache size
-- Cleanup unused objects
+### 🛠️ UTILITY (`chucu`)
+| Lệnh | Mô tả |
+|-------|-------|
+| `.chucu` | Menu tiện ích |
+| `.thauthi [token]` | Kiểm tra token |
+| `.thanhduyet [số]` | Xóa tin nhắn bản thân |
+| `.giapan` | Đóng DM |
+| `.nguonluc` | Check ping |
+| `.truytung [@user]` | Soi avatar |
+| `.phian [@user]` | Soi banner |
+| `.sao-an [server_id]` | Copy cấu trúc kênh |
+| `.danhdinh [@user]` | Info người dùng |
+| `.ketgioi` | Info server |
+| `.dongan [emoji]` | Copy emoji |
+
+### 🛡️ ADMIN (`quanly`)
+| Lệnh | Mô tả |
+|-------|-------|
+| `.quanly` | Menu quản lý |
+| `.tram [user]` | Kick |
+| `.phong [user]` | Ban |
+| `.giai [user_id]` | Unban |
+| `.diet` | Xóa toàn bộ kênh |
+| `.tao [tên]` | Tạo kênh hàng loạt |
+| `.danh [tên]` | Đổi tên server |
+
+### 🃏 TROLL
+| Lệnh | Mô tả |
+|-------|-------|
+| `.troll` | Menu troll |
+| `.batdiet` | Random outcome |
+| `.xucxac` | Tung xúc xắc |
+| `.amhon [channel_id] [file]` | Phát nhạc voice |
+| `.truhon` | Rời voice |
+| `.fake [@user] [text]` | Giả mạo tin nhắn |
+| `.donguyen` | Đoạn chú lực |
+| `.nguyenrua [@user]` | Ám quẻ |
+
+### 📊 UI
+| Lệnh | Mô tả |
+|-------|-------|
+| `.menu` | Menu chính (embed) |
+| `.warmenu` | Menu war (embed) |
+| `.musicmenu` | Menu nhạc (embed) |
+| `.funmenu` | Menu giải trí (embed) |
+| `.lanhdia` | Menu ANSI |
+| `.info` | Thông tin bot |
 
 ---
 
-## 📦 PHẦN 6: THƯ VIỆN CẦN THÊM
+## 🌐 Hosting (Wispbyte)
 
-```txt
-# requirements.txt mới
-discord.py-self>=2.0.0
-aiohttp>=3.8.0
-yt-dlp>=2023.1.6
-ffmpeg-python>=0.2.0
-pynacl>=1.5.0
-pyttsx3>=2.90
-googletrans==4.0.0rc1
-wikipedia>=1.4.0
-Pillow>=9.0.0
+### Bước 1: Upload
+
+**Cách A — GitHub (khuyến nghị):**
+1. Push code lên GitHub
+2. Trên Wispbyte panel → Clone từ URL
+
+**Cách B — Upload zip:**
+1. Tải `JJK-VVNK-v6.zip`
+2. Upload lên Wispbyte FileManager
+
+### Bước 2: Startup Command
+
+```
+if [[ -d .git ]] && [[ "0" == "1" ]]; then git pull; fi;
+if [[ ! -z "aiohttp" ]]; then pip install -U --prefix .local aiohttp; fi;
+if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then 
+  pip install -U --prefix .local -r ${REQUIREMENTS_FILE}; 
+fi;
+/usr/local/bin/python /home/container/main.py
 ```
 
-### System Dependencies:
-- `ffmpeg` (audio)
-- `yt-dlp` (YouTube download)
+### Bước 3: Environment Variables
+
+| Key | Value |
+|-----|-------|
+| `BOT_TOKEN` | Token Discord của bạn |
+
+### Bước 4: Khởi động
+
+Nhấn **Start** trên panel. Bot sẽ chạy 24/7.
+
+### ⚠️ Lưu ý hosting
+
+- Free tier rất ít dung lượng — xóa `.git/`, `__pycache__/`, `.zip`
+- Python version: 3.11 hoặc 3.12
+- Cần `ffmpeg` cho music: thêm `apt install -y ffmpeg` vào startup
 
 ---
 
-## 🔧 PHẦN 7: CẤU TRÚC FILE MỚI
+## 🔧 Troubleshooting
+
+### Bot không chạy
+- Kiểm tra token đúng chưa
+- Xem log trên console
+- Chạy `python main.py` trực tiếp để xem lỗi
+
+### Lỗi `ModuleNotFoundError`
+```bash
+pip install -r requirements.txt
+```
+
+### Lỗi rate limit (429)
+Bot tự xử lý rate limit. Nếu bị spam quá, giảm delay:
+```
+.vohahan 1.0 text
+```
+
+### Lỗi voice/music
+- Cần cài `ffmpeg`
+- Linux: `apt install ffmpeg`
+- Windows: tải ffmpeg.exe đặt trong thư mục `ffmpeg/`
+
+### Không join voice được
+- Kiểm tra bot có quyền `Connect` trong voice channel
+- ID voice phải đúng
+
+---
+
+## 📁 Cấu trúc file
 
 ```
 JJK-VVNK/
-├── main.py              - Entry point
-├── rate_utils.py        - Rate limit handling
-├── music.py             - Music module
-├── war.py               - War module (nâng cao)
-├── entertainment.py     - Games & fun
-├── utils.py             - Utility functions
-├── ui.py                - Embeds & menus
-├── cache.py             - Caching system
-├── config.py            - Cài đặt bot
-├── requirements.txt
-├── music/               - Built-in songs
-│   ├── stay_alive.mp3
-│   ├── styx_helix.mp3
-│   └── ...
-└── data/                - Data files
-    ├── ngon.txt
-    ├── nhay.txt
-    ├── trivia.json
-    └── memes.json
+├── main.py              ← Entry point
+├── rate_utils.py        ← Xử lý rate limit
+├── cache.py             ← Cache system
+├── ui.py                ← Embed helpers
+├── entertainment.py     ← Games & economy
+├── music.py             ← YouTube music
+├── raid.py              ← War commands
+├── tienich.py           ← Utility commands
+├── quanly.py            ← Admin commands
+├── troll.py             ← Troll commands
+├── lanhdia.py           ← Menu & info
+├── requirements.txt     ← Dependencies
+├── ngon.txt             ← Data cho .thuong
+├── nhay.txt             ← Data cho .lienke
+├── launch.ps1           ← PowerShell launcher
+├── setup.ps1            ← 1-click installer
+├── JJK-VVNK.bat         ← Batch launcher
+└── music/               ← Nhạc có sẵn (tạo thủ công)
+    ├── stay_alive.mp3
+    ├── styx_helix.mp3
+    ├── akuma_no_ko.mp3
+    └── specialz.mp3
 ```
 
 ---
 
-## 🚀 PHẦN 8: IMPLEMENTATION ORDER
+## ⚠️ Lưu ý quan trọng
 
-### Phase 1: Core (Ưu tiên cao nhất)
-1. ✅ Rate limit nâng cao (rate_utils.py)
-2. ✅ Music module (music.py)
-3. ✅ Embed menus (ui.py)
-4. ✅ Cache system (cache.py)
-
-### Phase 2: War Features
-5. Mass actions (ban/kick/nick)
-6. Enhanced spam
-7. Server nuke nâng cao
-8. Raid protection
-
-### Phase 3: Entertainment
-9. Mini games
-10. Fun commands
-11. Daily/economy system
-12. Trivia & quotes
-
-### Phase 4: Polish
-13. Button interactions
-14. Progress bars
-15. Error handling đẹp
-16. Logging system
+- **Self-bot vi phạm ToS Discord** — dùng alt account
+- **Không spam quá đà** — dễ bị flag
+- **Token bí mật** — không share cho ai
+- **Backup config** — lưu token ở nơi an toàn
 
 ---
 
-
-## 📝 LƯU Ý
-
-1. **Self-bot**:仍vi phạm ToS Discord — account có nguy cơ bị ban
-2. **FFmpeg**: Cần cài trên hosting (apt install ffmpeg)
-3. **yt-dlp**: Cần cài trên hosting (pip install yt-dlp)
-4. **RAM**: Music + war cùng lúc có thể dùng nhiều RAM
-5. **Rate limit**: Luôn respect Discord API limits
-
----
-
-*Created: 2026-08-08*
-*Version: 2.0.0*
+*JJK-VVNK Bot v6.0 — Made by QU4N.TH3.D3V*
