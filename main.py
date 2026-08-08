@@ -58,9 +58,8 @@ bot = commands.Bot(command_prefix=PREFIX, self_bot=True, help_command=None)
 @bot.event
 async def on_ready():
     os.system('cls' if os.name == 'nt' else 'clear')
-    banner = f"""\033[1;36m
-    \033[1;33m                                                                        QU4N.TH3.D3V\033[0m
-
+    banner = f"""\033[1;33m
+                  QU4N.TH3.D3V\033[0m
 \033[1;36m    ██╗   ██╗██╗   ██╗███╗   ██╗██╗  ██╗   \033[0m
 \033[1;36m    ██║   ██║██║   ██║████╗  ██║██║ ██╔╝   \033[0m
 \033[1;36m    ██║   ██║██║   ██║██╔██╗ ██║█████╔╝    \033[0m

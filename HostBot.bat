@@ -4,8 +4,7 @@ cls
 color 0D
 
 echo.
-echo                                                                             QU4N.TH3.D3V
-echo.
+echo                  QU4N.TH3.D3V
 echo   ██╗   ██╗██╗   ██╗███╗   ██╗██╗  ██╗   
 echo   ██║   ██║██║   ██║████╗  ██║██║ ██╔╝   
 echo   ██║   ██║██║   ██║██╔██╗ ██║█████╔╝    
