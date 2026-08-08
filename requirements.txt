@@ -6,3 +6,4 @@ pytz
 psutil
 colour
 python-dateutil
+yt-dlp
