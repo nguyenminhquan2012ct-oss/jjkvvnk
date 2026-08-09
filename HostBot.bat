@@ -1,5 +1,5 @@
 @echo off
-chcp 65001 >nul
+chcp 65001 >nul 2>&1
 setlocal EnableExtensions EnableDelayedExpansion
 
 title HostBot
@@ -10,211 +10,64 @@ echo.
 echo                                                    QU4N.TH3.D3V
 echo   ██╗   ██╗██╗   ██╗███╗   ██╗██╗  ██╗
 echo   ██║   ██║██║   ██║████╗  ██║██║ ██╔╝
-echo   ██║   ██║██║   ██║██╔██╗ ██║█████═╝ 
-echo   ╚██╗ ██╔╝╚██╗ ██╔╝██║╚██╗██║██╔═██╗ 
+echo   ██║   ██║██║   ██║██╔██╗ ██║█████═╝
+echo   ╚██╗ ██╔╝╚██╗ ██╔╝██║╚██╗██║██╔═██╗
 echo    ╚████╔╝  ╚████╔╝ ██║ ╚████║██║  ██╗
 echo     ╚═══╝    ╚═══╝  ╚═╝  ╚═══╝╚═╝  ╚═╝
 echo.
 echo  ========================================
-echo   HostBot v6.0 - Discord Self-Bot
+echo   HostBot v6.3 - Discord Self-Bot
 echo  ========================================
 echo.
 
-REM ============================================================
-REM  CHECK PYTHON
-REM ============================================================
-
-echo  [1/5] Checking Python...
-
+REM === CHECK PYTHON ===
+echo  [1/3] Checking Python...
 where python >nul 2>&1
-
 if errorlevel 1 (
-    echo.
-    echo  [ERROR] Python was not found.
-    echo.
-    echo  Please install Python and enable:
-    echo  Add Python to PATH
-    echo.
+    echo  [ERROR] Python not found. Install Python and add to PATH.
     pause
     exit /b 1
 )
-
-for /f "tokens=*" %%A in ('python --version 2^>^&1') do (
-    set "PYTHON_VERSION=%%A"
-)
-
-echo  [ OK ] !PYTHON_VERSION!
+for /f "tokens=*" %%A in ('python --version 2^>^&1') do set "PV=%%A"
+echo  [OK] !PV!
 echo.
 
-REM ============================================================
-REM  CHECK PIP
-REM ============================================================
-
-echo  [2/5] Checking pip...
-
-python -m pip --version >nul 2>&1
-
-if errorlevel 1 (
-    echo.
-    echo  [ERROR] pip is not available.
-    echo.
-    pause
-    exit /b 1
-)
-
-echo  [ OK ] pip is available.
-echo.
-
-REM ============================================================
-REM  CONFIGURATION
-REM ============================================================
-
-echo  [3/5] Checking configuration...
-
+REM === CHECK CONFIG ===
+echo  [2/3] Checking config...
 if not exist "config.json" (
     echo.
-    echo  [INFO] config.json not found.
-    echo  [INFO] Creating configuration...
+    echo  config.json not found. Creating...
     echo.
+    set /p "TK=  Discord Token: "
+    set /p "PX=  Prefix [.]: "
+    if "!PX!"=="" set "PX=."
 
-    set "token="
-    set "prefix=."
-
-    set /p "token=  Discord Token: "
-    set /p "prefix=  Prefix [Enter = .]: "
-
-    if "!prefix!"=="" set "prefix=."
-
-    powershell -NoProfile -Command "$config = @{token='!token!'; prefix='!prefix!'}; $config | ConvertTo-Json | Set-Content -LiteralPath 'config.json' -Encoding UTF8"
-
-    if errorlevel 1 (
-        echo.
-        echo  [ERROR] Failed to create config.json.
-        echo.
-        pause
-        exit /b 1
-    )
-
+    echo {"token":"!TK!","prefix":"!PX!"} > "config.json"
+    echo  [OK] config.json created.
     echo.
-    echo  [ OK ] config.json created.
-    echo.
-)
-
-REM ============================================================
-REM  VALIDATE CONFIG
-REM ============================================================
-
-if not exist "config.json" (
-    echo  [ERROR] config.json is missing.
-    echo.
-    pause
-    exit /b 1
-)
-
-powershell -NoProfile -Command "$c=Get-Content -LiteralPath 'config.json' -Raw | ConvertFrom-Json; $t=$c.token; if ([string]::IsNullOrWhiteSpace($t)) { $t=$c.Token }; if ([string]::IsNullOrWhiteSpace($t)) { exit 1 }"
-
-if errorlevel 1 (
-    echo.
-    echo  [ERROR] Token is missing or invalid.
-    echo  [INFO ] Edit config.json and try again.
-    echo.
-    pause
-    exit /b 1
-)
-
-echo  [ OK ] config.json is valid.
-echo.
-
-REM ============================================================
-REM  DEPENDENCIES
-REM ============================================================
-
-echo  [4/5] Checking dependencies...
-
-if exist "requirements.txt" (
-    python -m pip install -r requirements.txt
-
-    if errorlevel 1 (
-        echo.
-        echo  [ERROR] Failed to install dependencies.
-        echo.
-        echo  Check your Internet connection and
-        echo  requirements.txt.
-        echo.
-        pause
-        exit /b 1
-    )
-
-    echo.
-    echo  [ OK ] Dependencies ready.
 ) else (
-    echo  [WARN] requirements.txt not found.
-    echo  [INFO] Skipping dependency installation.
+    echo  [OK] config.json found.
+    echo.
 )
 
-echo.
-
-REM ============================================================
-REM  APPLICATION
-REM ============================================================
-
-echo  [5/5] Checking application...
-
-if not exist "main.py" (
-    echo.
-    echo  [ERROR] main.py was not found.
-    echo.
-    echo  Current directory:
-    echo  %CD%
-    echo.
-    pause
-    exit /b 1
+REM === CHECK DEPS ===
+echo  [3/3] Checking dependencies...
+if exist "requirements.txt" (
+    python -m pip install -r requirements.txt --quiet 2>nul
 )
-
-echo  [ OK ] main.py found.
+echo  [OK] Ready.
 echo.
 
-REM ============================================================
-REM  CHECK CONSOLE
-REM ============================================================
-
-if not exist "console.py" (
-    echo  [WARN] console.py not found. Starting main.py directly.
-    echo.
-    python main.py
-    pause
-    exit /b
-)
-
-echo  [ OK ] console.py found.
-echo.
-
-REM ============================================================
-REM  START HOSTBOT CONSOLE
-REM ============================================================
-
+REM === START ===
 echo  ========================================
-echo.
-echo        STARTING HOSTBOT CONSOLE...
-echo.
+echo        STARTING HOSTBOT...
 echo  ========================================
 echo.
 
 python console.py
 
-set "EXIT_CODE=!errorlevel!"
-
 echo.
 echo  ========================================
-
-if "!EXIT_CODE!"=="0" (
-    echo  [ OK ] HostBot Console stopped normally.
-) else (
-    echo  [ERROR] HostBot Console exited with code !EXIT_CODE!
-)
-
+echo  HostBot stopped.
 echo  ========================================
-echo.
-
 pause
-exit /b !EXIT_CODE!

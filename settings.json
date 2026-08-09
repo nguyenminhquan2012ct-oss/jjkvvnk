@@ -22,12 +22,48 @@
         "footer": "HostBot | {servers} servers",
         "color_main": "0x800080",
         "sections": {
-            "war": {"name": "WAR", "emoji": "⚔️", "color": "0xFF0000", "command": "raid", "desc": "Menu chien tranh"},
-            "music": {"name": "MUSIC", "emoji": "🎵", "color": "0x00AAFF", "command": "nhac", "desc": "Menu nhac"},
-            "fun": {"name": "FUN", "emoji": "🎮", "color": "0x00FF00", "command": "traloi", "desc": "Menu giai tri"},
-            "utility": {"name": "UTILITY", "emoji": "🛠️", "color": "0xFFFF00", "command": "chucu", "desc": "Menu tien ich"},
-            "admin": {"name": "ADMIN", "emoji": "🛡️", "color": "0xFF0000", "command": "quanly", "desc": "Menu quan ly"},
-            "troll": {"name": "TROLL", "emoji": "🃏", "color": "0x00FFFF", "command": "troll", "desc": "Menu troll"}
+            "war": {
+                "name": "WAR",
+                "emoji": "⚔️",
+                "color": "0xFF0000",
+                "command": "raid",
+                "desc": "Menu chien tranh"
+            },
+            "music": {
+                "name": "MUSIC",
+                "emoji": "🎵",
+                "color": "0x00AAFF",
+                "command": "nhac",
+                "desc": "Menu nhac"
+            },
+            "fun": {
+                "name": "FUN",
+                "emoji": "🎮",
+                "color": "0x00FF00",
+                "command": "traloi",
+                "desc": "Menu giai tri"
+            },
+            "utility": {
+                "name": "UTILITY",
+                "emoji": "🛠️",
+                "color": "0xFFFF00",
+                "command": "chucu",
+                "desc": "Menu tien ich"
+            },
+            "admin": {
+                "name": "ADMIN",
+                "emoji": "🛡️",
+                "color": "0xFF0000",
+                "command": "quanly",
+                "desc": "Menu quan ly"
+            },
+            "troll": {
+                "name": "TROLL",
+                "emoji": "🃏",
+                "color": "0x00FFFF",
+                "command": "troll",
+                "desc": "Menu troll"
+            }
         }
     },
     "command_aliases": {
