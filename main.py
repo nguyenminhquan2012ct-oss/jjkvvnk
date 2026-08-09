@@ -187,10 +187,10 @@ async def on_message(message):
                         print(f"\033[1;32m[+] DA HUP DUOC NITRO: {code}\033[0m")
                     else:
                         print(f"\033[1;31m[-] Hut Nitro: {code}\033[0m")
-    except Exception:
-        pass
-
-    await bot.process_commands(message)
+    except Exception as e:
+        print(f"\033[1;31m[Nitro Error] {e}\033[0m")
+    finally:
+        await bot.process_commands(message)
 
 # --- 11. KHOI CHAY ---
 async def main():
