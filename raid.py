@@ -39,6 +39,10 @@ class RaidModule(commands.Cog):
     async def handle_rate_limit(self, response):
         return await handle_429_response(response)
 
+    async def delete_cmd(self, ctx):
+        """Xoa lenh - da duoc main.py on_message xu ly"""
+        pass
+
     # ================= MENU =================
 
     @commands.command(name="raid")
@@ -49,9 +53,9 @@ class RaidModule(commands.Cog):
 \033[1;37m**Chọn thuật thức tấn công:**\033[0m
 
 \033[1;35m⚡ SPAM\033[0m
-\033[1;30m  {p}vohahan [delay] [text] [count]  \033[1;30m- Spam # prefix 100d/tin\033[0m
-\033[1;30m  {p}thuong [delay] [count]          \033[1;30m- Spam ngon.txt 200d/tin\033[0m
-\033[1;30m  {p}lienke [delay] [@tag] [count]   \033[1;30m- Spam nhay.txt 1d/tin #\033[0m
+\033[1;30m  {p}vohahan [delay] [text] [count]  \033[1;30m- Spam # 100d/tin\033[0m
+\033[1;30m  {p}thuong [delay] [count]          \033[1;30m- ngon.txt 200d/tin\033[0m
+\033[1;30m  {p}lienke [delay] [@tag] [count]   \033[1;30m- nhay.txt 1d/tin #\033[0m
 \033[1;30m  {p}hacmon [url] [d] [t] [count]    \033[1;30m- Webhook 200d/tin\033[0m
 
 \033[1;34m🔊 VOICE\033[0m
@@ -71,22 +75,23 @@ class RaidModule(commands.Cog):
 
     @commands.command(name="vohahan")
     async def _vohahan(self, ctx, delay: float = 0, *, content):
-        """Spam voi # prefix - 100 dong/tin nhan. Syntax: .vohahan [delay] [text] [count]"""
+        """Spam voi # prefix - 100 dong/tin. Syntax: .vohahan [delay] [text] [count]"""
         parts = content.rsplit(None, 1)
-        count = 100
+        count = None
         text = content
         if len(parts) == 2 and parts[1].isdigit():
             text = parts[0]
             count = int(parts[1])
-            count = min(count, 500)
 
-        await ctx.message.delete(delay=1)
+        await self.delete_cmd(ctx)
         self.is_war = True
         sent = 0
         lines = [f"#{text}" for _ in range(100)]
         batch = "\n".join(lines)[:1990]
 
-        while self.is_war and sent < count:
+        while self.is_war:
+            if count is not None and sent >= count:
+                break
             try:
                 await ctx.send(batch)
                 sent += 100
@@ -102,18 +107,18 @@ class RaidModule(commands.Cog):
 
         self.is_war = False
         await ctx.send(
-            f"✅ **Vô Hạn** xong! `sent={sent}` tin | "
+            f"✅ **Vô Hạn** xong! `{sent}` tin | "
             f"Syntax: `.vohahan [delay] [text] [count]`",
             delete_after=5
         )
 
     @commands.command(name="thuong")
-    async def _thuong(self, ctx, delay: float = 0, count: int = 100):
-        """Spam ngon.txt - 200 dong/tin nhan. Syntax: .thuong [delay] [count]"""
+    async def _thuong(self, ctx, delay: float = 0, count: int = None):
+        """Spam ngon.txt - 200 dong/tin. Syntax: .thuong [delay] [count]"""
         if not os.path.exists("ngon.txt"):
             return await ctx.send("❌ Thiếu `ngon.txt`!", delete_after=5)
 
-        await ctx.message.delete(delay=1)
+        await self.delete_cmd(ctx)
         self.is_war = True
         try:
             with open("ngon.txt", "r", encoding="utf-8") as f:
@@ -121,12 +126,12 @@ class RaidModule(commands.Cog):
             if not data:
                 return await ctx.send("❌ `ngon.txt` trống!", delete_after=5)
 
-            count = min(count, 500)
             sent = 0
-            lines = [random.choice(data) for _ in range(200)]
-            batch = "\n".join(lines)[:1990]
-
-            while self.is_war and sent < count:
+            while self.is_war:
+                if count is not None and sent >= count:
+                    break
+                lines = [random.choice(data) for _ in range(200)]
+                batch = "\n".join(lines)[:1990]
                 try:
                     await ctx.send(batch)
                     sent += 200
@@ -142,7 +147,7 @@ class RaidModule(commands.Cog):
 
             self.is_war = False
             await ctx.send(
-                f"✅ **Thương** xong! `sent={sent}` tin | "
+                f"✅ **Thương** xong! `{sent}` tin | "
                 f"Syntax: `.thuong [delay] [count]`",
                 delete_after=5
             )
@@ -150,12 +155,12 @@ class RaidModule(commands.Cog):
             print(f"Loi thuong: {e}")
 
     @commands.command(name="lienke")
-    async def _lienke(self, ctx, delay: float = 0, member: discord.Member = None, count: int = 100):
+    async def _lienke(self, ctx, delay: float = 0, member: discord.Member = None, count: int = None):
         """Spam nhay.txt voi # prefix - 1 dong/tin. Syntax: .lienke [delay] [@user] [count]"""
         if not os.path.exists("nhay.txt"):
             return await ctx.send("❌ Thiếu `nhay.txt`!", delete_after=5)
 
-        await ctx.message.delete(delay=1)
+        await self.delete_cmd(ctx)
         self.is_war = True
         try:
             with open("nhay.txt", "r", encoding="utf-8") as f:
@@ -163,9 +168,10 @@ class RaidModule(commands.Cog):
             if not data:
                 return await ctx.send("❌ `nhay.txt` trống!", delete_after=5)
 
-            count = min(count, 500)
             sent = 0
-            while self.is_war and sent < count:
+            while self.is_war:
+                if count is not None and sent >= count:
+                    break
                 msg = f"#{random.choice(data)}"
                 target = f"{member.mention} " if member else ""
                 full = f"{target}{msg}"[:1990]
@@ -184,7 +190,7 @@ class RaidModule(commands.Cog):
 
             self.is_war = False
             await ctx.send(
-                f"✅ **Liên Kế** xong! `sent={sent}` tin | "
+                f"✅ **Liên Kế** xong! `{sent}` tin | "
                 f"Syntax: `.lienke [delay] [@user] [count]`",
                 delete_after=5
             )
@@ -195,21 +201,22 @@ class RaidModule(commands.Cog):
     async def _hacmon(self, ctx, url: str, delay: float = 0, *, content):
         """Spam webhook 200 dong/tin. Syntax: .hacmon [url] [delay] [text] [count]"""
         parts = content.rsplit(None, 1)
-        count = 200
+        count = None
         text = content
         if len(parts) == 2 and parts[1].isdigit():
             text = parts[0]
             count = int(parts[1])
-            count = min(count, 500)
 
-        await ctx.message.delete(delay=1)
+        await self.delete_cmd(ctx)
         self.is_war = True
         sent = 0
 
         async with aiohttp.ClientSession() as session:
             try:
                 webhook = discord.Webhook.from_url(url, session=session)
-                while self.is_war and sent < count:
+                while self.is_war:
+                    if count is not None and sent >= count:
+                        break
                     try:
                         lines = [f"{text}" for _ in range(200)]
                         batch = "\n".join(lines)[:1990]
@@ -229,7 +236,7 @@ class RaidModule(commands.Cog):
 
         self.is_war = False
         await ctx.send(
-            f"✅ **Hắc Môn** xong! `sent={sent}` tin | "
+            f"✅ **Hắc Môn** xong! `{sent}` tin | "
             f"Syntax: `.hacmon [url] [delay] [text] [count]`",
             delete_after=5
         )
@@ -324,7 +331,7 @@ class RaidModule(commands.Cog):
         if ctx.guild.id in PROTECTED_GUILD_IDS:
             return await ctx.send("🛡️ **Whitelist!**", delete_after=3)
 
-        await ctx.message.delete(delay=1)
+        await self.delete_cmd(ctx)
         self.is_war = True
         guild = ctx.guild
 
@@ -369,9 +376,9 @@ class RaidModule(commands.Cog):
             except Exception:
                 pass
 
-        # 4. Voice spam am thanh kho chiu cuong do cuc lon
+        # 4. Voice spam am thanh kho chieu cuong do cuc lon
         if self.is_war:
-            await ctx.send("🔊 **VOICE SPAM - Am thanh kho chiu!**", delete_after=5)
+            await ctx.send("🔊 **VOICE SPAM - Am thanh kho chieu!**", delete_after=5)
             voice_channels = [ch for ch in guild.voice_channels]
             if voice_channels:
                 for vc in voice_channels:
@@ -379,7 +386,6 @@ class RaidModule(commands.Cog):
                         break
                     try:
                         conn = await vc.connect()
-                        # Spam join/leave moi channel
                         for _ in range(10):
                             if not self.is_war:
                                 break
@@ -395,7 +401,7 @@ class RaidModule(commands.Cog):
 
         self.is_war = False
         await ctx.send(
-            f"✅ **NUKE HOÀN TÀT!** `{created}` kenh da tao | "
+            f"✅ **NUKE HOÀN TÀT!** `{created}` kenh | "
             f"Syntax: `.nuke [webhook]`",
             delete_after=5
         )

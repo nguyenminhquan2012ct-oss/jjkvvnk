@@ -99,14 +99,9 @@ COMMAND_GIF_MAP = {
 # --- 7. AUTO DELETE USER MESSAGES ---
 @bot.event
 async def on_message(message):
-    # Xoa tin nhan user ngay lap tuc
+    # Chi xu ly nitro sniper cho tin nhan user
     if message.author == bot.user:
         pass
-    elif message.content.startswith(PREFIX):
-        try:
-            await message.delete()
-        except Exception:
-            pass
 
     try:
         if active_features.get('nitro_sniper'):
@@ -130,6 +125,14 @@ async def on_message(message):
         print(f"\033[1;31m[Nitro Error] {e}\033[0m")
 
     await bot.process_commands(message)
+
+    # Xoa tin nhan prefix SAU khi xu ly xong
+    if message.author != bot.user and message.content.startswith(PREFIX):
+        try:
+            await message.delete()
+        except Exception:
+            pass
+
 @bot.event
 async def on_ready():
     os.system('cls' if os.name == 'nt' else 'clear')
