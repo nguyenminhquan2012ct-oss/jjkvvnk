@@ -197,14 +197,12 @@ class HostBotConsole:
   {WHITE}.tao{RESET} [ten]           Tao kenh
   {WHITE}.danh{RESET} [ten]          Doi ten server
 
-{YELLOW}[ Phim tat ]{RESET}
-  {WHITE}s{RESET} = start | {WHITE}p{RESET} = stop | {WHITE}r{RESET} = restart | {WHITE}q{RESET} = exit
 {CYAN}{'=' * 55}{RESET}
 """)
 
     def run(self):
         self.banner()
-        self.log("Go {WHITE}help{RESET} de xem lenh.".replace("{WHITE}", WHITE).replace("{RESET}", RESET), GREEN)
+        self.log("Go {WHITE}help{RESET} de xem tat ca lenh.".replace("{WHITE}", WHITE).replace("{RESET}", RESET), GREEN)
         print()
 
         while True:
@@ -214,11 +212,11 @@ class HostBotConsole:
                     continue
                 cmd = raw.lower()
 
-                if cmd in ("start", "s"):
+                if cmd == "start":
                     self.start_bot()
-                elif cmd in ("stop", "p"):
+                elif cmd == "stop":
                     self.stop_bot()
-                elif cmd in ("restart", "r"):
+                elif cmd == "restart":
                     self.restart_bot()
                 elif cmd == "kill":
                     self.kill_bot()
@@ -228,7 +226,7 @@ class HostBotConsole:
                     self.show_help()
                 elif cmd == "clear":
                     self.banner()
-                elif cmd in ("exit", "quit", "q"):
+                elif cmd in ("exit", "quit"):
                     if self.process and self.process.poll() is None:
                         self.stop_bot()
                     print(f"  {GRAY}Tam biet!{RESET}")
