@@ -94,40 +94,24 @@ class EntertainmentSystem(commands.Cog):
 
     @commands.command(name="traloi")
     async def _traloi(self, ctx):
-        """Menu giai tri"""
         p = self.bot.command_prefix
-        lines = [
-            f"\033[1;34m🎮 MINI GAMES\033[0m",
-            f"  {p}8ball [cau hoi]      \033[1;30mBoi\033[0m",
-            f"  {p}rps [rock/paper]    \033[1;30mKeo bua bao\033[0m",
-            f"  {p}trivia             \033[1;30mCau do vui\033[0m",
-            f"  {p}coinflip           \033[1;30mToss dong xu\033[0m",
-            f"  {p}number [1-100]     \033[1;30mDoan so\033[0m",
-            "",
-            f"\033[1;32m💰 KINH TE\033[0m",
-            f"  {p}daily              \033[1;30mQua hang ngay\033[0m",
-            f"  {p}bal                \033[1;30mXem so du\033[0m",
-            f"  {p}pay [@user] [so]   \033[1;30mChuyen tien\033[0m",
-            f"  {p}shop / buy [item]  \033[1;30mCua hang\033[0m",
-            f"  {p}inventory          \033[1;30mVat pham\033[0m",
-            "",
-            f"\033[1;33m🌟 VUI\033[0m",
-            f"  {p}fact / quote / meme\033[1;30m   Vui\033[0m",
-            f"  {p}insult [@user]     \033[1;30mInsult\033[0m",
-            f"  {p}compliment [@user] \033[1;30mKhen\033[0m",
-            f"  {p}avatar [@user]     \033[1;30mAnh\033[0m",
-            f"  {p}banner [@user]     \033[1;30mBanner\033[0m",
-        ]
-        w = 46
-        border = "═" * w
-        menu = f"```ansi\n"
-        menu += f"\033[1;32m╔{border}╗\033[0m\n"
-        menu += f"\033[1;32m║\033[0m \033[1;37m{'PHAP DAN GIAI TRI':^{w-2}}\033[0m \033[1;32m║\033[0m\n"
-        menu += f"\033[1;32m╠{border}╣\033[0m\n"
-        for line in lines:
-            menu += f"\033[1;32m║\033[0m {line:<{w-2}} \033[1;32m║\033[0m\n"
-        menu += f"\033[1;32m╚{border}╝\033[0m\n"
-        menu += "```"
+        menu = f"""```ansi
+\033[1;32m🎮 PHÁP ĐÀN GIẢI TRÍ 🎮\033[0m
+\033[1;37m**Chọn thuật thức:**\033[0m
+
+\033[1;34m🎮 MINI GAMES\033[0m
+\033[1;30m  {p}8ball / rps / trivia  \033[1;30m- Games\033[0m
+\033[1;30m  {p}coinflip / number    \033[1;30m- Đoán số\033[0m
+
+\033[1;32m💰 KINH TẾ\033[0m
+\033[1;30m  {p}daily / bal / pay    \033[1;30m- Vàng\033[0m
+\033[1;30m  {p}shop / inventory     \033[1;30m- Cửa hàng\033[0m
+
+\033[1;33m🌟 VUI\033[0m
+\033[1;30m  {p}fact / quote / meme  \033[1;30m- Vui\033[0m
+\033[1;30m  {p}insult / compliment  \033[1;30m- Troll\033[0m
+\033[1;30m  {p}avatar / banner      \033[1;30m- Ảnh\033[0m
+```"""
         await ctx.send(menu)
 
     # ================= MINI GAMES =================

@@ -14,31 +14,20 @@ class LanhDiaSystem(commands.Cog):
     # --- Thuật thức 1: .lanhdia (Menu chính theo style JJK ông thích) ---
     @commands.command(name="lanhdia")
     async def _lanhdia_menu(self, ctx):
-        """Menu chinh"""
         p = self.bot.command_prefix
-        lines = [
-            f"\033[1;37mChu thuat su: \033[1;32m{self.bot.user.name}\033[0m",
-            "",
-            f"\033[1;33m🔵 {p}thuong       \033[1;30mNhay ngon.txt\033[0m",
-            f"\033[1;31m🔴 {p}he            \033[1;30mDam tag nhay.txt\033[0m",
-            f"\033[1;31m⚔️  {p}ngutoa        \033[1;30mChem nhat Server\033[0m",
-            f"\033[1;34m✨ {p}info          \033[1;30mSoi thong so\033[0m",
-            f"\033[1;37m🧹 {p}tayue         \033[1;30mXoa tin nhan\033[0m",
-            f"\033[1;32m🔄 {p}hoiphuc       \033[1;30mRestart bot\033[0m",
-            f"\033[1;37m⚪ {p}ngung         \033[1;30mStop\033[0m",
-            "",
-            f"\033[1;30mType {p}menu de xem tat ca\033[0m",
-        ]
-        w = 46
-        border = "═" * w
-        menu = f"```ansi\n"
-        menu += f"\033[1;35m╔{border}╗\033[0m\n"
-        menu += f"\033[1;35m║\033[0m \033[1;37m{'DOMAIN EXPANSION':^{w-2}}\033[0m \033[1;35m║\033[0m\n"
-        menu += f"\033[1;35m╠{border}╣\033[0m\n"
-        for line in lines:
-            menu += f"\033[1;35m║\033[0m {line:<{w-2}} \033[1;35m║\033[0m\n"
-        menu += f"\033[1;35m╚{border}╝\033[0m\n"
-        menu += "```"
+        menu = f"""```ansi
+\033[1;35m💫 DOMAIN EXPANSION: INFINITE VOID 💫\033[0m
+\033[1;37m**Lãnh địa đã sẵn sàng!** Chọn thuật thức bên dưới:\033[0m
+
+\033[1;31m⚔️ WAR\033[0m     \033[1;30m  {p}raid\033[0m    \033[1;30m- Menu chiến tranh\033[0m
+\033[1;34m🎵 MUSIC\033[0m   \033[1;30m  {p}nhac\033[0m   \033[1;30m- Menu nhạc\033[0m
+\033[1;32m🎮 FUN\033[0m     \033[1;30m  {p}traloi\033[0m \033[1;30m- Menu giải trí\033[0m
+\033[1;33m🛠️ UTILITY\033[0m  \033[1;30m  {p}chucu\033[0m  \033[1;30m- Menu tiện ích\033[0m
+\033[1;35m🛡️ ADMIN\033[0m   \033[1;30m  {p}quanly\033[0m \033[1;30m- Menu quản lý\033[0m
+\033[1;36m🃏 TROLL\033[0m   \033[1;30m  {p}troll\033[0m  \033[1;30m- Menu troll\033[0m
+
+\033[1;30mJJK-VVNK Bot | {len(self.bot.guilds)} servers\033[0m
+```"""
         await ctx.send(menu)
         await ctx.send("https://cdn.discordapp.com/attachments/1447965096214007872/1449264465970331789/C4A0F6F1-28DA-4945-AE12-4A258A305084.gif")
 

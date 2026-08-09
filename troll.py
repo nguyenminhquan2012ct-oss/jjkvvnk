@@ -10,34 +10,26 @@ class TrollSystem(commands.Cog):
 
     @commands.command(name="troll")
     async def _troll_menu(self, ctx):
-        """Menu troll"""
         p = self.bot.command_prefix
-        lines = [
-            f"\033[1;34m🎮 MINI GAMES\033[0m",
-            f"  {p}batdiet             \033[1;30mNhan pham\033[0m",
-            f"  {p}xucxac             \033[1;30mXuc xac\033[0m",
-            "",
-            f"\033[1;32m🎶 AM THANH\033[0m",
-            f"  {p}amhon [url]        \033[1;30mPhat nhac\033[0m",
-            f"  {p}truhon            \033[1;30mRoi voice\033[0m",
-            "",
-            f"\033[1;31m🔥 TROLL\033[0m",
-            f"  {p}fake [@user] [t]  \033[1;30mGia mao tin nhan\033[0m",
-            f"  {p}donguyen         \033[1;30mXem suc manh\033[0m",
-            f"  {p}vonghon          \033[1;30mNhai tin nhan\033[0m",
-            f"  {p}nguyenrua [@u]   \033[1;30mAm que\033[0m",
-            f"  {p}batkhuat         \033[1;30mTu phan hoi khi bi tag\033[0m",
-        ]
-        w = 46
-        border = "═" * w
-        menu = f"```ansi\n"
-        menu += f"\033[1;36m╔{border}╗\033[0m\n"
-        menu += f"\033[1;36m║\033[0m \033[1;37m{'PHAP DAN GIAI TRI':^{w-2}}\033[0m \033[1;36m║\033[0m\n"
-        menu += f"\033[1;36m╠{border}╣\033[0m\n"
-        for line in lines:
-            menu += f"\033[1;36m║\033[0m {line:<{w-2}} \033[1;36m║\033[0m\n"
-        menu += f"\033[1;36m╚{border}╝\033[0m\n"
-        menu += "```"
+        menu = f"""```ansi
+\033[1;36m🃏 PHÁP ĐÀN GIẢI TRÍ 🃏\033[0m
+\033[1;37m**Chọn thuật thức:**\033[0m
+
+\033[1;34m🎮 MINI GAMES\033[0m
+\033[1;30m  {p}batdiet              \033[1;30m- Nhân phẩm\033[0m
+\033[1;30m  {p}xucxac              \033[1;30m- Xúc xắc\033[0m
+
+\033[1;32m🎶 ÂM THANH\033[0m
+\033[1;30m  {p}amhon [url]         \033[1;30m- Phát nhạc\033[0m
+\033[1;30m  {p}truhon             \033[1;30m- Rời voice\033[0m
+
+\033[1;31m🔥 TROLL\033[0m
+\033[1;30m  {p}fake [@user] [text] \033[1;30m- Giả mạo\033[0m
+\033[1;30m  {p}donguyen           \033[1;30m- Sức mạnh\033[0m
+\033[1;30m  {p}vonghon            \033[1;30m- Nhại tin\033[0m
+\033[1;30m  {p}nguyenrua [@user]  \033[1;30m- Ám quẻ\033[0m
+\033[1;30m  {p}batkhuat           \033[1;30m- Auto reply\033[0m
+```"""
         await ctx.send(menu)
 
     # --- [🎮] GAME ---

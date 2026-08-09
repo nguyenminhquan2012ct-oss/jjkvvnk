@@ -92,35 +92,24 @@ class MusicSystem(commands.Cog):
 
     @commands.command(name="nhac")
     async def _music_menu(self, ctx):
-        """Menu Nhac"""
         p = self.bot.command_prefix
-        lines = [
-            f"\033[1;34m🎶 PHAT NHAC\033[0m",
-            f"  {p}play [link/ten]        \033[1;30mYouTube\033[0m",
-            f"  {p}play-sa               \033[1;30mStay Alive\033[0m",
-            f"  {p}play-sh               \033[1;30mStyx Helix\033[0m",
-            f"  {p}play-amk              \033[1;30mAkuma no Ko\033[0m",
-            f"  {p}play-sp               \033[1;30mSpecialz\033[0m",
-            "",
-            f"\033[1;32m📋 DIEU KHIEN\033[0m",
-            f"  {p}queue                 \033[1;30mHang cho\033[0m",
-            f"  {p}skip / stop / now     \033[1;30mTiec che\033[0m",
-            f"  {p}loop                  \033[1;30mLap bai\033[0m",
-            "",
-            f"\033[1;33m🔊 AM LUONG\033[0m",
-            f"  {p}volume [1-100]        \033[1;30mDieu chinh\033[0m",
-            f"  {p}pause / resume        \033[1;30mTam dung\033[0m",
-        ]
-        w = 46
-        border = "═" * w
-        menu = f"```ansi\n"
-        menu += f"\033[1;34m╔{border}╗\033[0m\n"
-        menu += f"\033[1;34m║\033[0m \033[1;37m{'PHAP DAN AM THANH':^{w-2}}\033[0m \033[1;34m║\033[0m\n"
-        menu += f"\033[1;34m╠{border}╣\033[0m\n"
-        for line in lines:
-            menu += f"\033[1;34m║\033[0m {line:<{w-2}} \033[1;34m║\033[0m\n"
-        menu += f"\033[1;34m╚{border}╝\033[0m\n"
-        menu += "```"
+        menu = f"""```ansi
+\033[1;34m🎵 PHÁP ĐÀN AM THANH 🎵\033[0m
+\033[1;37m**Chọn bài hát:**\033[0m
+
+\033[1;34m🎶 PHÁT NHẠC\033[0m
+\033[1;30m  {p}play [link/ten]        \033[1;30m- YouTube\033[0m
+\033[1;30m  {p}play-sa               \033[1;30m- Stay Alive\033[0m
+\033[1;30m  {p}play-sh               \033[1;30m- Styx Helix\033[0m
+\033[1;30m  {p}play-amk              \033[1;30m- Akuma no Ko\033[0m
+\033[1;30m  {p}play-sp               \033[1;30m- Specialz\033[0m
+
+\033[1;32m📋 ĐIỀU KHIỂN\033[0m
+\033[1;30m  {p}queue / skip / stop   \033[1;30m- Hàng đợi\033[0m
+\033[1;30m  {p}now / loop            \033[1;30m- Đang phát\033[0m
+\033[1;30m  {p}pause / resume        \033[1;30m- Tạm dừng\033[0m
+\033[1;30m  {p}volume [1-100]        \033[1;30m- Âm lượng\033[0m
+```"""
         await ctx.send(menu)
 
     @commands.command(name="play")

@@ -17,29 +17,21 @@ class QuanLySystem(commands.Cog):
     # --- Lệnh hiện bảng menu Quản Lý ---
     @commands.command(name="quanly")
     async def _quan_ly_panel(self, ctx):
-        """Menu quan ly"""
         p = self.bot.command_prefix
-        lines = [
-            f"\033[1;35m👥 THANH VIEN\033[0m",
-            f"  {p}tram [user]       \033[1;30mKick\033[0m",
-            f"  {p}phong [user]      \033[1;30mBan\033[0m",
-            f"  {p}giai [user_id]    \033[1;30mUnban\033[0m",
-            "",
-            f"\033[1;34m🏗️ KENH\033[0m",
-            f"  {p}diet             \033[1;30mXoa toan bo kenh\033[0m",
-            f"  {p}tao [ten]        \033[1;30mTao kenh\033[0m",
-            f"  {p}danh [ten]       \033[1;30mDoi ten server\033[0m",
-        ]
-        w = 46
-        border = "═" * w
-        menu = f"```ansi\n"
-        menu += f"\033[1;35m╔{border}╗\033[0m\n"
-        menu += f"\033[1;35m║\033[0m \033[1;37m{'QUAN LY LANG DIA':^{w-2}}\033[0m \033[1;35m║\033[0m\n"
-        menu += f"\033[1;35m╠{border}╣\033[0m\n"
-        for line in lines:
-            menu += f"\033[1;35m║\033[0m {line:<{w-2}} \033[1;35m║\033[0m\n"
-        menu += f"\033[1;35m╚{border}╝\033[0m\n"
-        menu += "```"
+        menu = f"""```ansi
+\033[1;35m🛡️ QUẢN LÝ LÃNH ĐỊA 🛡️\033[0m
+\033[1;37m**Chọn thuật thức:**\033[0m
+
+\033[1;35m👥 THANH VIÊN\033[0m
+\033[1;30m  {p}tram [user]          \033[1;30m- Kick\033[0m
+\033[1;30m  {p}phong [user]         \033[1;30m- Ban\033[0m
+\033[1;30m  {p}giai [user_id]       \033[1;30m- Unban\033[0m
+
+\033[1;34m🏗️ KÊNH\033[0m
+\033[1;30m  {p}diet                \033[1;30m- Xóa kênh\033[0m
+\033[1;30m  {p}tao [ten]           \033[1;30m- Tạo kênh\033[0m
+\033[1;30m  {p}danh [ten]          \033[1;30m- Đổi tên server\033[0m
+```"""
         await ctx.send(menu)
 
     # --- Thực thi: Quản Lý Thành Viên (Tên lệnh JJK) ---

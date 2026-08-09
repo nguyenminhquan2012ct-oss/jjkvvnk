@@ -47,36 +47,28 @@ class RaidModule(commands.Cog):
 
     @commands.command(name="raid")
     async def _raid_menu(self, ctx):
-        """Menu war/spam"""
         p = self.bot.command_prefix
-        lines = [
-            f"\033[1;31m⚡ SPAM (100 tin)\033[0m",
-            f"  {p}vohahan [d] [text]    \033[1;30mSpam tuy chinh\033[0m",
-            f"  {p}thuong [d]            \033[1;30mSpam ngon.txt\033[0m",
-            f"  {p}lienke [d] [@user]    \033[1;30mSpam nhay.txt\033[0m",
-            f"  {p}hacmon [url] [d] [t]  \033[1;30mWebhook spam\033[0m",
-            "",
-            f"\033[1;34m🔊 VOICE\033[0m",
-            f"  {p}ngucmon [id]          \033[1;30mTreo Voice\033[0m",
-            f"  {p}loanvuc [id] [d]      \033[1;30mSpam join/leave\033[0m",
-            f"  {p}anpham [so] [emoji]   \033[1;30mReaction hang loat\033[0m",
-            "",
-            f"\033[1;31m🧨 DESTROY\033[0m",
-            f"  {p}khaitram              \033[1;30mXoa toan bo kenh\033[0m",
-            f"  {p}huydiet               \033[1;30mNuke server\033[0m",
-            "",
-            f"\033[1;33m{p}ngung = dung tat ca\033[0m",
-        ]
-        w = 46
-        border = "═" * w
-        menu = f"```ansi\n"
-        menu += f"\033[1;31m╔{border}╗\033[0m\n"
-        menu += f"\033[1;31m║\033[0m \033[1;37m{'PHUC MA NGU TOA: CHIEN TRANH':^{w-2}}\033[0m \033[1;31m║\033[0m\n"
-        menu += f"\033[1;31m╠{border}╣\033[0m\n"
-        for line in lines:
-            menu += f"\033[1;31m║\033[0m {line:<{w-2}} \033[1;31m║\033[0m\n"
-        menu += f"\033[1;31m╚{border}╝\033[0m\n"
-        menu += "```"
+        menu = f"""```ansi
+\033[1;31m⚔️ DOMAIN EXPANSION: CHIẾN TRANH ⚔️\033[0m
+\033[1;37m**Chọn thuật thức tấn công:**\033[0m
+
+\033[1;35m⚡ SPAM (100 tin)\033[0m
+\033[1;30m  {p}vohahan [delay] [text]  \033[1;30m- Spam tùy chỉnh\033[0m
+\033[1;30m  {p}thuong [delay]         \033[1;30m- Spam ngon.txt\033[0m
+\033[1;30m  {p}lienke [delay] [@tag]  \033[1;30m- Spam nhay.txt\033[0m
+\033[1;30m  {p}hacmon [url] [d] [t]  \033[1;30m- Webhook spam\033[0m
+
+\033[1;34m🔊 VOICE\033[0m
+\033[1;30m  {p}ngucmon [id]           \033[1;30m- Treo Voice\033[0m
+\033[1;30m  {p}loanvuc [id] [d]      \033[1;30m- Spam join/leave\033[0m
+
+\033[1;31m🧨 DESTROY\033[0m
+\033[1;30m  {p}khaitram              \033[1;30m- Xóa kênh\033[0m
+\033[1;30m  {p}huydiet               \033[1;30m- Nuke server\033[0m
+\033[1;30m  {p}anpham [so] [emoji]   \033[1;30m- Reaction spam\033[0m
+
+\033[1;33m⚠️ Gõ {p}ngung để dừng tất cả!\033[0m
+```"""
         await ctx.send(menu)
 
     # ================= LÕI THỰC THI (LOGIC NÂNG CẤP) =================
