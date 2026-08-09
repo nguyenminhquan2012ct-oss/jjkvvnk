@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import signal
 import subprocess
 import threading
@@ -51,8 +52,39 @@ class HostBotConsole:
             return
 
         if not os.path.exists(CONFIG_FILE):
-            self.log("Thieu config.json! Chay HostBot.bat de tao.", RED)
-            return
+            self.log("Thieu config.json! Dang tao...", YELLOW)
+            token = input(f"  {YELLOW}Nhap Discord Token: {RESET}").strip()
+            if not token:
+                self.log("Token trong! Huy.", RED)
+                return
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+                json.dump({"token": token, "prefix": "."}, f, indent=4)
+            self.log("Da tao config.json!", GREEN)
+        else:
+            with open(CONFIG_FILE, 'r', encoding='utf-8-sig') as f:
+                cfg = json.load(f)
+            old_token = cfg.get("token", "")
+            if old_token and old_token != "DAN_TOKEN_VAO_DAY":
+                print(f"  {GRAY}Token hien tai: {old_token[:20]}...{RESET}")
+                use_old = input(f"  {YELLOW}Dung token cu? (y/n): {RESET}").strip().lower()
+                if use_old != 'n':
+                    token = old_token
+                else:
+                    token = input(f"  {YELLOW}Nhap Token moi: {RESET}").strip()
+                    if not token:
+                        self.log("Token trong! Huy.", RED)
+                        return
+                    with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+                        json.dump({"token": token, "prefix": "."}, f, indent=4)
+                    self.log("Da cap nhat token!", GREEN)
+            else:
+                token = input(f"  {YELLOW}Nhap Discord Token: {RESET}").strip()
+                if not token:
+                    self.log("Token trong! Huy.", RED)
+                    return
+                with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+                    json.dump({"token": token, "prefix": "."}, f, indent=4)
+                self.log("Da luu token!", GREEN)
 
         self.log("Dang khoi dong bot...", CYAN)
         try:

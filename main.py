@@ -163,24 +163,23 @@ async def on_command_completion(ctx):
 # --- 10. NITRO SNIPER ---
 @bot.event
 async def on_message(message):
-    if active_features['nitro_sniper']:
+    if active_features.get('nitro_sniper'):
         if 'discord.gift/' in message.content or 'discordapp.com/gifts/' in message.content:
             match = re.search(r"(discord\.gift\/|discordapp\.com\/gifts\/)(\w+)", message.content)
-            if not match:
-                return
-            code = match.group(2)
-            url = f"https://discordapp.com/api/v9/entitlements/gift-codes/{code}/redeem"
-            resp = None
-            for _ in range(3):
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(url, headers=get_main_headers()) as resp:
-                        if resp.status != 429:
-                            break
-                        await rate_utils.handle_429_response(resp)
-            if resp is not None and resp.status == 200:
-                print(f"\033[1;32m[+] DA HUP DUOC NITRO: {code}\033[0m")
-            else:
-                print(f"\033[1;31m[-] Hut Nitro: {code}\033[0m")
+            if match:
+                code = match.group(2)
+                url = f"https://discordapp.com/api/v9/entitlements/gift-codes/{code}/redeem"
+                resp = None
+                for _ in range(3):
+                    async with aiohttp.ClientSession() as session:
+                        async with session.post(url, headers=get_main_headers()) as resp:
+                            if resp.status != 429:
+                                break
+                            await rate_utils.handle_429_response(resp)
+                if resp is not None and resp.status == 200:
+                    print(f"\033[1;32m[+] DA HUP DUOC NITRO: {code}\033[0m")
+                else:
+                    print(f"\033[1;31m[-] Hut Nitro: {code}\033[0m")
 
     await bot.process_commands(message)
 

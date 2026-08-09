@@ -3,19 +3,20 @@ chcp 65001 >nul 2>&1
 title HostBot
 color 0D
 cls
+setlocal enabledelayedexpansion
 
 echo.
 echo                                                    QU4N.TH3.D3V
-echo   ██╗   ██╗██╗   ██╗███╗   ██╗██╗  ██╗
-echo   ██║   ██║██║   ██║████╗  ██║██║ ██╔╝
-echo   ██║   ██║██║   ██║██╔██╗ ██║█████═╝
-echo   ╚██╗ ██╔╝╚██╗ ██╔╝██║╚██╗██║██╔═██╗
-echo    ╚████╔╝  ╚████╔╝ ██║ ╚████║██║  ██╗
-echo     ╚═══╝    ╚═══╝  ╚═╝  ╚═══╝╚═╝  ╚═╝
+echo   =========================================
+echo    V   V  V   V  VVVVV  V   V
+echo    V   V  V   V  V      V  V
+echo    V   V  V   V  V      V V
+echo     V V   V   V  V      VV
+echo      V    VVVVV  VVVVV  V   V
+echo   =========================================
 echo.
-echo  ========================================
 echo   HostBot v6.4 - Discord Self-Bot
-echo  ========================================
+echo   ========================================
 echo.
 
 where python >nul 2>&1
