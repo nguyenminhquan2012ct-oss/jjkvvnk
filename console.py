@@ -7,6 +7,14 @@ import threading
 import time
 from datetime import datetime
 
+# Kich hoat hien thi mau ANSI tren Windows CMD
+try:
+    import colorama
+    colorama.init()
+except ImportError:
+    if os.name == "nt":
+        os.system("")
+
 CONFIG_FILE = "config.json"
 PYTHON = sys.executable
 
@@ -61,8 +69,11 @@ class HostBotConsole:
                 json.dump({"token": token, "prefix": "."}, f, indent=4)
             self.log("Da tao config.json!", GREEN)
         else:
-            with open(CONFIG_FILE, 'r', encoding='utf-8-sig') as f:
-                cfg = json.load(f)
+            try:
+                with open(CONFIG_FILE, 'r', encoding='utf-8-sig') as f:
+                    cfg = json.load(f)
+            except Exception:
+                cfg = {}
             old_token = cfg.get("token", "")
             if old_token and old_token != "DAN_TOKEN_VAO_DAY":
                 print(f"  {GRAY}Token hien tai: {old_token[:20]}...{RESET}")
@@ -89,10 +100,12 @@ class HostBotConsole:
         self.log("Dang khoi dong bot...", CYAN)
         try:
             self.process = subprocess.Popen(
-                [PYTHON, "main.py"],
+                [PYTHON, "-u", "main.py"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
                 bufsize=1,
             )
             threading.Thread(target=self._output, daemon=True).start()
@@ -102,8 +115,9 @@ class HostBotConsole:
 
     def _output(self):
         try:
-            for line in self.process.stdout:
-                print(f"  {GRAY}[BOT]{RESET} {line.rstrip()}")
+            if self.process and self.process.stdout:
+                for line in self.process.stdout:
+                    print(f"  {GRAY}[BOT]{RESET} {line.rstrip()}")
         except Exception:
             pass
         finally:
@@ -118,11 +132,11 @@ class HostBotConsole:
         self.log("Dang dung bot...", YELLOW)
         try:
             self.process.terminate()
-            self.process.wait(timeout=10)
+            self.process.wait(timeout=5)
             self.log("Bot da dung.", GREEN)
         except subprocess.TimeoutExpired:
             self.process.kill()
-            self.log("Bot bi kill.", RED)
+            self.log("Bot bi kill do timeout.", RED)
         except Exception as e:
             self.log(f"Loi: {e}", RED)
         finally:
@@ -234,7 +248,7 @@ class HostBotConsole:
 
     def run(self):
         self.banner()
-        self.log("Go {WHITE}help{RESET} de xem tat ca lenh.".replace("{WHITE}", WHITE).replace("{RESET}", RESET), GREEN)
+        self.log(f"Go {WHITE}help{RESET} de xem tat ca lenh.", GREEN)
         print()
 
         while True:
@@ -268,6 +282,10 @@ class HostBotConsole:
 
             except KeyboardInterrupt:
                 print()
+                if self.process and self.process.poll() is None:
+                    self.stop_bot()
+                print(f"  {GRAY}Tam biet!{RESET}")
+                sys.exit(0)
             except EOFError:
                 break
             except Exception as e:

@@ -7,16 +7,9 @@ setlocal enabledelayedexpansion
 
 echo.
 echo                                                    QU4N.TH3.D3V
-echo   =========================================
-echo    V   V  V   V  VVVVV  V   V
-echo    V   V  V   V  V      V  V
-echo    V   V  V   V  V      V V
-echo     V V   V   V  V      VV
-echo      V    VVVVV  VVVVV  V   V
-echo   =========================================
-echo.
+echo   =============================================================
 echo   HostBot v6.4 - Discord Self-Bot
-echo   ========================================
+echo   =============================================================
 echo.
 
 where python >nul 2>&1
@@ -29,20 +22,23 @@ if errorlevel 1 (
 for /f "tokens=*" %%A in ('python --version 2^>^&1') do echo  [OK] %%A
 echo.
 
-if not exist "config.json" (
-    echo  Config not found. Creating...
-    echo.
-    set /p "TK=  Discord Token: "
-    echo {"token":"!TK!","prefix":"."} > config.json
-    echo  [OK] Done.
-    echo.
+rem Luon bat nhap Token moi lan mo bat
+set /p "TK=  Nhap Discord Token: "
+if "!TK!"=="" (
+    echo  [ERROR] Token khong duoc de trong!
+    pause
+    exit /b 1
 )
+
+echo {"token":"!TK!","prefix":"."} > config.json
+echo  [OK] Da luu Token vao config.json.
+echo.
 
 if exist "requirements.txt" (
     python -m pip install -r requirements.txt --quiet 2>nul
 )
 
-echo  Starting...
+echo  Starting Console...
 echo.
 
 python console.py

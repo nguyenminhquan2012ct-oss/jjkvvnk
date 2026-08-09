@@ -117,7 +117,8 @@ class TrollSystem(commands.Cog):
     async def _fake(self, ctx, member: discord.Member, *, text):
         await ctx.message.delete()
         webhook = await ctx.channel.create_webhook(name=member.display_name)
-        await webhook.send(text, avatar_url=member.avatar.url)
+        avatar = member.avatar.url if member.avatar else None
+        await webhook.send(text, avatar_url=avatar)
         await webhook.delete()
 
     @commands.command(name="donguyen")

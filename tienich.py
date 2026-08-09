@@ -129,7 +129,7 @@ class ChucuSystem(commands.Cog):
                 await ctx.send(user.banner.url)
             else:
                 await ctx.send("❌ Đối tượng không có ảnh bìa (Banner)!", delete_after=3)
-        except:
+        except Exception:
             await ctx.send("❌ Không thể phi ấn đối tượng này!", delete_after=3)
 
     @commands.command(name="sao-an")
@@ -199,7 +199,7 @@ class ChucuSystem(commands.Cog):
                     img = await r.read()
                     new = await discord_action_with_retry(ctx.guild.create_custom_emoji, name=emoji.name, image=img)
                     await ctx.send(f"✅ Đã đóng ấn thành công Emoji: {new}", delete_after=5)
-        except:
+        except Exception:
             await ctx.send("❌ Không thể đóng ấn Emoji này vào lãnh địa!", delete_after=3)
 
 # Dòng này phải để ngoài class và ở cuối file

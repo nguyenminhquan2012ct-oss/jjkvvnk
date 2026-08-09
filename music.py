@@ -47,7 +47,8 @@ class MusicSystem(commands.Cog):
         await self._play_file(guild_id, song["path"])
 
     async def _play_file(self, guild_id, path):
-        vc = self.bot.get_guild(guild_id).voice_client
+        guild = self.bot.get_guild(guild_id)
+        vc = guild.voice_client if guild else None
         if not vc or not vc.is_connected():
             return
         if not os.path.isfile(path):
@@ -72,7 +73,8 @@ class MusicSystem(commands.Cog):
         )
 
     async def _auto_disconnect(self, guild_id):
-        vc = self.bot.get_guild(guild_id).voice_client
+        guild = self.bot.get_guild(guild_id)
+        vc = guild.voice_client if guild else None
         if vc and not vc.is_playing():
             try:
                 await vc.disconnect()
