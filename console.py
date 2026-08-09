@@ -31,13 +31,14 @@ class HostBotConsole:
     def banner(self):
         os.system("cls" if os.name == "nt" else "clear")
         print(f"""
-{YELLOW}                    QU4N.TH3.D3V{RESET}
+{YELLOW}                  QU4N.TH3.D3V{RESET}
 
-{CYAN}    █   █ █   █ █████ █   █
-{CYAN}    █   █ █   █ █     █  █
-{CYAN}    █   █ █   █ █     █ █
-{CYAN}     █ █  █   █ █     ██
-{CYAN}      █   █████ █████ █  █{RESET}
+{CYAN}    ██╗   ██╗██╗   ██╗███╗   ██╗██╗  ██╗
+{CYAN}    ██║   ██║██║   ██║████╗  ██║██║ ██╔╝
+{CYAN}    ██║   ██║██║   ██║██╔██╗ ██║█████╔╝
+{CYAN}    ╚██╗ ██╔╝╚██╗ ██╔╝██║╚██╗██║██╔═██╗
+{CYAN}     ╚████╔╝  ╚████╔╝ ██║ ╚████║██║  ██╗
+{CYAN}      ╚═══╝    ╚═══╝  ╚═╝  ╚═══╝╚═╝  ╚═╝{RESET}
 {GRAY}    v{self.version}{RESET}
 {GRAY}    {'=' * 50}{RESET}""")
 
