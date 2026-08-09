@@ -1,7 +1,5 @@
 @echo off
 chcp 65001 >nul 2>&1
-setlocal EnableExtensions EnableDelayedExpansion
-
 title HostBot
 color 0D
 cls
@@ -16,58 +14,35 @@ echo    ╚████╔╝  ╚████╔╝ ██║ ╚████�
 echo     ╚═══╝    ╚═══╝  ╚═╝  ╚═══╝╚═╝  ╚═╝
 echo.
 echo  ========================================
-echo   HostBot v6.3 - Discord Self-Bot
+echo   HostBot v6.4 - Discord Self-Bot
 echo  ========================================
 echo.
 
-REM === CHECK PYTHON ===
-echo  [1/3] Checking Python...
 where python >nul 2>&1
 if errorlevel 1 (
-    echo  [ERROR] Python not found. Install Python and add to PATH.
+    echo  [ERROR] Python not found!
     pause
     exit /b 1
 )
-for /f "tokens=*" %%A in ('python --version 2^>^&1') do set "PV=%%A"
-echo  [OK] !PV!
+
+for /f "tokens=*" %%A in ('python --version 2^>^&1') do echo  [OK] %%A
 echo.
 
-REM === CHECK CONFIG ===
-echo  [2/3] Checking config...
 if not exist "config.json" (
-    echo.
-    echo  config.json not found. Creating...
+    echo  Config not found. Creating...
     echo.
     set /p "TK=  Discord Token: "
-    set /p "PX=  Prefix [.]: "
-    if "!PX!"=="" set "PX=."
-
-    echo {"token":"!TK!","prefix":"!PX!"} > "config.json"
-    echo  [OK] config.json created.
-    echo.
-) else (
-    echo  [OK] config.json found.
+    echo {"token":"!TK!","prefix":"."} > config.json
+    echo  [OK] Done.
     echo.
 )
 
-REM === CHECK DEPS ===
-echo  [3/3] Checking dependencies...
 if exist "requirements.txt" (
     python -m pip install -r requirements.txt --quiet 2>nul
 )
-echo  [OK] Ready.
-echo.
 
-REM === START ===
-echo  ========================================
-echo        STARTING HOSTBOT...
-echo  ========================================
+echo  Starting...
 echo.
 
 python console.py
-
-echo.
-echo  ========================================
-echo  HostBot stopped.
-echo  ========================================
 pause

@@ -23,13 +23,14 @@ settings = load_settings()
 
 # --- 1. CAU HINH: uu tien Bien moi truong, fallback config.json ---
 TOKEN = os.environ.get("DISCORD_TOKEN") or os.environ.get("DISCORD_BOT_TOKEN") or os.environ.get("BOT_TOKEN")
-PREFIX = settings.get("prefix", os.environ.get("DISCORD_PREFIX", "."))
+PREFIX = "."
 
 if not TOKEN and os.path.exists('config.json'):
     with open('config.json', 'r', encoding='utf-8-sig') as f:
         config = json.load(f)
     TOKEN = config.get('token') or config.get('Token')
-    PREFIX = config.get('prefix') or config.get('Prefix') or PREFIX
+    if not TOKEN:
+        TOKEN = config.get('token')
 
 if not TOKEN:
     if not os.path.exists('config.json'):
