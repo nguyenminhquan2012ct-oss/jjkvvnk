@@ -1,30 +1,34 @@
 # HostBot v6.4
 
-**Discord Self-Bot** - Dieu khien tai khoan Discord ca nhan voi nhieu tinh nang.
+Discord Self-Bot voi nhieu tinh nang: war, spam, nhac, giai tri, quan ly.
 
 > ⚠️ Self-bot vi pham Discord ToS. Su dung tai khoan alt. Chu nhan chap nhan moi rui ro.
 
 ---
 
-## Cai dat
+## Cach tai
 
-### Yeu cau
-- **Python 3.10+** (test voi Python 3.14)
-- **Windows** (hoac Linux/macOS voi dieu chinh nho)
+### Cach 1: Tai file ZIP
+1. Vao: https://github.com/nguyenminhquan2012ct-oss/jjkvvnk
+2. Nút **Code** (mau xanh) → **Download ZIP**
+3. Giai nen thu muc `jjkvvnk-main`
 
-### Buoc 1: Tai source code
+### Cach 2: Clone (can Git)
 ```bash
 git clone https://github.com/nguyenminhquan2012ct-oss/jjkvvnk.git
-cd C:/Downloads/jjkvvnk-main
 ```
 
-### Buoc 2: Chay Run.bat
-- Double-click **`Run.bat`**
-- Lan dau se hoi **Discord Token** → nhap vao
-- Thu vien se tu dong cai dat
-- Bot tu dong khoi dong va **tu restart neu crash**
+---
 
-### Hoac chay thu cong
+## Cach chay
+
+1. Mo thu muc `jjkvvnk`
+2. Double-click **`Run.bat`**
+3. Lan dau hoi **Discord Token** → nhap vao
+4. Bot tu dong cai thu vien va khoi dong
+5. Bot tu dong restart neu crash
+
+Hoac chay thu cong:
 ```bash
 python -m pip install -r requirements.txt
 python main.py
@@ -34,21 +38,11 @@ python main.py
 
 ## Cau hinh
 
-File `config.json` (tu dong tao boi Run.bat):
+File `config.json` (tu tao boi Run.bat):
 ```json
 {
     "token": "DISCORD_TOKEN_CUA_BAN",
     "prefix": "."
-}
-```
-
-File `settings.json` (tuy chinh bot):
-```json
-{
-    "bot_name": "HostBot",
-    "author": "QU4N.TH3.D3V",
-    "auto_gif": true,
-    "status_cycle": ["JJK-VVNK", "Playing...", "HostBot v6.4"]
 }
 ```
 
@@ -60,16 +54,17 @@ File `settings.json` (tuy chinh bot):
 | Lenh | Mo ta |
 |------|-------|
 | `.menu` | Hien thi menu chinh |
+| `.lanhdia` | Hien thi menu chinh (JJK style) |
 | `.info` | Thong tin bot va server |
 | `.ngung` | Dung tat ca thuat thuc dang chay |
 
 ### War / Spam
 | Lenh | Mo ta |
 |------|-------|
-| `.raid` | Menu war/spam |
-| `.vohahan [delay] [text]` | Spam tuy chinh |
-| `.thuong [delay]` | Spam noi dung tu `ngon.txt` |
-| `.lienke [delay] [@user]` | Spam noi dung tu `nhay.txt` |
+| `.raid` | Menu war |
+| `.vohahan [delay] [text]` | Spam tuy chinh (100 tin) |
+| `.thuong [delay]` | Spam tu ngon.txt (100 tin) |
+| `.lienke [delay] [@user]` | Spam tu nhay.txt (100 tin) |
 | `.hacmon [url] [delay] [text]` | Spam qua Webhook |
 | `.ngucmon [voice_id]` | Treo Voice Channel |
 | `.loanvuc [voice_id] [delay]` | Spam join/leave Voice |
@@ -105,10 +100,13 @@ File `settings.json` (tuy chinh bot):
 | `.number [1-100]` | Doan so |
 | `.daily` | Nhan vang hang ngay |
 | `.bal` | Xem so du |
-| `.shop` | Cua hang |
+| `.pay [@user] [so]` | Chuyen tien |
+| `.shop` / `.buy [item]` | Cua hang |
+| `.inventory` | Vat pham |
+| `.fact` / `.quote` / `.meme` | Fun |
+| `.insult [@user]` / `.compliment [@user]` | Troll vui |
 | `.avatar [@user]` | Xem avatar |
 | `.banner [@user]` | Xem banner |
-| `.fact` / `.quote` / `.meme` | Fun |
 
 ### Tien ich
 | Lenh | Mo ta |
@@ -116,10 +114,14 @@ File `settings.json` (tuy chinh bot):
 | `.chucu` | Menu tien ich |
 | `.thauthi [token]` | Kiem tra token |
 | `.thanhduyet [so]` | Xoa tin nhan ban than |
+| `.giapan` | Dong DM |
 | `.nguonluc` | Check ping |
 | `.truytung [@user]` | Soi avatar |
+| `.phian [@user]` | Soi banner |
 | `.danhdinh [@user]` | Thong tin nguoi dung |
 | `.ketgioi` | Thong tin server |
+| `.dongan [emoji]` | Sao chep emoji |
+| `.sao-an [server_id]` | Sao chep kenh |
 
 ### Quan ly
 | Lenh | Mo ta |
@@ -138,7 +140,7 @@ File `settings.json` (tuy chinh bot):
 | `.troll` | Menu troll |
 | `.batdiet` | Game nhan pham |
 | `.xucxac` | Xuc xac |
-| `.amhon [id] [file]` | Phat nhac vao Voice |
+| `.amhon [url]` | Phat nhac vao Voice |
 | `.truhon` | Roi Voice |
 | `.fake [@user] [text]` | Gia mao tin nhan |
 | `.donguyen` | Do suc manh |
@@ -151,55 +153,41 @@ File `settings.json` (tuy chinh bot):
 ## Cau truc thu muc
 
 ```
-JJK-VVNK/
+jjkvvnk/
 ├── main.py              # Entry point
-├── Run.bat              # Launcher (auto-install + auto-restart)
-├── config.json          # Token (gitignored)
+├── Run.bat              # Launcher tu dong
+├── config.json          # Token (bi gitignore)
 ├── settings.json        # Cau hinh bot
-├── requirements.txt     # Thu vien can thiet
-├── .gitignore           # Git ignore
+├── requirements.txt     # Thu vien
+├── .gitignore
 │
-├── ui.py                # Menu commands
-├── entertainment.py     # Fun/economy commands
-├── music.py             # Music commands
-├── raid.py              # War/spam commands
-├── tienich.py           # Utility commands
-├── quanly.py            # Admin commands
-├── troll.py             # Troll commands
-├── lanhdia.py           # Info commands
+├── ui.py                # Menu
+├── entertainment.py     # Giai tri / Economy
+├── music.py             # Nhac
+├── raid.py              # War / Spam
+├── tienich.py           # Tien ich
+├── quanly.py            # Quan ly
+├── troll.py             # Troll
+├── lanhdia.py           # Info
 │
-├── rate_utils.py        # Rate limit handling
-├── cache.py             # Cache utilities
+├── rate_utils.py        # Xu ly rate limit
+├── cache.py             # Cache
 │
-├── ngon.txt             # Noi dung spam (.thuong)
-├── nhay.txt             # Noi dung spam (.lienke)
-├── music/               # File nhac co san
-│   ├── stay_alive.mp3
-│   ├── styx_helix.mp3
-│   ├── akuma_no_ko.mp3
-│   └── specialz.mp3
-└── music_cache/         # Cache nhac tu YouTube (gitignored)
+├── ngon.txt             # Noi dung .thuong
+├── nhay.txt             # Noi dung .lienke
+├── music/               # Nhac co san
+└── music_cache/         # Cache nhac
 ```
 
 ---
 
-## Fix loi thuong gap
+## Fix loi
 
-**Bot khong phan hoi lenh:**
-- Kiem tra `config.json` co token dung khong
-- Kiem tra bot co quyen gui tin nhan trong channel khong
-- Go `.ngung` de dung tat ca, thu lai
-
-**Loi khi play nhac:**
-- Can **FFmpeg** installed. Tai: https://ffmpeg.org/download.html
-- Dat `ffmpeg.exe` vao thu muc `ffmpeg/` hoac them vao PATH
-
-**Bot bi rate limit:**
-- Bot co he xu ly rate limit tu dong
-- Neu bi khoa, doi vai phut roi thu lai
+- **Bot khong phan hoi**: Kiem tra token trong `config.json` dung chua
+- **Loi play nhac**: Can FFmpeg - tai https://ffmpeg.org/download.html
+- **Bi rate limit**: Bot xu ly tu dong, doi vai phut roi thu lai
+- **Bot bi kick/khoa**: Dung tai khoan alt, khong phai tai khoan chinh
 
 ---
 
-## Tac gia
-
-**QU4N.TH3.D3V** - JJK-VVNK Bot v6.4
+**QU4N.TH3.D3V** | JJK-VVNK Bot v6.4
