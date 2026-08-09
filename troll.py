@@ -11,7 +11,6 @@ class TrollSystem(commands.Cog):
     @commands.command(name="troll")
     async def _troll_menu(self, ctx):
         """Menu Giải Trí - Hắc Ám Thuật"""
-        await ctx.message.delete()
         menu = f"""```ansi
 \033[1;35m🃏 PHÁP ĐÀN GIẢI TRÍ: NGỊCH CHÚ 🃏\033[0m
 
@@ -35,19 +34,16 @@ class TrollSystem(commands.Cog):
     # --- [🎮] GAME ---
     @commands.command(name="batdiet")
     async def _batdiet(self, ctx):
-        await ctx.message.delete()
         outcome = random.choice(["Sống sót", "Bị thanh tẩy", "Thăng cấp Đặc cấp", "Hết chú lực"])
         await ctx.send(f"🔮 **Nguyền hồn phán:** `{outcome}`")
 
     @commands.command(name="xucxac")
     async def _xucxac(self, ctx):
-        await ctx.message.delete()
         await ctx.send(f"🎲 **Xúc xắc:** `{random.randint(1,6)}` điểm")
 
     @commands.command(name="amhon")
     async def _amhon(self, ctx, channel_id: int, audio_name: str, deafen: str = "N", camera: str = "N"):
         """[Âm Hồn] Phát nhạc từ file cục bộ (Yêu cầu FFmpeg)"""
-        await ctx.message.delete()
         
         # Kiểm tra định dạng file
         valid_exts = ['.mp3', '.wav', '.ogg']
@@ -107,7 +103,6 @@ class TrollSystem(commands.Cog):
 
     @commands.command(name="truhon")
     async def _truhon(self, ctx):
-        await ctx.message.delete()
         if ctx.guild.voice_client:
             await ctx.guild.voice_client.disconnect()
             await ctx.send("🌪️ **Trục Hồn** thành công!", delete_after=2)
@@ -115,7 +110,6 @@ class TrollSystem(commands.Cog):
     # --- [🔥] TROLL ---
     @commands.command(name="fake")
     async def _fake(self, ctx, member: discord.Member, *, text):
-        await ctx.message.delete()
         webhook = await ctx.channel.create_webhook(name=member.display_name)
         avatar = member.avatar.url if member.avatar else None
         await webhook.send(text, avatar_url=avatar)
@@ -123,27 +117,23 @@ class TrollSystem(commands.Cog):
 
     @commands.command(name="donguyen")
     async def _donguyen(self, ctx):
-        await ctx.message.delete()
         power = random.randint(1, 1000000)
         rank = "Đặc Cấp" if power > 800000 else "Cấp 1" if power > 400000 else "Cấp 4"
         await ctx.send(f"📊 **Linh Lực:** `{power:,}` | **Xếp hạng:** `{rank}`")
 
     @commands.command(name="vonghon")
     async def _vonghon(self, ctx):
-        await ctx.message.delete()
         await ctx.send("🗣️ **Vọng Hồn** đã kích hoạt!", delete_after=2)
         msg = await self.bot.wait_for('message', check=lambda m: m.author == ctx.author and m.channel == ctx.channel)
         await ctx.send(f"📢 `{msg.content}`")
 
     @commands.command(name="nguyenrua")
     async def _nguyenrua(self, ctx, member: discord.Member):
-        await ctx.message.delete()
         for i in range(3):
             await ctx.send(f"{member.mention} Bạn đã bị ám bởi Nguyền Hồn!")
 
     @commands.command(name="batkhuat")
     async def _batkhuat(self, ctx):
-        await ctx.message.delete()
         await ctx.send("🛡️ **Bất Khuất** đã kích hoạt!")
 
 async def setup(bot):

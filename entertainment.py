@@ -95,7 +95,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="traloi")
     async def _traloi(self, ctx):
         """Menu Giải Trí"""
-        await ctx.message.delete()
         menu = f"""```ansi
 \033[1;35m🎮 PHÁP ĐÀN GIẢI TRÍ: NGỊCH CHÚ 🎮\033[0m
 
@@ -130,7 +129,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="8ball")
     async def _eight_ball(self, ctx, *, question: str):
         """Phép bói 8 bóng"""
-        await ctx.message.delete()
         responses = [
             "🔮 Chắc chắn rồi!",
             "🔮 Không thể nào.",
@@ -148,7 +146,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="rps")
     async def _rps(self, ctx, choice: str = None):
         """Kéo búa bao"""
-        await ctx.message.delete()
         if not choice:
             return await ctx.send("❌ Gõ `.rps rock`, `.rps paper` hoặc `.rps scissors`!", delete_after=5)
         choice = choice.lower()
@@ -170,7 +167,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="trivia")
     async def _trivia(self, ctx):
         """Câu đố vui"""
-        await ctx.message.delete()
         q = random.choice(TRIVIA_QUESTIONS)
         await ctx.send(f"❓ **{q['q']}\n(Trả lời bằng `.tra-loi-câu [câu trả lời]`) **")
         def check(m):
@@ -188,14 +184,12 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="coinflip")
     async def _coinflip(self, ctx):
         """Toss đồng xu"""
-        await ctx.message.delete()
         result = random.choice(["🪙 **Mặt正面 (Ngửa)!**", "🪙 **Mặt背面 (Sấp)!**"])
         await ctx.send(result)
 
     @commands.command(name="number")
     async def _guess_number(self, ctx, guess: int = None):
         """Đoán số 1-100"""
-        await ctx.message.delete()
         if guess is None:
             return await ctx.send("❌ Gõ `.number [số]` để đoán!", delete_after=5)
         target = random.randint(1, 100)
@@ -211,7 +205,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="daily")
     async def _daily(self, ctx):
         """Nhận quà hàng ngày"""
-        await ctx.message.delete()
         data = get_user_data(ctx.author.id)
         now = time.time()
         last = data.get("daily", 0)
@@ -229,7 +222,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="bal")
     async def _balance(self, ctx, target: discord.Member = None):
         """Xem số dư"""
-        await ctx.message.delete()
         target = target or ctx.author
         data = get_user_data(target.id)
         await ctx.send(f"💰 **{target.name}** có **{data.get('balance', 0)}** vàng.")
@@ -237,7 +229,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="pay")
     async def _pay(self, ctx, target: discord.Member = None, amount: int = None):
         """Chuyển tiền"""
-        await ctx.message.delete()
         if not target or not amount:
             return await ctx.send("❌ Gõ `.pay [@user] [số tiền]`!", delete_after=5)
         if amount <= 0:
@@ -255,7 +246,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="shop")
     async def _shop(self, ctx):
         """Cửa hàng"""
-        await ctx.message.delete()
         lines = ["```ansi\n\033[1;33m🏪 CỬA HÀNG THUẬT THỨC\033[0m\n"]
         for key, item in SHOP_ITEMS.items():
             lines.append(f"\033[1;37m{item['name']}\033[0m | \033[1;32m{item['price']} vàng\033[0m | `{key}`")
@@ -266,7 +256,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="buy")
     async def _buy(self, ctx, item_key: str = None):
         """Mua vật phẩm"""
-        await ctx.message.delete()
         if not item_key:
             return await ctx.send("❌ Gõ `.buy [tên key]`!", delete_after=5)
         if item_key not in SHOP_ITEMS:
@@ -285,7 +274,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="inventory")
     async def _inventory(self, ctx, target: discord.Member = None):
         """Xem vật phẩm"""
-        await ctx.message.delete()
         target = target or ctx.author
         data = get_user_data(target.id)
         inv = data.get("inventory", [])
@@ -305,19 +293,16 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="fact")
     async def _fact(self, ctx):
         """Fact thú vị"""
-        await ctx.message.delete()
         await ctx.send(f"🧠 **Fact:** {random.choice(FACTS)}")
 
     @commands.command(name="quote")
     async def _quote(self, ctx):
         """Trích dẫn JJK"""
-        await ctx.message.delete()
         await ctx.send(f"📜 {random.choice(QUOTES)}")
 
     @commands.command(name="meme")
     async def _meme(self, ctx):
         """Random meme"""
-        await ctx.message.delete()
         memes = [
             "https://cdn.discordapp.com/attachments/1376174995230949446/1520297142709784626/From_Klickpin.com-_Printable_Wall_Art_Ideas_That_Make_Everyday_Better_29506-pin-id-730779477063900866.gif?ex=6a40ae8c&is=6a3f5d0c&hm=5f9ab89de47a1d586beda24cf5c18f73d6b83f850b416cc3b00afbd2059014f1&",
             "https://media.tenor.com/images/memes/sukuna-memes/sukuna-meme.gif",
@@ -327,7 +312,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="insult")
     async def _insult(self, ctx, target: discord.Member = None):
         """Insult vui"""
-        await ctx.message.delete()
         target = target or ctx.author
         insults = [
             f"{target.mention} IQ của bạn thấp hơn nhiệt độ phòng!",
@@ -341,7 +325,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="compliment")
     async def _compliment(self, ctx, target: discord.Member = None):
         """Khen ngợi"""
-        await ctx.message.delete()
         target = target or ctx.author
         compliments = [
             f"{target.mention} Bạn tuyệt vời như Sukuna!",
@@ -355,7 +338,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="avatar")
     async def _avatar(self, ctx, target: discord.Member = None):
         """Avatar đẹp"""
-        await ctx.message.delete()
         target = target or ctx.author
         if target.avatar:
             await ctx.send(f"🖼️ **Avatar của {target.name}:**\n{target.avatar.url}")
@@ -365,7 +347,6 @@ class EntertainmentSystem(commands.Cog):
     @commands.command(name="banner")
     async def _banner(self, ctx, target: discord.User = None):
         """Banner đẹp"""
-        await ctx.message.delete()
         target = target or ctx.author
         try:
             user = await self.bot.fetch_user(target.id)

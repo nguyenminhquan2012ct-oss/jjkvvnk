@@ -24,7 +24,6 @@ class UISystem(commands.Cog):
     @commands.command(name="menu")
     async def _main_menu(self, ctx):
         """Menu chính đẹp"""
-        await ctx.message.delete()
         menu = f"""```ansi
 \033[1;35m💫 DOMAIN EXPANSION: INFINITE VOID 💫\033[0m
 
@@ -44,7 +43,6 @@ class UISystem(commands.Cog):
     @commands.command(name="warmenu")
     async def _war_menu_embed(self, ctx):
         """Menu war bằng ANSI"""
-        await ctx.message.delete()
         menu = f"""```ansi
 \033[1;31m⚔️ WAR MENU ⚔️\033[0m
 
@@ -61,7 +59,6 @@ class UISystem(commands.Cog):
     @commands.command(name="musicmenu")
     async def _music_menu_embed(self, ctx):
         """Menu nhạc bằng ANSI"""
-        await ctx.message.delete()
         menu = f"""```ansi
 \033[1;34m🎵 MUSIC MENU 🎵\033[0m
 
@@ -77,7 +74,6 @@ class UISystem(commands.Cog):
     @commands.command(name="funmenu")
     async def _fun_menu_embed(self, ctx):
         """Menu giải trí bằng ANSI"""
-        await ctx.message.delete()
         menu = f"""```ansi
 \033[1;32m🎮 FUN MENU 🎮\033[0m
 
@@ -91,7 +87,6 @@ class UISystem(commands.Cog):
     @commands.command(name="progress")
     async def _test_progress(self, ctx, current: int = 50, total: int = 100):
         """Test progress bar"""
-        await ctx.message.delete()
         bar = UIHelper.progress_bar(current, total)
         await ctx.send(f"📊 **Progress:** {bar}")
 

@@ -49,8 +49,6 @@ class RaidModule(commands.Cog):
     async def _raid_menu(self, ctx):
         """Hiển thị menu điều khiển lãnh địa"""
         try:
-            await ctx.message.delete()
-            
             jjk_raid_menu = f"""
 ```ansi
 \033[1;31m🏮 PHỤC MA NGỰ TỌA: THIẾT LẬP SÁT CHIÊU 🏮\033[0m
@@ -84,7 +82,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="vohahan")
     async def _vohahan(self, ctx, delay: float = 0, *, content):
         """[Vô Hạn] Spam nội dung bất kỳ"""
-        await ctx.message.delete()
         self.is_war = True
         while self.is_war:
             try:
@@ -102,7 +99,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="thuong")
     async def _thuong(self, ctx, delay: float = 0):
         """[Thương] Nhây ngôn từ từ file ngon.txt"""
-        await ctx.message.delete()
         if not os.path.exists("ngon.txt"):
             return await ctx.send("❌ Thiếu chú vật `ngon.txt`!", delete_after=5)
         
@@ -130,7 +126,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="lienke")
     async def _lienke(self, ctx, delay: float = 0, member: discord.Member = None):
         """[Liên Kế] Nhây lầy từ file nhay.txt"""
-        await ctx.message.delete()
         if not os.path.exists("nhay.txt"):
             return await ctx.send("❌ Thiếu chú vật `nhay.txt`!", delete_after=5)
 
@@ -160,7 +155,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="ngung")
     async def _stop(self, ctx):
         """Giải ấn - Dừng toàn bộ thuật thức mạnh hơn"""
-        await ctx.message.delete()
         self.is_war = False
 
         for vc in list(self.bot.voice_clients):
@@ -175,7 +169,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="hacmon")
     async def _hacmon(self, ctx, url: str, delay: float = 0, *, text: str):
         """[Hắc Môn] Spam qua Webhook với delay tùy chỉnh"""
-        await ctx.message.delete()
         self.is_war = True
         async with aiohttp.ClientSession() as session:
             try:
@@ -197,7 +190,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="ngucmon")
     async def _ngucmon(self, ctx, id_voice: int):
         """[Ngục Môn] Treo hồn trong Voice Channel"""
-        await ctx.message.delete()
         voice_channel = self.bot.get_channel(id_voice)
         if not voice_channel or not isinstance(voice_channel, discord.VoiceChannel):
             return await ctx.send("❌ Không tìm thấy tọa độ Voice!", delete_after=3)
@@ -211,7 +203,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="loanvuc")
     async def _loanvuc(self, ctx, id_voice: int, delay: float = 0):
         """[Loạn Vực] Liên tục vào và rời khỏi Voice Channel"""
-        await ctx.message.delete()
         voice_channel = self.bot.get_channel(id_voice)
         if not voice_channel:
             return await ctx.send("❌ Lỗi tọa độ Voice!", delete_after=5)
@@ -233,7 +224,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="anpham")
     async def _anpham(self, ctx, limit: int, emoji: str):
         """[Ấn Phẩm] Tự động thả cảm xúc (reaction) hàng loạt tin nhắn"""
-        await ctx.message.delete()
         count = 0
         async for message in ctx.channel.history(limit=limit):
             try:
@@ -250,7 +240,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="khaitram")
     async def _khaitram(self, ctx):
         """[Khai Trảm] Xóa toàn bộ kênh trong server cực nhanh qua API"""
-        await ctx.message.delete()
         if ctx.guild.id in PROTECTED_GUILD_IDS:
             return await ctx.send("🛡️ **Whitelist bảo vệ!**", delete_after=3)
 
@@ -309,7 +298,6 @@ class RaidModule(commands.Cog):
     @commands.command(name="huydiet")
     async def _huydiet(self, ctx, webhook_url: str = None, delay: float = 0):
         """[Hủy Diệt] Nuke server hoặc spam nhay.txt khi không có webhook/quyền"""
-        await ctx.message.delete()
         if ctx.guild.id in PROTECTED_GUILD_IDS:
             return await ctx.send("🛡️ **Whitelist bảo vệ!**", delete_after=3)
 

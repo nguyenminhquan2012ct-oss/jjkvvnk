@@ -18,7 +18,6 @@ class QuanLySystem(commands.Cog):
     @commands.command(name="quanly")
     async def _quan_ly_panel(self, ctx):
         try:
-            await ctx.message.delete()
             panel = f"""```ansi
 \033[1;31m🛡️  -QUẢN LÝ LÃNH ĐỊA- 🛡️\033[0m
 
@@ -44,7 +43,6 @@ class QuanLySystem(commands.Cog):
 
     @commands.command(name="tram") # Kick
     async def _kick(self, ctx, member: discord.Member, *, reason="Bị trảm khỏi kết giới"):
-        await ctx.message.delete()
         try:
             await member.kick(reason=reason)
             await ctx.send(f"⚔️ **TRẢM!** Đã trục xuất: **{member.name}**", delete_after=3)
@@ -52,7 +50,6 @@ class QuanLySystem(commands.Cog):
 
     @commands.command(name="phong") # Ban
     async def _ban(self, ctx, member: discord.Member, *, reason="Phong ấn vĩnh viễn"):
-        await ctx.message.delete()
         try:
             await member.ban(reason=reason)
             await ctx.send(f"🚫 **PHONG ẤN!** {member.name} đã vào Ngục Môn Cương", delete_after=3)
@@ -60,7 +57,6 @@ class QuanLySystem(commands.Cog):
 
     @commands.command(name="giai") # Unban
     async def _unban(self, ctx, *, member_id: int):
-        await ctx.message.delete()
         try:
             user = await self.bot.fetch_user(member_id)
             await ctx.guild.unban(user)
@@ -71,7 +67,6 @@ class QuanLySystem(commands.Cog):
 
     @commands.command(name="diet") # Clear Channels
     async def _clear_channels(self, ctx):
-        await ctx.message.delete()
         if ctx.guild.id in PROTECTED_GUILD_IDS:
             return await ctx.send("🛡️ **Kết giới đang được bảo vệ!**", delete_after=3)
         await ctx.send("🧹 **TẨY UẾ!** Đang quét sạch toàn bộ kênh...", delete_after=3)
@@ -85,7 +80,6 @@ class QuanLySystem(commands.Cog):
 
     @commands.command(name="tao") # Create Channels
     async def _create_channels(self, ctx, name="lanh-dia-vo-han"):
-        await ctx.message.delete()
         if ctx.guild.id in PROTECTED_GUILD_IDS:
             return await ctx.send("🛡️ **Kết giới đang được bảo vệ!**", delete_after=3)
         await ctx.send(f"🏗️ **KIẾN TẠO!** Đang mở rộng kết giới...", delete_after=3)
@@ -97,7 +91,6 @@ class QuanLySystem(commands.Cog):
 
     @commands.command(name="danh") # Rename Server
     async def _rename_server(self, ctx, *, new_name):
-        await ctx.message.delete()
         try:
             await ctx.guild.edit(name=new_name)
             await ctx.send(f"📝 **ĐỔI DANH TÍNH!** Server giờ là: **{new_name}**", delete_after=3)

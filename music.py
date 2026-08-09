@@ -93,7 +93,6 @@ class MusicSystem(commands.Cog):
     @commands.command(name="nhac")
     async def _music_menu(self, ctx):
         """Menu Nhac"""
-        await ctx.message.delete()
         p = self.bot.command_prefix
         menu = f"""```ansi
 \033[1;34m PHAP DAN AM THANH: CHU THUAT NHAC \033[0m
@@ -204,7 +203,6 @@ class MusicSystem(commands.Cog):
 
     @commands.command(name="queue")
     async def _queue(self, ctx):
-        await ctx.message.delete()
         queue = self.get_queue(ctx.guild.id)
         now = self.now_playing.get(ctx.guild.id)
         if not queue and not now:
@@ -220,14 +218,12 @@ class MusicSystem(commands.Cog):
 
     @commands.command(name="skip")
     async def _skip(self, ctx):
-        await ctx.message.delete()
         vc = ctx.guild.voice_client
         if vc and vc.is_playing():
             vc.stop()
 
     @commands.command(name="stop")
     async def _stop(self, ctx):
-        await ctx.message.delete()
         self.queues.pop(ctx.guild.id, None)
         self.now_playing.pop(ctx.guild.id, None)
         vc = ctx.guild.voice_client
@@ -239,7 +235,6 @@ class MusicSystem(commands.Cog):
 
     @commands.command(name="now")
     async def _now(self, ctx):
-        await ctx.message.delete()
         now = self.now_playing.get(ctx.guild.id)
         if now:
             await ctx.send(f"🎵 **Dang phat:** {now['title']}")
@@ -248,7 +243,6 @@ class MusicSystem(commands.Cog):
 
     @commands.command(name="loop")
     async def _loop(self, ctx):
-        await ctx.message.delete()
         current = self.loop_mode.get(ctx.guild.id, False)
         self.loop_mode[ctx.guild.id] = not current
         state = "🟢 **BAT**" if not current else "🔴 **TAT**"
@@ -256,7 +250,6 @@ class MusicSystem(commands.Cog):
 
     @commands.command(name="volume")
     async def _volume(self, ctx, vol: int = None):
-        await ctx.message.delete()
         if vol is None:
             current = int(self.volumes.get(ctx.guild.id, 1.0) * 100)
             return await ctx.send(f"🔊 Am luong hien tai: **{current}%**", delete_after=5)
@@ -269,7 +262,6 @@ class MusicSystem(commands.Cog):
 
     @commands.command(name="pause")
     async def _pause(self, ctx):
-        await ctx.message.delete()
         vc = ctx.guild.voice_client
         if vc and vc.is_playing():
             vc.pause()
@@ -277,7 +269,6 @@ class MusicSystem(commands.Cog):
 
     @commands.command(name="resume")
     async def _resume(self, ctx):
-        await ctx.message.delete()
         vc = ctx.guild.voice_client
         if vc and vc.is_paused():
             vc.resume()

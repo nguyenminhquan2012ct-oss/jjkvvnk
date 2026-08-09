@@ -96,7 +96,15 @@ COMMAND_GIF_MAP = {
     'tao': 'admin', 'danh': 'admin',
 }
 
-# --- 7. ON READY ---
+# --- 7. AUTO DELETE USER MESSAGES ---
+@bot.event
+async def on_command(ctx):
+    try:
+        await ctx.message.delete()
+    except Exception:
+        pass
+
+# --- 8. ON READY ---
 @bot.event
 async def on_ready():
     os.system('cls' if os.name == 'nt' else 'clear')

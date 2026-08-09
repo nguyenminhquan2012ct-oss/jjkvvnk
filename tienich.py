@@ -21,8 +21,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="chucu")
     async def _chucu_menu(self, ctx):
         """Menu Chú Cụ - Tổng hợp pháp bảo hỗ trợ"""
-        await ctx.message.delete()
-
         menu = f"""```ansi
 \033[1;31m🏮 PHỤC MA NGỰ TỌA: CHÚ CỤ HỖ TRỢ 🏮\033[0m
 
@@ -50,7 +48,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="thauthi")
     async def _thauthi(self, ctx, token: str):
         """[Thấu Thị] Kiểm tra linh lực Token"""
-        await ctx.message.delete()
         headers = {'Authorization': token, 'Content-Type': 'application/json'}
         async with aiohttp.ClientSession() as session:
             async with session.get('https://discord.com/api/v9/users/@me', headers=headers) as r:
@@ -72,7 +69,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="thanhduyet")
     async def _thanhduyet(self, ctx, limit: int):
         """[Thanh Duyệt] Xóa tin nhắn bản thân"""
-        await ctx.message.delete()
         count = 0
         async for msg in ctx.channel.history(limit=limit):
             if msg.author.id == self.bot.user.id:
@@ -89,7 +85,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="giapan")
     async def _giapan(self, ctx):
         """[Giải Ấn] Đóng tất cả DMs"""
-        await ctx.message.delete()
         count = 0
         for channel in self.bot.private_channels:
             try:
@@ -105,7 +100,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="nguonluc")
     async def _nguonluc(self, ctx):
         """[Nguồn Lực] Check Ping & Hệ thống"""
-        await ctx.message.delete()
         ms = round(self.bot.latency * 1000)
         sys_info = platform.system()
         await ctx.send(f"```ansi\n\033[1;36m🌀 NGUỒN LỰC\033[0m\n- Chú lực trễ: {ms}ms\n- Cốt lõi hệ thống: {sys_info}```", delete_after=10)
@@ -113,7 +107,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="truytung")
     async def _truytung(self, ctx, target: discord.Member = None):
         """[Truy Tung] Soi Avatar"""
-        await ctx.message.delete()
         target = target or ctx.author
         url = target.avatar.url if target.avatar else "Đối tượng không có ảnh đại diện!"
         await ctx.send(url)
@@ -121,7 +114,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="phian")
     async def _phian(self, ctx, target: discord.User = None):
         """[Phi Ấn] Soi Banner"""
-        await ctx.message.delete()
         target = target or ctx.author
         try:
             user = await self.bot.fetch_user(target.id)
@@ -135,7 +127,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="sao-an")
     async def _saoan(self, ctx, server_id: int):
         """[Sao Ấn] Tái tạo toàn bộ cấu trúc kênh từ server khác"""
-        await ctx.message.delete()
         source_guild = self.bot.get_guild(server_id)
         if not source_guild:
             return await ctx.send("❌ Không thể tìm thấy kết giới (Server ID) này!", delete_after=3)
@@ -165,7 +156,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="danhdinh")
     async def _danhdinh(self, ctx, target: discord.Member = None):
         """[Danh Tính] Thông tin người dùng"""
-        await ctx.message.delete()
         target = target or ctx.author
         created = target.created_at.strftime('%d/%m/%Y')
         res = f"""```ansi
@@ -179,7 +169,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="ketgioi")
     async def _ketgioi(self, ctx):
         """[Kết Giới] Thông số Server"""
-        await ctx.message.delete()
         g = ctx.guild
         res = f"""```ansi
 \033[1;31m🏰 THÔNG SỐ KẾT GIỚI\033[0m
@@ -192,7 +181,6 @@ class ChucuSystem(commands.Cog):
     @commands.command(name="dongan")
     async def _dongan(self, ctx, emoji: discord.PartialEmoji):
         """[Đóng Ấn] Sao chép Emoji về server"""
-        await ctx.message.delete()
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(emoji.url) as r:

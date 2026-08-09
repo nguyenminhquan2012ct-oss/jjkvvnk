@@ -15,8 +15,6 @@ class LanhDiaSystem(commands.Cog):
     @commands.command(name="lanhdia")
     async def _lanhdia_menu(self, ctx):
         try:
-            await ctx.message.delete()
-            
             style_menu = f"""
 ```ansi
 \033[1;35m💫 DOMAIN EXPANSION: INFINITE VOID 💫\033[0m
@@ -44,8 +42,6 @@ class LanhDiaSystem(commands.Cog):
     @commands.command(name="info")
     async def _bot_info(self, ctx):
         try:
-            await ctx.message.delete()
-            
             # Tính toán Uptime chính xác
             uptime_delta = datetime.fromtimestamp(time.time()) - datetime.fromtimestamp(self.start_time)
             days = uptime_delta.days
