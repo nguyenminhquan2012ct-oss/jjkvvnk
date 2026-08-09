@@ -15,7 +15,7 @@
 ### Buoc 1: Tai source code
 ```bash
 git clone https://github.com/nguyenminhquan2012ct-oss/jjkvvnk.git
-cd jjkvvnk
+cd C:/Downloads/jjkvvnk-main
 ```
 
 ### Buoc 2: Chay Run.bat
