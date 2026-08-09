@@ -10,25 +10,34 @@ class TrollSystem(commands.Cog):
 
     @commands.command(name="troll")
     async def _troll_menu(self, ctx):
-        """Menu Giải Trí - Hắc Ám Thuật"""
-        menu = f"""```ansi
-\033[1;35m🃏 PHÁP ĐÀN GIẢI TRÍ: NGỊCH CHÚ 🃏\033[0m
-
-\033[1;34m[🎮] CHÚ THUẬT MINI GAME\033[0m
-\033[1;37m {self.bot.command_prefix}batdiet\033[0m             \033[1;30m  [Bất Diệt] Game nhân phẩm\033[0m
-\033[1;37m {self.bot.command_prefix}xucxac\033[0m              \033[1;30m  [Xúc Xắc] Tung xúc xắc nguyền hồn\033[0m
-
-\033[1;32m[🎶] PHÁT NHẠC (AUDIO CHÚ THUẬT)\033[0m
-\033[1;37m {self.bot.command_prefix}amhon [url]\033[0m         \033[1;30m  [Âm Hồn] Phát nhạc vào Voice\033[0m
-\033[1;37m {self.bot.command_prefix}truhon\033[0m              \033[1;30m  [Trục Hồn] Rời Voice channel\033[0m
-
-\033[1;31m[🔥] CHIÊU THỨC TROLL\033[0m
-\033[1;37m {self.bot.command_prefix}fake [@user] [text]\033[0m  \033[1;30m  [Ngụy Thuật] Giả mạo tin nhắn\033[0m
-\033[1;37m {self.bot.command_prefix}donguyen\033[0m            \033[1;30m  [Đo Nguyền Lực] Xem sức mạnh\033[0m
-\033[1;37m {self.bot.command_prefix}vonghon\033[0m             \033[1;30m  [Vọng Hồn] Nhại lại tin nhắn\033[0m
-\033[1;37m {self.bot.command_prefix}nguyenrua [@user]\033[0m   \033[1;30m  [Nguyền Rủa] Ám quẻ đối phương\033[0m
-\033[1;37m {self.bot.command_prefix}batkhuat\033[0m            \033[1;30m  [Bất Khuất] Tự phản hồi khi bị tag\033[0m
-```"""
+        """Menu troll"""
+        p = self.bot.command_prefix
+        lines = [
+            f"\033[1;34m🎮 MINI GAMES\033[0m",
+            f"  {p}batdiet             \033[1;30mNhan pham\033[0m",
+            f"  {p}xucxac             \033[1;30mXuc xac\033[0m",
+            "",
+            f"\033[1;32m🎶 AM THANH\033[0m",
+            f"  {p}amhon [url]        \033[1;30mPhat nhac\033[0m",
+            f"  {p}truhon            \033[1;30mRoi voice\033[0m",
+            "",
+            f"\033[1;31m🔥 TROLL\033[0m",
+            f"  {p}fake [@user] [t]  \033[1;30mGia mao tin nhan\033[0m",
+            f"  {p}donguyen         \033[1;30mXem suc manh\033[0m",
+            f"  {p}vonghon          \033[1;30mNhai tin nhan\033[0m",
+            f"  {p}nguyenrua [@u]   \033[1;30mAm que\033[0m",
+            f"  {p}batkhuat         \033[1;30mTu phan hoi khi bi tag\033[0m",
+        ]
+        w = 46
+        border = "═" * w
+        menu = f"```ansi\n"
+        menu += f"\033[1;36m╔{border}╗\033[0m\n"
+        menu += f"\033[1;36m║\033[0m \033[1;37m{'PHAP DAN GIAI TRI':^{w-2}}\033[0m \033[1;36m║\033[0m\n"
+        menu += f"\033[1;36m╠{border}╣\033[0m\n"
+        for line in lines:
+            menu += f"\033[1;36m║\033[0m {line:<{w-2}} \033[1;36m║\033[0m\n"
+        menu += f"\033[1;36m╚{border}╝\033[0m\n"
+        menu += "```"
         await ctx.send(menu)
 
     # --- [🎮] GAME ---

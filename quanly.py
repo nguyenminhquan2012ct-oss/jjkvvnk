@@ -17,27 +17,30 @@ class QuanLySystem(commands.Cog):
     # --- Lệnh hiện bảng menu Quản Lý ---
     @commands.command(name="quanly")
     async def _quan_ly_panel(self, ctx):
-        try:
-            panel = f"""```ansi
-\033[1;31m🛡️  -QUẢN LÝ LÃNH ĐỊA- 🛡️\033[0m
-
-\033[1;35m👥 QUẢN LÝ THÀNH VIÊN 👥\033[0m
-
-\033[1;37m📤  {self.bot.command_prefix}tram [user]\033[0m     \033[1;30m  Kick user (Trảm)\033[0m
-\033[1;37m🚫  {self.bot.command_prefix}phong [user]\033[0m    \033[1;30m  Ban user (Phong Ấn)\033[0m
-\033[1;37m➕  {self.bot.command_prefix}giai [user_id]\033[0m   \033[1;30m  Unban user (Giải Ấn)\033[0m
-
-\033[1;34m🏗️ QUẢN LÝ KÊNH 🏗️\033[0m
-
-\033[1;37m🧹  {self.bot.command_prefix}diet\033[0m            \033[1;30m  Trảm sạch toàn bộ kênh (Tẩy Uế)\033[0m
-\033[1;37m🏗️  {self.bot.command_prefix}tao [tên]\033[0m       \033[1;30m  Kiến tạo kênh hàng loạt\033[0m
-\033[1;37m📝  {self.bot.command_prefix}danh [tên mới]\033[0m   \033[1;30m  Đổi danh tính server\033[0m
-
-\033[1;33m⚠️  Gõ {self.bot.command_prefix}quanly để xem lại bảng lệnh!\033[0m
-```"""
-            await ctx.send(panel)
-        except Exception as e:
-            print(f"Lỗi: {e}")
+        """Menu quan ly"""
+        p = self.bot.command_prefix
+        lines = [
+            f"\033[1;35m👥 THANH VIEN\033[0m",
+            f"  {p}tram [user]       \033[1;30mKick\033[0m",
+            f"  {p}phong [user]      \033[1;30mBan\033[0m",
+            f"  {p}giai [user_id]    \033[1;30mUnban\033[0m",
+            "",
+            f"\033[1;34m🏗️ KENH\033[0m",
+            f"  {p}diet             \033[1;30mXoa toan bo kenh\033[0m",
+            f"  {p}tao [ten]        \033[1;30mTao kenh\033[0m",
+            f"  {p}danh [ten]       \033[1;30mDoi ten server\033[0m",
+        ]
+        w = 46
+        border = "═" * w
+        menu = f"```ansi\n"
+        menu += f"\033[1;35m╔{border}╗\033[0m\n"
+        menu += f"\033[1;35m║\033[0m \033[1;37m{'QUAN LY LANG DIA':^{w-2}}\033[0m \033[1;35m║\033[0m\n"
+        menu += f"\033[1;35m╠{border}╣\033[0m\n"
+        for line in lines:
+            menu += f"\033[1;35m║\033[0m {line:<{w-2}} \033[1;35m║\033[0m\n"
+        menu += f"\033[1;35m╚{border}╝\033[0m\n"
+        menu += "```"
+        await ctx.send(menu)
 
     # --- Thực thi: Quản Lý Thành Viên (Tên lệnh JJK) ---
 

@@ -94,34 +94,40 @@ class EntertainmentSystem(commands.Cog):
 
     @commands.command(name="traloi")
     async def _traloi(self, ctx):
-        """Menu Giải Trí"""
-        menu = f"""```ansi
-\033[1;35m🎮 PHÁP ĐÀN GIẢI TRÍ: NGỊCH CHÚ 🎮\033[0m
-
-\033[1;34m[🎮] MINI GAMES\033[0m
-\033[1;37m {self.bot.command_prefix}8ball [câu hỏi]\033[0m         \033[1;30m  Phép bói 8 bóng\033[0m
-\033[1;37m {self.bot.command_prefix}rps [rock/paper/scissors]\033[0m \033[1;30m  Kéo búa bao\033[0m
-\033[1;37m {self.bot.command_prefix}trivia\033[0m                  \033[1;30m  Câu đố vui\033[0m
-\033[1;37m {self.bot.command_prefix}coinflip\033[0m                \033[1;30m  Toss đồng xu\033[0m
-\033[1;37m {self.bot.command_prefix}number [1-100]\033[0m           \033[1;30m  Đoán số bí ẩn\033[0m
-
-\033[1;32m[💰] KINH TẾ\033[0m
-\033[1;37m {self.bot.command_prefix}daily\033[0m                   \033[1;30m  Nhận quà hàng ngày\033[0m
-\033[1;37m {self.bot.command_prefix}bal\033[0m                     \033[1;30m  Xem số dư\033[0m
-\033[1;37m {self.bot.command_prefix}pay [@user] [số]\033[0m       \033[1;30m  Chuyển tiền\033[0m
-\033[1;37m {self.bot.command_prefix}shop\033[0m                   \033[1;30m  Cửa hàng\033[0m
-\033[1;37m {self.bot.command_prefix}buy [tên item]\033[0m         \033[1;30m  Mua vật phẩm\033[0m
-\033[1;37m {self.bot.command_prefix}inventory\033[0m              \033[1;30m  Vật phẩm\033[0m
-
-\033[1;33m[🌟] VUI & THÚ VỊ\033[0m
-\033[1;37m {self.bot.command_prefix}fact\033[0m                    \033[1;30m  Fact thú vị\033[0m
-\033[1;37m {self.bot.command_prefix}quote\033[0m                   \033[1;30m  Trích dẫn JJK\033[0m
-\033[1;37m {self.bot.command_prefix}meme\033[0m                    \033[1;30m  Random meme\033[0m
-\033[1;37m {self.bot.command_prefix}insult [@user]\033[0m         \033[1;30m  Insult vui\033[0m
-\033[1;37m {self.bot.command_prefix}compliment [@user]\033[0m     \033[1;30m  Khen ngợi\033[0m
-\033[1;37m {self.bot.command_prefix}avatar [@user]\033[0m         \033[1;30m  Avatar đẹp\033[0m
-\033[1;37m {self.bot.command_prefix}banner [@user]\033[0m         \033[1;30m  Banner đẹp\033[0m
-```"""
+        """Menu giai tri"""
+        p = self.bot.command_prefix
+        lines = [
+            f"\033[1;34m🎮 MINI GAMES\033[0m",
+            f"  {p}8ball [cau hoi]      \033[1;30mBoi\033[0m",
+            f"  {p}rps [rock/paper]    \033[1;30mKeo bua bao\033[0m",
+            f"  {p}trivia             \033[1;30mCau do vui\033[0m",
+            f"  {p}coinflip           \033[1;30mToss dong xu\033[0m",
+            f"  {p}number [1-100]     \033[1;30mDoan so\033[0m",
+            "",
+            f"\033[1;32m💰 KINH TE\033[0m",
+            f"  {p}daily              \033[1;30mQua hang ngay\033[0m",
+            f"  {p}bal                \033[1;30mXem so du\033[0m",
+            f"  {p}pay [@user] [so]   \033[1;30mChuyen tien\033[0m",
+            f"  {p}shop / buy [item]  \033[1;30mCua hang\033[0m",
+            f"  {p}inventory          \033[1;30mVat pham\033[0m",
+            "",
+            f"\033[1;33m🌟 VUI\033[0m",
+            f"  {p}fact / quote / meme\033[1;30m   Vui\033[0m",
+            f"  {p}insult [@user]     \033[1;30mInsult\033[0m",
+            f"  {p}compliment [@user] \033[1;30mKhen\033[0m",
+            f"  {p}avatar [@user]     \033[1;30mAnh\033[0m",
+            f"  {p}banner [@user]     \033[1;30mBanner\033[0m",
+        ]
+        w = 46
+        border = "═" * w
+        menu = f"```ansi\n"
+        menu += f"\033[1;32m╔{border}╗\033[0m\n"
+        menu += f"\033[1;32m║\033[0m \033[1;37m{'PHAP DAN GIAI TRI':^{w-2}}\033[0m \033[1;32m║\033[0m\n"
+        menu += f"\033[1;32m╠{border}╣\033[0m\n"
+        for line in lines:
+            menu += f"\033[1;32m║\033[0m {line:<{w-2}} \033[1;32m║\033[0m\n"
+        menu += f"\033[1;32m╚{border}╝\033[0m\n"
+        menu += "```"
         await ctx.send(menu)
 
     # ================= MINI GAMES =================

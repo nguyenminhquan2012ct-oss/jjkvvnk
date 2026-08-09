@@ -14,29 +14,33 @@ class LanhDiaSystem(commands.Cog):
     # --- Thuật thức 1: .lanhdia (Menu chính theo style JJK ông thích) ---
     @commands.command(name="lanhdia")
     async def _lanhdia_menu(self, ctx):
-        try:
-            style_menu = f"""
-```ansi
-\033[1;35m💫 DOMAIN EXPANSION: INFINITE VOID 💫\033[0m
-
-\033[1;34m[+] CHÚ THUẬT SƯ:\033[0m \033[1;32m{self.bot.user.name}\033[0m
-
-\033[1;31m[!] DANH SÁCH THUẬT THỨC\033[0m
-\033[1;37m 🔵 {self.bot.command_prefix}thuong\033[0m     \033[1;30m  [Thương] Nhây ngôn từ (ngon.txt)\033[0m
-\033[1;37m 🔴 {self.bot.command_prefix}he\033[0m         \033[1;30m  [Hách] Đấm tag liên hồi (nhay.txt)\033[0m
-\033[1;37m ⚔️ {self.bot.command_prefix}ngutoa\033[0m     \033[1;30m  [Ngự Tọa] Chém nát Server (Raid)\033[0m
-\033[1;37m ✨ {self.bot.command_prefix}info\033[0m       \033[1;30m  [Lục Nhãn] Soi thông số kết giới\033[0m
-\033[1;37m 🧹 {self.bot.command_prefix}tayue\033[0m      \033[1;30m  [Tẩy Uế] Thanh tẩy tin nhắn (Clear)\033[0m
-\033[1;37m 🔄 {self.bot.command_prefix}hoiphuc\033[0m    \033[1;30m  [Phản Phục] Tái thiết kết giới (Restart)\033[0m
-\033[1;37m ⚪ {self.bot.command_prefix}ngung\033[0m      \033[1;30m  [Ngưng] Giải ấn chú thuật (Stop)\033[0m
-
-\033[1;35m"Trong lãnh địa của ta, mọi đòn tấn công đều là tất trúng."\033[0m
-```"""
-            gif_url = "https://cdn.discordapp.com/attachments/1447965096214007872/1449264465970331789/C4A0F6F1-28DA-4945-AE12-4A258A305084.gif"
-            await ctx.send(style_menu)
-            await ctx.send(gif_url)
-        except Exception as e:
-            print(f"Lỗi .lanhdia: {e}")
+        """Menu chinh"""
+        p = self.bot.command_prefix
+        lines = [
+            f"\033[1;37mChu thuat su: \033[1;32m{self.bot.user.name}\033[0m",
+            "",
+            f"\033[1;33m🔵 {p}thuong       \033[1;30mNhay ngon.txt\033[0m",
+            f"\033[1;31m🔴 {p}he            \033[1;30mDam tag nhay.txt\033[0m",
+            f"\033[1;31m⚔️  {p}ngutoa        \033[1;30mChem nhat Server\033[0m",
+            f"\033[1;34m✨ {p}info          \033[1;30mSoi thong so\033[0m",
+            f"\033[1;37m🧹 {p}tayue         \033[1;30mXoa tin nhan\033[0m",
+            f"\033[1;32m🔄 {p}hoiphuc       \033[1;30mRestart bot\033[0m",
+            f"\033[1;37m⚪ {p}ngung         \033[1;30mStop\033[0m",
+            "",
+            f"\033[1;30mType {p}menu de xem tat ca\033[0m",
+        ]
+        w = 46
+        border = "═" * w
+        menu = f"```ansi\n"
+        menu += f"\033[1;35m╔{border}╗\033[0m\n"
+        menu += f"\033[1;35m║\033[0m \033[1;37m{'DOMAIN EXPANSION':^{w-2}}\033[0m \033[1;35m║\033[0m\n"
+        menu += f"\033[1;35m╠{border}╣\033[0m\n"
+        for line in lines:
+            menu += f"\033[1;35m║\033[0m {line:<{w-2}} \033[1;35m║\033[0m\n"
+        menu += f"\033[1;35m╚{border}╝\033[0m\n"
+        menu += "```"
+        await ctx.send(menu)
+        await ctx.send("https://cdn.discordapp.com/attachments/1447965096214007872/1449264465970331789/C4A0F6F1-28DA-4945-AE12-4A258A305084.gif")
 
     # --- Thuật thức 2: .info (Bảng thông số kỹ thuật style diff) ---
     @commands.command(name="info")

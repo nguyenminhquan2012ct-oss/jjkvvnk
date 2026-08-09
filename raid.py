@@ -47,45 +47,52 @@ class RaidModule(commands.Cog):
 
     @commands.command(name="raid")
     async def _raid_menu(self, ctx):
-        """Hiển thị menu điều khiển lãnh địa"""
-        try:
-            jjk_raid_menu = f"""
-```ansi
-\033[1;31m🏮 PHỤC MA NGỰ TỌA: THIẾT LẬP SÁT CHIÊU 🏮\033[0m
-
-\033[1;35m[⚡] THUẬT THỨC CẤP TỐC (SPAM)\033[0m
-\033[1;37m {self.bot.command_prefix}vohahan [delay] [text]\033[0m   \033[1;30m  [Vô Hạn] Spam tùy chỉnh\033[0m
-\033[1;37m {self.bot.command_prefix}thuong [delay]\033[0m            \033[1;30m  [Thương] Nhây file ngon.txt\033[0m
-\033[1;37m {self.bot.command_prefix}lienke [delay] [@tag]\033[0m     \033[1;30m  [Liên Kế] Nhây file nhay.txt\033[0m
-\033[1;37m {self.bot.command_prefix}hacmon [url] [delay] [text]\033[0m \033[1;30m  [Hắc Môn] Thuật thức Webhook\033[0m
-
-\033[1;34m[🔊] KẾT GIỚI ÂM THANH (VOICE)\033[0m
-\033[1;37m {self.bot.command_prefix}ngucmon [id]\033[0m                \033[1;30m  [Ngục Môn] Treo hồn trong Voice\033[0m
-\033[1;37m {self.bot.command_prefix}loanvuc [id] [delay]\033[0m         \033[1;30m  [Loạn Vực] Spam J/L Voice\033[0m
-\033[1;37m {self.bot.command_prefix}anpham [số] [emoji]\033[0m        \033[1;30m  [Ấn Phẩm] Đóng dấu chú thuật\033[0m
-
-\033[1;31m[🧨] ĐỊA NGỤC TRẦN GIAN (DESTROY)\033[0m
-\033[1;37m {self.bot.command_prefix}khaitram\033[0m                    \033[1;30m  [Khai Trảm] Giải trừ toàn bộ kênh\033[0m
-\033[1;37m {self.bot.command_prefix}huydiet [tên] [text]\033[0m       \033[1;30m  [Hủy Diệt] Bình địa kết giới (Nuke)\033[0m
-
-\033[1;33m⚠️ Lưu ý: Gõ {self.bot.command_prefix}ngung để thu hồi toàn bộ thuật thức!\033[0m
-```"""
-            gif_raid = "https://cdn.discordapp.com/attachments/1376174995230949446/1520297142709784626/From_Klickpin.com-_Printable_Wall_Art_Ideas_That_Make_Everyday_Better_29506-pin-id-730779477063900866.gif?ex=6a40ae8c&is=6a3f5d0c&hm=5f9ab89de47a1d586beda24cf5c18f73d6b83f850b416cc3b00afbd2059014f1&"
-            
-            await ctx.send(jjk_raid_menu)
-            await ctx.send(gif_raid)
-        except Exception as e:
-            print(f"Lỗi hiển thị Menu Raid: {e}")
+        """Menu war/spam"""
+        p = self.bot.command_prefix
+        lines = [
+            f"\033[1;31m⚡ SPAM (100 tin)\033[0m",
+            f"  {p}vohahan [d] [text]    \033[1;30mSpam tuy chinh\033[0m",
+            f"  {p}thuong [d]            \033[1;30mSpam ngon.txt\033[0m",
+            f"  {p}lienke [d] [@user]    \033[1;30mSpam nhay.txt\033[0m",
+            f"  {p}hacmon [url] [d] [t]  \033[1;30mWebhook spam\033[0m",
+            "",
+            f"\033[1;34m🔊 VOICE\033[0m",
+            f"  {p}ngucmon [id]          \033[1;30mTreo Voice\033[0m",
+            f"  {p}loanvuc [id] [d]      \033[1;30mSpam join/leave\033[0m",
+            f"  {p}anpham [so] [emoji]   \033[1;30mReaction hang loat\033[0m",
+            "",
+            f"\033[1;31m🧨 DESTROY\033[0m",
+            f"  {p}khaitram              \033[1;30mXoa toan bo kenh\033[0m",
+            f"  {p}huydiet               \033[1;30mNuke server\033[0m",
+            "",
+            f"\033[1;33m{p}ngung = dung tat ca\033[0m",
+        ]
+        w = 46
+        border = "═" * w
+        menu = f"```ansi\n"
+        menu += f"\033[1;31m╔{border}╗\033[0m\n"
+        menu += f"\033[1;31m║\033[0m \033[1;37m{'PHUC MA NGU TOA: CHIEN TRANH':^{w-2}}\033[0m \033[1;31m║\033[0m\n"
+        menu += f"\033[1;31m╠{border}╣\033[0m\n"
+        for line in lines:
+            menu += f"\033[1;31m║\033[0m {line:<{w-2}} \033[1;31m║\033[0m\n"
+        menu += f"\033[1;31m╚{border}╝\033[0m\n"
+        menu += "```"
+        await ctx.send(menu)
 
     # ================= LÕI THỰC THI (LOGIC NÂNG CẤP) =================
 
     @commands.command(name="vohahan")
     async def _vohahan(self, ctx, delay: float = 0, *, content):
-        """[Vô Hạn] Spam nội dung bất kỳ"""
+        """[Vô Hạn] Spam nội dung bất kỳ - 100 dong"""
         self.is_war = True
-        while self.is_war:
+        count = 0
+        max_lines = 100
+        while self.is_war and count < max_lines:
             try:
-                await ctx.send(content)
+                # Auto-giam dong neu qua 2000 ky tu
+                msg = content[:1990] if len(content) > 1990 else content
+                await ctx.send(msg)
+                count += 1
                 if delay > 0:
                     await asyncio.sleep(delay)
             except discord.HTTPException as e:
@@ -95,10 +102,11 @@ class RaidModule(commands.Cog):
                 break
             except Exception:
                 break
+        await ctx.send(f"✅ **Vô Hạn** hoan tat! Da gui `{count}` tin nhan.", delete_after=5)
 
     @commands.command(name="thuong")
     async def _thuong(self, ctx, delay: float = 0):
-        """[Thương] Nhây ngôn từ từ file ngon.txt"""
+        """[Thương] Nhây ngôn từ từ file ngon.txt - 100 dong"""
         if not os.path.exists("ngon.txt"):
             return await ctx.send("❌ Thiếu chú vật `ngon.txt`!", delete_after=5)
         
@@ -109,10 +117,14 @@ class RaidModule(commands.Cog):
             
             if not content:
                 return await ctx.send("❌ File `ngon.txt` trống rỗng!", delete_after=5)
-                
-            while self.is_war:
+            
+            count = 0
+            max_lines = 100
+            while self.is_war and count < max_lines:
                 try:
-                    await ctx.send(random.choice(content))
+                    msg = random.choice(content)[:1990]
+                    await ctx.send(msg)
+                    count += 1
                 except discord.HTTPException as e:
                     if getattr(e, "status", None) == 429:
                         await wait_off_429(e)
@@ -120,12 +132,13 @@ class RaidModule(commands.Cog):
                     break
                 if delay > 0:
                     await asyncio.sleep(delay)
+            await ctx.send(f"✅ **Thương** hoan tat! Da gui `{count}` tin nhan.", delete_after=5)
         except Exception as e:
             print(f"Lỗi thuật thức Thương: {e}")
 
     @commands.command(name="lienke")
     async def _lienke(self, ctx, delay: float = 0, member: discord.Member = None):
-        """[Liên Kế] Nhây lầy từ file nhay.txt"""
+        """[Liên Kế] Nhây lầy từ file nhay.txt - 100 dong"""
         if not os.path.exists("nhay.txt"):
             return await ctx.send("❌ Thiếu chú vật `nhay.txt`!", delete_after=5)
 
@@ -137,11 +150,15 @@ class RaidModule(commands.Cog):
             if not content:
                 return await ctx.send("❌ File `nhay.txt` trống rỗng!", delete_after=5)
             
-            while self.is_war:
+            count = 0
+            max_lines = 100
+            while self.is_war and count < max_lines:
                 msg = random.choice(content)
                 target = f"{member.mention} " if member else ""
+                full_msg = f"{target}{msg}"[:1990]
                 try:
-                    await ctx.send(f"{target}{msg}")
+                    await ctx.send(full_msg)
+                    count += 1
                 except discord.HTTPException as e:
                     if getattr(e, "status", None) == 429:
                         await wait_off_429(e)
@@ -149,6 +166,7 @@ class RaidModule(commands.Cog):
                     break
                 if delay > 0:
                     await asyncio.sleep(delay)
+            await ctx.send(f"✅ **Liên Kế** hoan tat! Da gui `{count}` tin nhan.", delete_after=5)
         except Exception as e:
             print(f"Lỗi thuật thức Liên Kế: {e}")
 

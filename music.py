@@ -94,28 +94,33 @@ class MusicSystem(commands.Cog):
     async def _music_menu(self, ctx):
         """Menu Nhac"""
         p = self.bot.command_prefix
-        menu = f"""```ansi
-\033[1;34m PHAP DAN AM THANH: CHU THUAT NHAC \033[0m
-
-\033[1;34m[ Dieu khien nhac ]\033[0m
-\033[1;37m {p}play [link/ten]\033[0m           \033[1;30m  Phat nhac tu YouTube\033[0m
-\033[1;37m {p}play-sa\033[0m                 \033[1;30m  Phat "Stay Alive"\033[0m
-\033[1;37m {p}play-sh\033[0m                 \033[1;30m  Phat "Styx Helix"\033[0m
-\033[1;37m {p}play-amk\033[0m                \033[1;30m  Phat "Akuma no Ko"\033[0m
-\033[1;37m {p}play-sp\033[0m                 \033[1;30m  Phat "Specialz"\033[0m
-
-\033[1;32m[ Hang choi ]\033[0m
-\033[1;37m {p}queue\033[0m                   \033[1;30m  Xem danh sach cho\033[0m
-\033[1;37m {p}skip\033[0m                    \033[1;30m  Bo qua bai hien tai\033[0m
-\033[1;37m {p}stop\033[0m                    \033[1;30m  Dung nhac + roi voice\033[0m
-\033[1;37m {p}now\033[0m                     \033[1;30m  Bai dang phat\033[0m
-\033[1;37m {p}loop\033[0m                    \033[1;30m  Bat/tat lap bai\033[0m
-
-\033[1;33m[ Dieu chinh ]\033[0m
-\033[1;37m {p}volume [1-100]\033[0m          \033[1;30m  Dieu chinh am luong\033[0m
-\033[1;37m {p}pause\033[0m                   \033[1;30m  Tam dung\033[0m
-\033[1;37m {p}resume\033[0m                  \033[1;30m  Tiep tuc\033[0m
-```"""
+        lines = [
+            f"\033[1;34m🎶 PHAT NHAC\033[0m",
+            f"  {p}play [link/ten]        \033[1;30mYouTube\033[0m",
+            f"  {p}play-sa               \033[1;30mStay Alive\033[0m",
+            f"  {p}play-sh               \033[1;30mStyx Helix\033[0m",
+            f"  {p}play-amk              \033[1;30mAkuma no Ko\033[0m",
+            f"  {p}play-sp               \033[1;30mSpecialz\033[0m",
+            "",
+            f"\033[1;32m📋 DIEU KHIEN\033[0m",
+            f"  {p}queue                 \033[1;30mHang cho\033[0m",
+            f"  {p}skip / stop / now     \033[1;30mTiec che\033[0m",
+            f"  {p}loop                  \033[1;30mLap bai\033[0m",
+            "",
+            f"\033[1;33m🔊 AM LUONG\033[0m",
+            f"  {p}volume [1-100]        \033[1;30mDieu chinh\033[0m",
+            f"  {p}pause / resume        \033[1;30mTam dung\033[0m",
+        ]
+        w = 46
+        border = "═" * w
+        menu = f"```ansi\n"
+        menu += f"\033[1;34m╔{border}╗\033[0m\n"
+        menu += f"\033[1;34m║\033[0m \033[1;37m{'PHAP DAN AM THANH':^{w-2}}\033[0m \033[1;34m║\033[0m\n"
+        menu += f"\033[1;34m╠{border}╣\033[0m\n"
+        for line in lines:
+            menu += f"\033[1;34m║\033[0m {line:<{w-2}} \033[1;34m║\033[0m\n"
+        menu += f"\033[1;34m╚{border}╝\033[0m\n"
+        menu += "```"
         await ctx.send(menu)
 
     @commands.command(name="play")

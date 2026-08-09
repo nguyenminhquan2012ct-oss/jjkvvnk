@@ -20,27 +20,35 @@ class ChucuSystem(commands.Cog):
 
     @commands.command(name="chucu")
     async def _chucu_menu(self, ctx):
-        """Menu Chú Cụ - Tổng hợp pháp bảo hỗ trợ"""
-        menu = f"""```ansi
-\033[1;31m🏮 PHỤC MA NGỰ TỌA: CHÚ CỤ HỖ TRỢ 🏮\033[0m
-
-\033[1;35m[⚡] PHÁP BẢO CẤP TỐC\033[0m
-\033[1;37m {self.bot.command_prefix}thauthi [token]\033[0m       \033[1;30m  [Thấu Thị] Kiểm tra linh lực token\033[0m
-\033[1;37m {self.bot.command_prefix}thanhduyet [số]\033[0m       \033[1;30m  [Thanh Duyệt] Xóa tin nhắn bản thân\033[0m
-\033[1;37m {self.bot.command_prefix}giapan\033[0m                \033[1;30m  [Giải Ấn] Đóng toàn bộ DM\033[0m
-
-\033[1;34m[🔊] THÔNG TIN & SOI TÌM\033[0m
-\033[1;37m {self.bot.command_prefix}nguonluc\033[0m              \033[1;30m  [Nguồn Lực] Check ping và hệ thống\033[0m
-\033[1;37m {self.bot.command_prefix}truytung [@tag]\033[0m       \033[1;30m  [Truy Tung] Soi avatar\033[0m
-\033[1;37m {self.bot.command_prefix}phian [@tag]\033[0m          \033[1;30m  [Phi Ấn] Soi banner\033[0m
-
-\033[1;33m[🧿] THAO TÁC ĐẶC BIỆT\033[0m
-\033[1;37m {self.bot.command_prefix}sao-an [server_id]\033[0m    \033[1;30m  [Sao Ấn] Tái tạo cấu trúc kênh\033[0m
-\033[1;37m {self.bot.command_prefix}danhdinh [@tag]\033[0m       \033[1;30m  [Danh Tính] Thông tin người dùng\033[0m
-\033[1;37m {self.bot.command_prefix}ketgioi\033[0m               \033[1;30m  [Kết Giới] Thông số server\033[0m
-\033[1;37m {self.bot.command_prefix}dongan [emoji]\033[0m        \033[1;30m  [Đóng Ấn] Sao chép emoji\033[0m
-```"""
-
+        """Menu tien ich"""
+        p = self.bot.command_prefix
+        lines = [
+            f"\033[1;33m⚡ PHAP BAO\033[0m",
+            f"  {p}thauthi [token]       \033[1;30mKiem tra token\033[0m",
+            f"  {p}thanhduyet [so]       \033[1;30mXoa tin nhan\033[0m",
+            f"  {p}giapan               \033[1;30mDong DM\033[0m",
+            "",
+            f"\033[1;34m🔊 THONG TIN\033[0m",
+            f"  {p}nguonluc             \033[1;30mCheck ping\033[0m",
+            f"  {p}truytung [@user]     \033[1;30mSoi avatar\033[0m",
+            f"  {p}phian [@user]        \033[1;30mSoi banner\033[0m",
+            "",
+            f"\033[1;35m🧿 DAC BIET\033[0m",
+            f"  {p}sao-an [server_id]  \033[1;30mSao chep kenh\033[0m",
+            f"  {p}danhdinh [@user]    \033[1;30mInfo nguoi dung\033[0m",
+            f"  {p}ketgioi             \033[1;30mInfo server\033[0m",
+            f"  {p}dongan [emoji]      \033[1;30mSao chep emoji\033[0m",
+        ]
+        w = 46
+        border = "═" * w
+        menu = f"```ansi\n"
+        menu += f"\033[1;33m╔{border}╗\033[0m\n"
+        menu += f"\033[1;33m║\033[0m \033[1;37m{'CHU CU HO TRO':^{w-2}}\033[0m \033[1;33m║\033[0m\n"
+        menu += f"\033[1;33m╠{border}╣\033[0m\n"
+        for line in lines:
+            menu += f"\033[1;33m║\033[0m {line:<{w-2}} \033[1;33m║\033[0m\n"
+        menu += f"\033[1;33m╚{border}╝\033[0m\n"
+        menu += "```"
         await ctx.send(menu)
 
 # ================= LÕI THỰC THI (VIẾT MỚI) =================
